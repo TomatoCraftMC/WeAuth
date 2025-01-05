@@ -2,18 +2,28 @@
 # created by NearlyHeadlessJack 2024-01-03
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
-from listener.listener import Listener
-from database.database import DB
+from email.policy import default
+
+# import click
+from weauth.listener import Listener
+from weauth.database.database import DB
 import yaml
-from utils.check_for_update import check_for_update
-from utils.create_config_yaml import create_config_yaml
-from mc_server.mcsm_connect import MCSM
-from tencent_server.wx_server import WxConnection
-from exceptions.exceptions import *
+from weauth.utils.check_for_update import check_for_update
+from weauth.utils.create_config_yaml import create_config_yaml
+from weauth.mc_server.mcsm_connect import MCSM
+from weauth.tencent_server.wx_server import WxConnection
+from weauth.exceptions.exceptions import *
 
 VERSION: str = '1.0.0'  # 版本号
 BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 
+# @click.command()
+# @click.option(
+#     '-p',
+#     '--port',
+#     default='80',
+#     help='本地监听端口号'
+# )
 def main() -> None:
     """应用程序入口"""
     print(" ")
@@ -79,7 +89,7 @@ def read_config() -> dict:
     :return: 配置信息，以字典形式
     """
     try:
-        with open('./config.yaml', 'r', encoding='utf-8') as f:
+        with open('config.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         return result
     except FileNotFoundError:
@@ -103,7 +113,8 @@ def test_wechat_server(app_id, app_secret):
         return code2
     
 
-if __name__ == '__main__':
-    main()
-    
+# if __name__ == '__main__':
+#     main()
+
+
     

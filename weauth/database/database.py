@@ -6,9 +6,9 @@
 # ide： PyCharm
 # file: database.py
 import sqlite3
-from exceptions.exceptions import *
+from weauth.exceptions.exceptions import *
 import os
-from mc_server.mcsm_connect import MCSM
+from weauth.mc_server.mcsm_connect import MCSM
 import yaml
 
 class DB:

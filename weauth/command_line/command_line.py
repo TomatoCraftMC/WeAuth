@@ -5,8 +5,8 @@
 # datetime： 2025/1/5 14:20 
 # ide： PyCharm
 # file: command_line.py
-from exceptions.exceptions import *
-from database import DB
+from weauth.exceptions.exceptions import *
+from weauth.database import DB
 class CommandLine:
     def __init__(self):
         ...
