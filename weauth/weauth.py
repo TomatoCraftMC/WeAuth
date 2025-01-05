@@ -3,7 +3,7 @@
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
 from email.policy import default
-
+import sys
 # import click
 from weauth.listener import Listener
 from weauth.database.database import DB
@@ -51,8 +51,10 @@ def main() -> None:
     except ConfigFileNotFound:
         create_config_yaml()
         print('-首次运行, 请先在config.yaml中进行配置!')
-        return None
+        sys.exit(0)
 
+    # 检查是否有op列表
+    check_op_list()
     # 测试游戏端连接
     if MCSM.test_connection(config['mcsm_adr'], config['mcsm_api'], config['uuid'], config['remote-uuid']) == 200:
         print('-成功连接到游戏服务器!')
@@ -95,6 +97,16 @@ def read_config() -> dict:
     except FileNotFoundError:
         raise ConfigFileNotFound('未找到配置文件')
 
+def check_op_list() -> None:
+    """
+     检查是否有op表，没有则新建
+    """
+    try:
+        with open('ops.yaml', 'r', encoding='utf-8') as f:
+            result = yaml.load(f.read(), Loader=yaml.FullLoader)
+    except FileNotFoundError:
+        with open('./ops.yaml', 'w+') as f:
+            f.write('ops: [op_ID1,op_ID2,op_ID3]')
 
 
 def test_wechat_server(app_id, app_secret):

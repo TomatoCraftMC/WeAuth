@@ -164,3 +164,4 @@ frpserver/frps.toml
 /.idea
 /config.yaml
 config.yaml
+/ops.yaml
