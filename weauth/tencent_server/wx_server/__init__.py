@@ -11,7 +11,7 @@ import sys
 import requests
 import json
 import xml.etree.ElementTree as ET
-from tencent_server import TencentServerConnection
+from weauth.tencent_server import TencentServerConnection
 
 
 class WxConnection(TencentServerConnection):

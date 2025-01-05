@@ -1,5 +1,5 @@
 import requests
-from mc_server import MCServerConnection
+from weauth.mc_server import MCServerConnection
 
 class MCSM(MCServerConnection):
     def __init__(self):

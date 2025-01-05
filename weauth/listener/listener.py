@@ -7,10 +7,10 @@
 # file: listener.py
 from flask import Flask, request
 from xml.dom.minidom import parseString
-from database import DB
-from exceptions.exceptions import *
-from tencent_server.wx_server import WxConnection
-from command_line import CommandLine
+from weauth.database import DB
+from weauth.exceptions.exceptions import *
+from weauth.tencent_server.wx_server import WxConnection
+from weauth.command_line import CommandLine
 
 
 class Listener:

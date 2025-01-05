@@ -2,6 +2,9 @@
 # created by NearlyHeadlessJack 2024-01-03
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
+from email.policy import default
+
+import click
 from listener.listener import Listener
 from database.database import DB
 import yaml
@@ -14,6 +17,13 @@ from exceptions.exceptions import *
 VERSION: str = '1.0.0'  # 版本号
 BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 
+@click.command()
+@click.option(
+    '-p',
+    '--port',
+    default='80',
+    help='本地监听端口号'
+)
 def main() -> None:
     """应用程序入口"""
     print(" ")
@@ -79,7 +89,7 @@ def read_config() -> dict:
     :return: 配置信息，以字典形式
     """
     try:
-        with open('./config.yaml', 'r', encoding='utf-8') as f:
+        with open('config.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         return result
     except FileNotFoundError:
@@ -105,5 +115,6 @@ def test_wechat_server(app_id, app_secret):
 
 if __name__ == '__main__':
     main()
-    
+
+
     
