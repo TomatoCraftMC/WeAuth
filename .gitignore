@@ -163,3 +163,4 @@ frpserver/frps
 frpserver/frps.toml
 /.idea
 /config.yaml
+config.yaml
