@@ -39,12 +39,23 @@ Python>=3.8
 服务器的80端口必须可以被访问*
 ```   
 * 微信公众号只会通过80(http)或443(https)与开发者服务器进行交互。
-* **<font color='red'>您运行WeAuth的服务器如果是在大陆境内的云服务器，只有经过备案才能使用80/443端口。</font>**
+* **如果您运行WeAuth的服务器是在大陆境内的云服务器，只有经过备案才能使用80/443端口。>**  
+* **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**  
+## 安装WeAuth
+WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通过`pip`指令安装。  
+```command
+pip3 install weauth  #使用官方Pypi源
+
+pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
+```   
+安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。  
+```command
+mkdir WeAuth
+cd WeAuth
+weauth
+```   
 
 
-
-
-WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，如果
 
 
 
