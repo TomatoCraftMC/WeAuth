@@ -68,6 +68,16 @@ weauth
 >请勿将WeAuth管理员与游戏内op混淆，但是在未来，WeAuth将支持从游戏服务器拉取op玩家ID信息。    
 
 **只有`ops.yaml`文件支持热重载**  
+## WeAuth启动参数(近期正在快速更新)
+```command
+weauth
+-v  # 查看版本信息
+-h  # 查看启动参数帮助信息
+-w  # 微信服务器验证模式，需配合 -t指令使用
+-t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-op [ID]  # 将ID加入ops.yaml中
+-test  # 以测试模式启动，仅用于开发测试
+```   
 
 
 
