@@ -5,7 +5,7 @@
 # datetime： 2025/1/6 19:23 
 # ide： PyCharm
 # file: wx_connection.py
-
+import hashlib
 import time
 import sys
 import requests
@@ -35,7 +35,7 @@ class WxConnection(TencentServerConnection):
         try:
             response = requests.get(url, params=body)
             res = json.loads(response.text)
-        except:
+        except Exception:
             return -2, -2
         else:
             try:
@@ -63,3 +63,23 @@ class WxConnection(TencentServerConnection):
         xml_data = ET.tostring(root, encoding='utf-8')
 
         return xml_data
+
+    @staticmethod
+    def confirm_token(token:str,timestamp:str,nonce:str,echo_str:int,signature:str) ->int:
+        try:
+            temp_list = [token, timestamp, nonce]
+            temp_list.sort()
+            temp = ''.join(temp_list)
+            sha1 = hashlib.sha1(temp.encode('utf-8'))
+            hashcode = sha1.hexdigest()
+
+            if hashcode == signature:
+                return echo_str
+            else:
+                print('微信Token校验失败')
+                return -1
+        except Exception as e:
+            print('微信Token解析失败', e)
+            return -1
+
+

@@ -42,11 +42,23 @@ def entrypoint():
 						action='store_true',default=False)
 	parser.add_argument('-test', '--test_mode', help='Running in test_mode',
 						action='store_true',default=False)
+	parser.add_argument('-w', '--wechat_confirm', help='微信验证开发者服务器相应程序',
+						action='store_true',default=False)
+	parser.add_argument('-t','--token',help='验证用token',default='-1',type=str)
 	args = parser.parse_args()
 
 	if args.version:
 		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage:{}'
 			  .format(core_constant.VERSION,core_constant.GITHUB_URL))
 		sys.exit(0)
+	if args.wechat_confirm:
+		if args.token == '-1':
+			print('请输入token参数才能运行微信服务器验证\n'
+				  '如weauth -t toekn1234 -w')
+			sys.exit(0)
+		from weauth.wechat_confirm import confirm
+		confirm(args.token)
+		sys.exit(0)
+
 	main(args)
 
