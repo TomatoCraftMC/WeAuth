@@ -55,5 +55,5 @@ setup(
     include_package_data=True,
     install_requires=REQUIRED,
     entry_points=ENTRY_POINTS,
-	license="LGPLv2.1",
+	license="GPLv3",
 )
