@@ -27,7 +27,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [ ] 通过Flask与QQ机器人服务器交互  
  - [x] 通过MCSManager的API与Minecraft服务器交互（单向）  
  - [ ] 通过rcon协议与Minecraft服务器交互（双向）  
- - [ ] 通过MCDReforged插件与Minecrsft服务器交互  
+ - [ ] 通过MCDReforged(https://github.com/MCDReforged/MCDReforged)插件与Minecraft服务器交互  
 
 
 
