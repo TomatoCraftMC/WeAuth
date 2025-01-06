@@ -40,7 +40,11 @@ Python>=3.8
 ```   
 * 微信公众号只会通过80(http)或443(https)与开发者服务器进行交互。
 * **如果您运行WeAuth的服务器是在大陆境内的云服务器，只有经过备案才能使用80/443端口。**  
-* **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**  
+* **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**   
+> 您可以购买一台便宜的云服务器，经过备案后专门运行WeAuth。此时，如果您的Minecraft服务器无法连接到WeAuth服务器
+（比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
+
+
 ## 安装WeAuth
 WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通过`pip`指令安装。  
 ```command
