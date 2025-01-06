@@ -11,16 +11,12 @@ name: Upload Python Package
 on:
   release:
     types: [published]
-    paths:
-      - ".github/**"
+
 
 permissions:
   contents: read
 
 jobs:
-  test:
-    uses: ./.github/workflows/python-package.yml
-
   release-build:
     runs-on: ubuntu-latest
 
