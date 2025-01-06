@@ -14,19 +14,24 @@ class CommandLine:
     @staticmethod
     def command_node(command: str, open_id: str,mcsm: list, responses: list) -> (int, str):
         raw_command = command
-        match raw_command[0]:
-            case '#':
-                welcome = responses[0]
-                return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, mcsm=mcsm,welcome=welcome)
-            case '@':
-                return CommandLine.admin_command(raw_command=command[1:], open_id=open_id, mcsm=mcsm)
-            case '$':
-                ...
-            case _:
-                return -1,'0'
+        if raw_command[0] == '#':
+            welcome = responses[0]
+            return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, mcsm=mcsm, welcome=welcome)
+        elif raw_command[0] == '@':
+            return CommandLine.admin_command(raw_command=command[1:], open_id=open_id, mcsm=mcsm)
+        else:
+            return -1, '0'
 
-
-
+        # match raw_command[0]:
+        #     case '#':
+        #         welcome = responses[0]
+        #         return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, mcsm=mcsm,welcome=welcome)
+        #     case '@':
+        #         return CommandLine.admin_command(raw_command=command[1:], open_id=open_id, mcsm=mcsm)
+        #     case '$':
+        #         ...
+        #     case _:
+        #         return -1,'0
         pass
 
     @staticmethod
