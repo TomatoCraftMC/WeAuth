@@ -54,6 +54,7 @@ setup(
 	version=VERSION,
 	description=DESCRIPTION,
     author=AUTHOR,
+	author_email="wang@rjack.cn",
 	python_requires=REQUIRES_PYTHON,
 	long_description=LONG_DESCRIPTION,
 	long_description_content_type='text/markdown',

@@ -47,5 +47,13 @@ After configuration, run WeAuth again.
 #Zi_min
 #bjwefbjw
 ```
+### Send a Command
+```commandline
+@command
+@tell @a hello,world
+@give @a minecraft:torch 1
+```
+Only those whose ID in `ops.yaml` can use this function.
 
-
+## [Homepage](https://github.com/TomatoCraftMC/WeAuth)
+For more guide and 中文介绍.
