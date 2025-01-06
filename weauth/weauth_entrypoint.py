@@ -7,6 +7,7 @@
 # file: weauth_entrypoint.py
 import platform
 import sys
+from weauth.constants import core_constant
 
 __all__ = ['entrypoint']
 
@@ -36,6 +37,12 @@ def entrypoint():
 	import argparse
 	parser = argparse.ArgumentParser(description='启动参数')
 	parser.add_argument('-p','--port',help='监听端口',default='80',type=str)
+	parser.add_argument('-v', '--version', help='Print {} version and exit'.format(core_constant.NAME),
+						action='store_true',default='False')
 	args = parser.parse_args()
+	if args.version:
+		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage:{}'
+			  .format(core_constant.VERSION,core_constant.GITHUB_URL))
+		sys.exit(0)
 	main(args)
 
