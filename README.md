@@ -95,7 +95,7 @@ weauth
 # [版本更新日志](docs/UPDATE.md)  
 # 贡献  
 # Licence
-WeAuth: GPLv3
+WeAuth is released under the GPLv3.0 license.  
 
 
 
