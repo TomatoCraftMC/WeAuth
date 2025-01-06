@@ -74,12 +74,13 @@ class WxConnection(TencentServerConnection):
             hashcode = sha1.hexdigest()
 
             if hashcode == signature:
+                print('校验成功!')
                 return echo_str
             else:
                 print('微信Token校验失败')
-                return -1
+                return '404'
         except Exception as e:
             print('微信Token解析失败', e)
-            return -1
+            return '404'
 
 

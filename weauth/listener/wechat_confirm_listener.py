@@ -23,7 +23,7 @@ class WeChatConfirmListener:
                     echo_str = request.args.get("echo_str")
                     signature = request.args.get("signature")
                     return WxConnection.confirm_token(token,timestamp,nonce,echo_str,signature)
-                except Exception:
+                except FileNotFoundError:
                     return -1
             return -1
 
