@@ -44,7 +44,7 @@ ENTRY_POINTS = {
 }
 print('ENTRY_POINTS = {}'.format(ENTRY_POINTS))
 
-with open(os.path.join(here, '/docs/README.md'), encoding='utf8') as f:
+with open(os.path.join(here, 'docs/README.md'), encoding='utf8') as f:
 	LONG_DESCRIPTION = f.read()
 
 
