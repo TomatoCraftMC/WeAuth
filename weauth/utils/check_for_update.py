@@ -6,7 +6,7 @@
 # ide： PyCharm
 # file: check_for_update.py
 import requests
-
+from weauth.constants.core_constant import *
 
 def check_for_update(version : str) -> bool:
     """
@@ -14,7 +14,7 @@ def check_for_update(version : str) -> bool:
     :param version: 版本号
     :return: 检查结果
     """
-    x = requests.get('https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION')
+    x = requests.get(GITEE_VERSION_URL)
     if version == str(x.text):
         return True
     else:

@@ -3,7 +3,7 @@
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
 from email.policy import default
-
+import sys
 # import click
 from weauth.listener import Listener
 from weauth.database.database import DB
@@ -13,9 +13,8 @@ from weauth.utils.create_config_yaml import create_config_yaml
 from weauth.mc_server.mcsm_connect import MCSM
 from weauth.tencent_server.wx_server import WxConnection
 from weauth.exceptions.exceptions import *
+from weauth.constants.core_constant import *
 
-VERSION: str = '1.0.0'  # 版本号
-BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 
 # @click.command()
 # @click.option(
@@ -24,7 +23,7 @@ BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 #     default='80',
 #     help='本地监听端口号'
 # )
-def main() -> None:
+def main(args) -> None:
     """应用程序入口"""
     print(" ")
     print("      __        __      _         _   _     ")
@@ -34,14 +33,13 @@ def main() -> None:
     print("         \_/\_/ \___/_/   \_\__,_|\__|_| |_|")
     print("                                            ")
     print("                 Version: {} \n".format(VERSION))
-
+    port = args.port
     # 检查更新
     print("-正在检查更新...\n")
     if check_for_update(VERSION) == 1:
         print("-当前为最新版本")
     else:
-        print("-已有新版本,您可以前往 https://gitee.com/NHJ2001/WeAuth 进行更新。\
-        \n或者前往 https://github.com/nearlyheadlessjack/weauth 进行更新。\n")
+        print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
     # 检查数据库
     DB.check_database()
     
@@ -51,8 +49,10 @@ def main() -> None:
     except ConfigFileNotFound:
         create_config_yaml()
         print('-首次运行, 请先在config.yaml中进行配置!')
-        return None
+        sys.exit(0)
 
+    # 检查是否有op列表
+    check_op_list()
     # 测试游戏端连接
     if MCSM.test_connection(config['mcsm_adr'], config['mcsm_api'], config['uuid'], config['remote-uuid']) == 200:
         print('-成功连接到游戏服务器!')
@@ -79,7 +79,7 @@ def main() -> None:
     listener = Listener(mcsm=mcsm,
                         wx_user_name=config['WxUserName'],responses=responses)
     # 核心监听程序运行
-    listener.wx_service.run(host='0.0.0.0', port='80')
+    listener.wx_service.run(host='0.0.0.0', port=port)
 
 
 # 读取配置文件
@@ -95,6 +95,16 @@ def read_config() -> dict:
     except FileNotFoundError:
         raise ConfigFileNotFound('未找到配置文件')
 
+def check_op_list() -> None:
+    """
+     检查是否有op表，没有则新建
+    """
+    try:
+        with open('ops.yaml', 'r', encoding='utf-8') as f:
+            result = yaml.load(f.read(), Loader=yaml.FullLoader)
+    except FileNotFoundError:
+        with open('./ops.yaml', 'w+') as f:
+            f.write('ops: [op_ID1,op_ID2,op_ID3]')
 
 
 def test_wechat_server(app_id, app_secret):

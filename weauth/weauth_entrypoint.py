@@ -32,7 +32,10 @@ def entrypoint():
 	"""
 	__environment_check()
 
-	from weauth.weauth import main
-
-	main()
+	from weauth.weauth_boostrap import main
+	import argparse
+	parser = argparse.ArgumentParser(description='启动参数')
+	parser.add_argument('-p','--port',help='监听端口',default='80',type=str)
+	args = parser.parse_args()
+	main(args)
 
