@@ -13,9 +13,9 @@ PACKAGE_NAME = 'weauth'
 CLI_COMMAND = PACKAGE_NAME
 
 # WeAuth Version Storage
-VERSION_PYPI:str  = '1.2.0'   #
-VERSION: str = '1.2.0'  # 版本号
-BUILD_VERSION: str = '1.2.0.2025.1.6.3'   # 内部版本号
+VERSION_PYPI:str  = '1.3.0'   #
+VERSION: str = '1.3.0'  # 版本号
+BUILD_VERSION: str = '1.3.0.2025.1.6.4'   # 内部版本号
 
 # URLs
 GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
