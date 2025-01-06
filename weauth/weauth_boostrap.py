@@ -121,8 +121,10 @@ def check_op_list() -> None:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
     except FileNotFoundError:
         with open('./ops.yaml', 'w+') as f:
-            f.write('ops: [op_ID1,op_ID2,op_ID3]')
-
+            context = {
+                'ops': ['test_id1','test_id2']
+            }
+            yaml.dump(data=context, stream=f, allow_unicode=True)
 
 def test_wechat_server(app_id, app_secret):
     code1, code2 = WxConnection.get_access_token(app_id, app_secret)
