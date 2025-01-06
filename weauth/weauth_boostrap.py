@@ -50,7 +50,7 @@ def main(args) -> None:
         except ConfigFileNotFound:
             create_config_yaml()
             print('-首次运行, 请先在config.yaml中进行配置!')
-            sys.exit(exit_code.CONFIG_MISSING)
+            sys.exit(0)
     else:
         config = {
             'server_connect': '0',
@@ -75,7 +75,7 @@ def main(args) -> None:
     else:
         print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
         if not args.test_mode:
-            sys.exit(exit_code.MINECRAFT_CONNECTION_FAILED)
+            sys.exit(0)
 
     # 测试微信服务器连接
     access_token = test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret'])
