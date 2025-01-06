@@ -20,3 +20,4 @@ BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 # URLs
 GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
 GITEE_VERSION_URL = r'https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION'
+DOCUMENTATION_URL = r'https://github.com/TomatoCraftMC/WeAuth/blob/main/README.md'
