@@ -17,7 +17,21 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 
 ### 功能  
  - [x] 白名单添加与管理   
-✅管理员直接通过公众号发送指令（单向）  
-✅微信公众号验证开发者服务器URL地址  
+ - [x] 管理员直接通过公众号发送指令（单向）  
+ - [x] 微信公众号验证开发者服务器URL地址  
+ - [ ] CdKey生成与兑换系统
+ - [ ] 从Minecraft能反向输出信息到微信公众号（仅支持rcon） 
+ - [ ] 执行定时脚本  
+### 桥梁
+ - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
+ - [ ] 通过Flask与QQ机器人服务器交互  
+ - [x] 通过MCSManager的API与Minecraft服务器交互（单向）  
+ - [ ] 通过rcon协议与Minecraft服务器交互（双向）  
+ - [ ] 通过MCDReforged插件与Minecrsft服务器交互  
+
+
+
+ 
+
 
 
