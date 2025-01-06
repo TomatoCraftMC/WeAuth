@@ -92,10 +92,10 @@ weauth
 ## MCSManager后台配置
 待更新  
   
-# 版本更新日志  
-### 2025-01-05 v1.3.6-release
-- WeAuth现在可作为微信公众号验证开发者服务器工具使用  
-
+# [版本更新日志](docs/UPDATE.md)  
+# 贡献  
+# Licence
+WeAuth: GPLv3
 
 
 
