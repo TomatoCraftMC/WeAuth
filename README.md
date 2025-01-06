@@ -44,7 +44,7 @@ Python>=3.8
 ## 安装WeAuth
 WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通过`pip`指令安装。  
 ```command
-pip3 install weauth  #使用官方Pypi源
+pip3 install weauth  # 使用官方Pypi源
 ```   
 ```command 
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
