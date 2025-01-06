@@ -20,7 +20,7 @@ class WeChatConfirmListener:
                 try:
                     timestamp = request.args.get("timestamp")
                     nonce = request.args.get("nonce")
-                    echo_str = request.args.get("echo_str")
+                    echo_str = str(request.args.get("echo_str"))
                     signature = request.args.get("signature")
                     return WxConnection.confirm_token(token,timestamp,nonce,echo_str,signature)
                 except FileNotFoundError:
