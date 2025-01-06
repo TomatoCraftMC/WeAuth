@@ -65,7 +65,7 @@ class WxConnection(TencentServerConnection):
         return xml_data
 
     @staticmethod
-    def confirm_token(token:str,timestamp:str,nonce:str,echo_str:int,signature:str) ->int:
+    def confirm_token(token:str,timestamp:str,nonce:str,echo_str:str,signature:str) ->str:
         try:
             temp_list = [token, timestamp, nonce]
             temp_list.sort()

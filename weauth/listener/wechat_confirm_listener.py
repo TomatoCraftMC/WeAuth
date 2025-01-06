@@ -17,14 +17,12 @@ class WeChatConfirmListener:
         @self.wx_service.route('/wx',methods=['GET'])
         def wx():
             if request.method == 'GET':
-                data = request.get_data()
                 try:
-                    xml_data = parseString(data).documentElement
-                    timestamp = xml_data.getElementsByTagName("timestamp")[0].childNodes[0].data
-                    nonce = xml_data.getElementsByTagName("nonce")[0].childNodes[0].data
-                    echo_str = xml_data.getElementsByTagName("echostr")[0].childNodes[0].data
-                    signature = xml_data.getElementsByTagName("signature")[0].childNodes[0].data
-                    return WxConnection.confirm_token(token,timestamp, nonce, int(echo_str), signature)
+                    timestamp = request.args.get("timestamp")
+                    nonce = request.args.get("nonce")
+                    echo_str = request.args.get("echo_str")
+                    signature = request.args.get("signature")
+                    return WxConnection.confirm_token(token,timestamp,nonce,echo_str,signature)
                 except Exception:
                     return -1
             return -1
