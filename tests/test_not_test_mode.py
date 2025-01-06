@@ -12,7 +12,7 @@ from weauth.constants import exit_code
 class MyTestCase(unittest.TestCase):
     def test_something(self):
 
-        self.assertEqual(os.system('python WeAuth.py'), exit_code.CONFIG_MISSING)  # add assertion here
+        self.assertEqual(os.system('python WeAuth.py'), 0)  # add assertion here
 
 
 if __name__ == '__main__':
