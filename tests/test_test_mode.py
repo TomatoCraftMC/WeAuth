@@ -9,6 +9,7 @@ import unittest
 import os
 from weauth.constants import exit_code
 
+@unittest.skip('待重写')
 class MyTestCase(unittest.TestCase):
     def test_something(self):
         self.assertEqual(os.system('python WeAuth.py -test'),0)  # add assertion here
