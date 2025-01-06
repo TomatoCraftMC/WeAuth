@@ -37,32 +37,56 @@ class CommandLine:
     @staticmethod
     def add_new_player_entry(raw_id: str, open_id: str, mcsm:list, welcome: str) -> (int, str):
 
-        match raw_id:
-            case '@a' | '@p' | '@e' | '@s':  # 不允许特殊字符当作ID
-                flag = 0  # 0则向服务器返回信息，否则不返回
-                message = 'ID不合法'
+        if raw_id =='@a' or raw_id =='@p' or raw_id =='@e'or raw_id == '@s':  # 不允许特殊字符当作ID
+            flag = 0  # 0则向服务器返回信息，否则不返回
+            message = 'ID不合法'
+            return flag, message
+        else:
+            try:
+                flag, message = CommandLine.add_player(id=raw_id, open_id=open_id, mcsm=mcsm, welcome=welcome)
                 return flag, message
-            case _:
-                try:
-                    flag,message = CommandLine.add_player(id=raw_id,open_id=open_id, mcsm=mcsm, welcome=welcome)
-                    return flag,message
-                except Banned:
-                    message = '您被禁止加入服务器。'
-                    print('\033[0;32;40m-用户被禁止加入服务器\033[0m')
-                    return 0, message
-                except AlreadyIn:
-                    message = '该角色已加入服务器。'
-                    print('\033[0;32;40m-角色重复加入服务器\033[0m')
-                    return 0, message
-                except OpenidAlreadyIn:
-                    message = '您的微信号已绑定角色。'
-                    print('\033[0;32;40m-用户OpenID重复绑定\033[0m')
-                    return 0, message
-                except ServerConnectionFailed:
-                    message = '游戏服务器连接失败, 请联系服务器管理员。'
-                    print('-游戏服务器连接失败')
-                    return 0, message
+            except Banned:
+                message = '您被禁止加入服务器。'
+                print('\033[0;32;40m-用户被禁止加入服务器\033[0m')
+                return 0, message
+            except AlreadyIn:
+                message = '该角色已加入服务器。'
+                print('\033[0;32;40m-角色重复加入服务器\033[0m')
+                return 0, message
+            except OpenidAlreadyIn:
+                message = '您的微信号已绑定角色。'
+                print('\033[0;32;40m-用户OpenID重复绑定\033[0m')
+                return 0, message
+            except ServerConnectionFailed:
+                message = '游戏服务器连接失败, 请联系服务器管理员。'
+                print('-游戏服务器连接失败')
+                return 0, message
 
+        # match raw_id:
+        #     case '@a' | '@p' | '@e' | '@s':  # 不允许特殊字符当作ID
+        #         flag = 0  # 0则向服务器返回信息，否则不返回
+        #         message = 'ID不合法'
+        #         return flag, message
+        #     case _:
+        #         try:
+        #             flag,message = CommandLine.add_player(id=raw_id,open_id=open_id, mcsm=mcsm, welcome=welcome)
+        #             return flag,message
+        #         except Banned:
+        #             message = '您被禁止加入服务器。'
+        #             print('\033[0;32;40m-用户被禁止加入服务器\033[0m')
+        #             return 0, message
+        #         except AlreadyIn:
+        #             message = '该角色已加入服务器。'
+        #             print('\033[0;32;40m-角色重复加入服务器\033[0m')
+        #             return 0, message
+        #         except OpenidAlreadyIn:
+        #             message = '您的微信号已绑定角色。'
+        #             print('\033[0;32;40m-用户OpenID重复绑定\033[0m')
+        #             return 0, message
+        #         except ServerConnectionFailed:
+        #             message = '游戏服务器连接失败, 请联系服务器管理员。'
+        #             print('-游戏服务器连接失败')
+        #             return 0, message
 
     @staticmethod
     def add_player(id: str,open_id: str, mcsm: list, welcome: str) -> (int, str):
