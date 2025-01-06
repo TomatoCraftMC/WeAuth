@@ -87,7 +87,9 @@ weauth
 ## MCSManager后台配置
 待更新  
   
-
+# 版本更新日志  
+### v1.3.6-release
+- 
 
 
 
