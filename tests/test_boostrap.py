@@ -7,12 +7,12 @@
 # file: test_boostrap.py
 import unittest
 import os
-
+from weauth.constants import exit_code
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
 
-        self.assertEqual(os.system('python WeAuth.py -v'), 0)  # add assertion here
+        self.assertEqual(os.system('python WeAuth.py -v'), exit_code.VERSION_CHECK)  # add assertion here
 
 
 if __name__ == '__main__':
