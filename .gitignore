@@ -165,3 +165,4 @@ frpserver/frps.toml
 /config.yaml
 config.yaml
 /ops.yaml
+/requirements.txt

@@ -13,9 +13,8 @@ from weauth.utils.create_config_yaml import create_config_yaml
 from weauth.mc_server.mcsm_connect import MCSM
 from weauth.tencent_server.wx_server import WxConnection
 from weauth.exceptions.exceptions import *
+from weauth.constants.core_constant import *
 
-VERSION: str = '1.0.0'  # 版本号
-BUILD_VERSION: str = '1.0.0.2025.1.5.1'   # 内部版本号
 
 # @click.command()
 # @click.option(
@@ -40,8 +39,7 @@ def main() -> None:
     if check_for_update(VERSION) == 1:
         print("-当前为最新版本")
     else:
-        print("-已有新版本,您可以前往 https://gitee.com/NHJ2001/WeAuth 进行更新。\
-        \n或者前往 https://github.com/nearlyheadlessjack/weauth 进行更新。\n")
+        print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
     # 检查数据库
     DB.check_database()
     
