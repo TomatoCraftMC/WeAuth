@@ -75,6 +75,7 @@ class WxConnection(TencentServerConnection):
 
             if hashcode == signature:
                 print('校验成功!')
+                print('echostr={}'.format(echo_str))
                 return echo_str
             else:
                 print('微信Token校验失败')
