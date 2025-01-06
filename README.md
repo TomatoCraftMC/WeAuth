@@ -48,12 +48,19 @@ pip3 install weauth  #使用官方Pypi源
 
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
 ```   
-安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。  
+安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。但我们建议您在新建的文件夹内运行WeAuth。    
 ```command
 mkdir WeAuth
 cd WeAuth
 weauth
 ```   
+## 配置WeAuth
+首次运行WeAuth会自动生成`config.yaml`与`ops.yaml`文件。  
+您需要在文件内填入合适信息才能正式运行WeAuth。  
+### config.yaml  
+该文件包含WeAuth连接微信/QQ服务器所需要的凭证与连接MCSManager所需要的信息。  
+
+
 
 
 
