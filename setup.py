@@ -20,7 +20,7 @@ REQUIRES_PYTHON = '>=3.8'
 
 CLASSIFIERS = [
 	# https://pypi.org/classifiers/
-	'License :: OSI Approved :: GNU Lesser General Public License v2.1 (LGPLv2.1)',
+	'License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE v3 (GPLv3)',
 	'Operating System :: OS Independent',
 	'Programming Language :: Python',
 	'Programming Language :: Python :: 3',
@@ -44,12 +44,19 @@ ENTRY_POINTS = {
 }
 print('ENTRY_POINTS = {}'.format(ENTRY_POINTS))
 
+with open(os.path.join(here, '/docs/README.md'), encoding='utf8') as f:
+	LONG_DESCRIPTION = f.read()
+
+
+
 setup(
     name=NAME,
 	version=VERSION,
 	description=DESCRIPTION,
     author=AUTHOR,
 	python_requires=REQUIRES_PYTHON,
+	long_description=LONG_DESCRIPTION,
+	long_description_content_type='text/markdown',
     project_urls=PROJECT_URLS,
     packages=find_packages(exclude=['tests', '*.tests', '*.tests.*', 'tests.*']),
     include_package_data=True,
