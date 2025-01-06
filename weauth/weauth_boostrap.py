@@ -23,7 +23,7 @@ from weauth.constants.core_constant import *
 #     default='80',
 #     help='本地监听端口号'
 # )
-def main() -> None:
+def main(args) -> None:
     """应用程序入口"""
     print(" ")
     print("      __        __      _         _   _     ")
@@ -33,7 +33,7 @@ def main() -> None:
     print("         \_/\_/ \___/_/   \_\__,_|\__|_| |_|")
     print("                                            ")
     print("                 Version: {} \n".format(VERSION))
-
+    port = args.port
     # 检查更新
     print("-正在检查更新...\n")
     if check_for_update(VERSION) == 1:
@@ -79,7 +79,7 @@ def main() -> None:
     listener = Listener(mcsm=mcsm,
                         wx_user_name=config['WxUserName'],responses=responses)
     # 核心监听程序运行
-    listener.wx_service.run(host='0.0.0.0', port='80')
+    listener.wx_service.run(host='0.0.0.0', port=port)
 
 
 # 读取配置文件
