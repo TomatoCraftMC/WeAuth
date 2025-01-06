@@ -1,0 +1,4 @@
+Flask>=3.0.3
+PyYAML>=6.0.1
+rcon>=2.4.6
+requests>=2.32.3
