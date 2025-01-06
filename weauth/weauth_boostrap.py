@@ -14,7 +14,7 @@ from weauth.mc_server.mcsm_connect import MCSM
 from weauth.tencent_server.wx_server import WxConnection
 from weauth.exceptions.exceptions import *
 from weauth.constants.core_constant import *
-
+from weauth.constants import exit_code
 
 # @click.command()
 # @click.option(
@@ -42,14 +42,30 @@ def main(args) -> None:
         print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
     # 检查数据库
     DB.check_database()
-    
-    # 读取配置文件
-    try:
-        config = read_config()
-    except ConfigFileNotFound:
-        create_config_yaml()
-        print('-首次运行, 请先在config.yaml中进行配置!')
-        sys.exit(0)
+
+    if not args.test_mode:
+        # 读取配置文件
+        try:
+            config = read_config()
+        except ConfigFileNotFound:
+            create_config_yaml()
+            print('-首次运行, 请先在config.yaml中进行配置!')
+            sys.exit(0)
+    else:
+        config = {
+            'server_connect': '0',
+            'welcome': '欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!',
+            'mcsm_adr': 'http://127.0.0.1:23333/',
+            'mcsm_api': '12345',
+            'uuid': '12345',
+            'remote-uuid': '12345',
+            'token': '12345',
+            'EncodingAESKey': '12345',
+            'appID': '12345',
+            'AppSecret': '12345',
+            'EncodingMode': '12345',
+            'WxUserName': '12345'
+        }
 
     # 检查是否有op列表
     check_op_list()
@@ -58,7 +74,8 @@ def main(args) -> None:
         print('-成功连接到游戏服务器!')
     else:
         print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
-        # sys.exit(1)
+        if not args.test_mode:
+            sys.exit(0)
 
     # 测试微信服务器连接
     access_token = test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret'])
