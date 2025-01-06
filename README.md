@@ -28,6 +28,12 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 通过[MCSManager](https://github.com/MCSManager/MCSManager)的API与Minecraft服务器交互（单向）  
  - [ ] 通过rcon协议与Minecraft服务器交互（双向）  
  - [ ] 通过[MCDReforged](https://github.com/MCDReforged/MCDReforged)插件与Minecraft服务器交互  
+### 数据库
+ - [x] 集成的SQLite3  
+ - [ ] MySQL连接支持  
+
+
+
 
 
 
