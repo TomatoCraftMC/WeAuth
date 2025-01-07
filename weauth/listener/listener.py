@@ -11,7 +11,7 @@ from weauth.database import DB
 from weauth.exceptions.exceptions import *
 from weauth.tencent_server.wx_server import WxConnection
 from weauth.command_line import CommandLine
-
+import sqlite3
 
 class Listener:
     def __init__(self, mcsm: dict, wx_user_name, responses: dict):
