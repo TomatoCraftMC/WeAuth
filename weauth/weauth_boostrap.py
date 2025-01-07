@@ -4,6 +4,9 @@
 # 程序总入口
 from email.policy import default
 import sys
+from http.client import responses
+
+
 # import click
 from weauth.listener import Listener
 from weauth.database.database import DB
@@ -15,6 +18,7 @@ from weauth.tencent_server.wx_server import WxConnection
 from weauth.exceptions.exceptions import *
 from weauth.constants.core_constant import *
 from weauth.constants import exit_code
+from weauth.mc_server import MCServerConnection
 
 # @click.command()
 # @click.option(
@@ -53,12 +57,15 @@ def main(args) -> None:
             sys.exit(0)
     else:
         config = {
-            'server_connect': '0',
+            'server_connect': 0,
             'welcome': '欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!',
             'mcsm_adr': 'http://127.0.0.1:23333/',
             'mcsm_api': '12345',
             'uuid': '12345',
             'remote-uuid': '12345',
+            'rcon_host_add': '127.0.0.1',
+            'rcon_port': '25565',
+            'rcon_password': '<PASSWORD>',
             'token': '12345',
             'EncodingAESKey': '12345',
             'appID': '12345',
@@ -70,13 +77,41 @@ def main(args) -> None:
 
     # 检查是否有op列表
     check_op_list()
-    # 测试游戏端连接
-    if MCSM.test_connection(config['mcsm_adr'], config['mcsm_api'], config['uuid'], config['remote-uuid']) == 200:
-        print('-成功连接到游戏服务器!')
+    server_type = 'MCSM'
+
+    if config['server_connect'] == 0:
+        server_type = 'MCSM'
+    elif config['server_connect'] == 1:
+        server_type = 'RCON'
     else:
-        print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
-        if not args.test_mode:
-            sys.exit(0)
+        print('-错误的服务器类型')
+        sys.exit(1)
+
+
+    # 测试游戏端连接
+    if server_type.upper() == 'MCSM':
+        parameter = [config['mcsm_adr'], config['mcsm_api'], config['uuid'], config['remote-uuid']]
+        return_code, message = MCServerConnection.test_connection(parameter,server_type=server_type)
+        if return_code == 200:
+            print('-成功连接到游戏服务器!')
+        else:
+            print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
+            if not args.test_mode:
+                sys.exit(0)
+
+    elif server_type.upper() == 'RCON':
+        parameter = [config['rcon_host_add'], config['rcon_port'], config['rcon_password']]
+        return_code, message = MCServerConnection.test_connection(parameter, server_type=server_type)
+        if return_code == 200:
+            print('-成功连接到游戏服务器!')
+        else:
+            print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
+            if not args.test_mode:
+                sys.exit(0)
+
+
+
+
 
     url = config['url']
     if args.url != '/wx':

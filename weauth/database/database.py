@@ -9,6 +9,7 @@ import sqlite3
 from weauth.exceptions.exceptions import *
 import os
 from weauth.mc_server.mcsm_connect import MCSM
+from weauth.mc_server import MCServerConnection
 import yaml
 
 class DB:

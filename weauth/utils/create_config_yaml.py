@@ -7,7 +7,7 @@
 # file: create_config_yaml.py
 
 def create_config_yaml() -> int:
-    text = ('# 连接Minecraft服务端的方法，0为MCSM API，其他待开发\n'
+    text = ('# 连接Minecraft服务端的方法，0为MCSM API，1为rcon\n'
             'server_connect: 0\n\n'
             '# 白名单加入成功时的回复语\n'
             'welcome: 欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!\n\n'
@@ -19,6 +19,12 @@ def create_config_yaml() -> int:
             'uuid: xxxxxx\n\n'
             '# MCSM实例的远程节点 ID\n'
             'remote-uuid: xxxxxx\n\n'
+            '# rcon连接地址或域名\n'
+            'rcon_host_add: 8.8.8.8\n\n'
+            '# rcon连接端口\n'
+            'rcon_port: 25565\n\n'
+            '# rcon连接密码\n'
+            'rcon_password: <PASSWORD>\n\n'
             '# 微信公众号TOEKN\n'
             'toekn: xxxxxx\n\n'
             '# 微信公众号EncodingAESKey(可选)\n'
