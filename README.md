@@ -1,7 +1,7 @@
 WeAuth
 --------
 
-[//]: # (![PyPI - Python Version]&#40;https://img.shields.io/pypi/pyversions/weauth&#41;)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/weauth)](https://pypi.org/project/weauth)
 [![PyPI - Version](https://img.shields.io/pypi/v/weauth)](https://pypi.org/project/weauth)
 [![GitHub License](https://img.shields.io/github/license/TomatoCraftMC/WeAuth)](https://github.com/TomatoCraftMC/WeAuth/blob/main/LICENSE)
 
