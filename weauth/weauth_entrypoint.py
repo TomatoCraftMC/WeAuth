@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
-# datetime： 2025/1/5 20:28 
+# datetime： 2025/1/5 20:28
 # ide： PyCharm
 # file: weauth_entrypoint.py
 import platform
@@ -56,7 +56,7 @@ def entrypoint():
 	if args.wechat_confirm:
 		if args.token == '-1':
 			print('请输入token参数才能运行微信服务器验证\n'
-				  '如weauth -t toekn1234 -w')
+				  '如weauth -t token1234 -w')
 			sys.exit(0)
 		from weauth.wechat_confirm import confirm
 		confirm(args.token)
