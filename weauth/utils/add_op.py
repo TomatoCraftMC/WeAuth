@@ -34,7 +34,7 @@ def add_op(op_id:str):
                 yaml.dump(data=context, stream=f, allow_unicode=True)
 def check_op_id_input(op_id:str)->bool:
     pattern = re.compile(r'\W')
-    if re.match(pattern, op_id) is None:
+    if re.search(pattern, op_id) is None:
         return False
     else:
         return True
