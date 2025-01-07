@@ -1,4 +1,8 @@
 # 更新日志
+### 2025-01-07 v1.3.9-release
+* 新增对[rcon](https://github.com/conqp/rcon)模块的依赖,Python<3.10版本最高支持rcon v2.1.1  
+> rcon项目使用GPLv3协议开源  
+
 ### 2025-01-07 v1.3.8-release
 * 现在可以通过`weauth -r [/route] `来自定义程序监听路由地址  
 * 现在可以在`config.yaml`中自定义程序监听路由地址  
