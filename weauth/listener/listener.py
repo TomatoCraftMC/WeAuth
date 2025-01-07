@@ -12,11 +12,11 @@ from weauth.exceptions.exceptions import *
 from weauth.tencent_server.wx_server import WxConnection
 from weauth.command_line import CommandLine
 import sqlite3
+from weauth.mc_server import MCServerConnection
 
 class Listener:
-    def __init__(self, mcsm: dict, wx_user_name, responses: dict,url:str):
+    def __init__(self, wx_user_name, responses: dict,url:str,game_server:MCServerConnection):
         print("-正在启动监听......\n")
-        __mcsm = [mcsm['adr'], mcsm['apikey'], mcsm['uuid'], mcsm['remote-uuid']]
         __responses = [responses['welcome']]
 
         self.xml_data = []
@@ -35,7 +35,7 @@ class Listener:
                     raw_command = self.xml_data.getElementsByTagName("Content")[0].childNodes[0].data
                     open_id = self.xml_data.getElementsByTagName("FromUserName")[0].childNodes[0].data
                     flag, message = CommandLine.command_node(command=raw_command,
-                                                             open_id=open_id,mcsm=__mcsm,responses=__responses)
+                                                             open_id=open_id,responses=__responses,game_sever=game_server)
                     if flag != 0:
                         return '无回复'
                     else:
@@ -46,7 +46,7 @@ class Listener:
                     is_openid_player, player_id = DB.search(open_id)
                     if is_openid_player == 1:   # 取消订阅的人是玩家
                         try:
-                            Listener.remove_whitelist(player_id, open_id, mcsm=__mcsm)
+                            Listener.remove_whitelist(player_id, open_id,game_server=game_server)
                         except ServerConnectionFailed:
                             print('-游戏服务器连接失败')
                             conn = sqlite3.connect('WeAuth.db')  # 因为没有推送给游戏，所以撤回数据库修改
@@ -64,8 +64,8 @@ class Listener:
 
 
     @staticmethod
-    def remove_whitelist(player_id, openid, mcsm: list):
-        if DB.push_to_server(mcsm=mcsm,player_id=player_id, mode=-1) != 200:
+    def remove_whitelist(player_id, openid,game_server:MCServerConnection):
+        if DB.push_to_server_whitelist(player_id=player_id, game_server=game_server, mode=-1) != 200:
             raise ServerConnectionFailed('游戏服务器连接失败')
         else:
             DB.remove(openid)

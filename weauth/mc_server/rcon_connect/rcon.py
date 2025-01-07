@@ -31,13 +31,15 @@ class RCON:
         try:
             with Client(host_add, port, passwd=passwd) as client:
                 response = client.run('tell', '@a', 'arguments')
+            return 200,None
         except socket.gaierror:
             print('-rcon地址无法解析')
             return_code = -200
         except ConnectionError:
             print('-rcon连接失败')
             return_code = -200
-
+        except Exception:
+            return_code = -200
         return return_code,None
 
 

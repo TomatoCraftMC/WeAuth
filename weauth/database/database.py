@@ -17,7 +17,7 @@ class DB:
         print('-数据库初始化')
 
     @staticmethod
-    def add(player_id: str, openid: str,mcsm: list):
+    def add(player_id: str, openid: str,game_server:MCServerConnection)->(int,str):
         
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
@@ -41,9 +41,10 @@ class DB:
                         conn.commit()
                         cur.close()
                         conn.close()
-                        if DB.push_to_server(mcsm=mcsm, player_id=player_id) != 200:
+                        return_code,msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
+                        if  return_code != 200:
                             raise ServerConnectionFailed('游戏服务器连接失败')
-                        return 0
+                        return 0, msg
                     else:
                         cur.close()
                         conn.close()
@@ -54,9 +55,11 @@ class DB:
             cur.close()
             conn.close()
             print("全新注册")
-            if DB.push_to_server(mcsm=mcsm, player_id=player_id) != 200:
+            return_code, msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
+            if return_code != 200:
                 raise ServerConnectionFailed('游戏服务器连接失败')
-            return 0
+            return 0, msg
+
         except sqlite3.IntegrityError:
             cur.close()
             conn.close()
@@ -153,7 +156,17 @@ class DB:
             conn.close()
         
     @staticmethod
-    def push_to_server(mcsm: list, player_id: str, mode=1):  # mode=1加模式，否则为删模式
+    def push_to_server_whitelist(player_id: str, game_server:MCServerConnection, mode=1)->(int,str):  # mode=1加模式，否则为删模式
+
+
+
+
+
+
+
+
+
+
         if mode == 1:
             command = 'whitelist add ' + player_id
         else:
@@ -164,12 +177,8 @@ class DB:
                                  remote_uuid=mcsm[3],
                                  command=command)
     @staticmethod
-    def push_to_server_command(mcsm:list,command:str):  # 用于推送指令
-        return MCSM.push_command(adr=mcsm[0],
-                                 api=mcsm[1],
-                                 uuid=mcsm[2],
-                                 remote_uuid=mcsm[3],
-                                 command=command)
+    def push_to_server_command(command:str,game_server:MCServerConnection)->(int,str):  # 用于推送指令
+        return game_server.push_command(command=command)
 
 
 # if __name__=='__main__':

@@ -65,7 +65,7 @@ def main(args) -> None:
             'remote-uuid': '12345',
             'rcon_host_add': '127.0.0.1',
             'rcon_port': '25565',
-            'rcon_password': '<PASSWORD>',
+            'rcon_password': 'PASSWORD',
             'token': '12345',
             'EncodingAESKey': '12345',
             'appID': '12345',
@@ -81,36 +81,30 @@ def main(args) -> None:
 
     if config['server_connect'] == 0:
         server_type = 'MCSM'
+        game_server = MCServerConnection(config['mcsm_adr'],
+                                          config['mcsm_api'],
+                                          config['uuid'],
+                                          config['remote-uuid'],server_type=server_type)
     elif config['server_connect'] == 1:
         server_type = 'RCON'
+        game_server = MCServerConnection(config['rcon_host_add'],
+                                          config['rcon_port'],
+                                          config['rcon_password'],
+                                          server_type=server_type)
+
     else:
         print('-错误的服务器类型')
         sys.exit(1)
 
 
     # 测试游戏端连接
-    if server_type.upper() == 'MCSM':
-        parameter = [config['mcsm_adr'], config['mcsm_api'], config['uuid'], config['remote-uuid']]
-        return_code, message = MCServerConnection.test_connection(parameter,server_type=server_type)
-        if return_code == 200:
-            print('-成功连接到游戏服务器!')
-        else:
-            print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
-            if not args.test_mode:
-                sys.exit(0)
-
-    elif server_type.upper() == 'RCON':
-        parameter = [config['rcon_host_add'], config['rcon_port'], config['rcon_password']]
-        return_code, message = MCServerConnection.test_connection(parameter, server_type=server_type)
-        if return_code == 200:
-            print('-成功连接到游戏服务器!')
-        else:
-            print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
-            if not args.test_mode:
-                sys.exit(0)
-
-
-
+    return_code,message = game_server.test_connection()
+    if  return_code == 200:
+        print('-成功连接到游戏服务器!')
+    else:
+        print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
+        if not args.test_mode:
+            sys.exit(0)
 
 
     url = config['url']
@@ -133,8 +127,7 @@ def main(args) -> None:
         'welcome': config['welcome']  # 玩家注册白名单成功
     }
 
-    listener = Listener(mcsm=mcsm,
-                        wx_user_name=config['WxUserName'],responses=responses,url=url)
+    listener = Listener(wx_user_name=config['WxUserName'],responses=responses,url=url,game_server=game_server)
 
     # 核心监听程序运行
     listener.wx_service.run(host='0.0.0.0', port=port)

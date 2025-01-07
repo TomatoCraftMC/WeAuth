@@ -7,18 +7,20 @@
 # file: command_line.py
 from weauth.exceptions.exceptions import *
 from weauth.database import DB
+from weauth.mc_server import MCServerConnection
 class CommandLine:
     def __init__(self):
         ...
 
     @staticmethod
-    def command_node(command: str, open_id: str,mcsm: list, responses: list) -> (int, str):
+    def command_node(command: str, open_id: str, responses: list,game_sever:MCServerConnection) -> (int, str):
         raw_command = command
         if raw_command[0] == '#':
             welcome = responses[0]
-            return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, mcsm=mcsm, welcome=welcome)
+            return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, welcome=welcome,
+                                                    game_sever=game_sever)
         elif raw_command[0] == '@':
-            return CommandLine.admin_command(raw_command=command[1:], open_id=open_id, mcsm=mcsm)
+            return CommandLine.admin_command(raw_command=command[1:], open_id=open_id,game_sever=game_sever)
         else:
             return -1, '0'
 
@@ -35,7 +37,7 @@ class CommandLine:
         pass
 
     @staticmethod
-    def add_new_player_entry(raw_id: str, open_id: str, mcsm:list, welcome: str) -> (int, str):
+    def add_new_player_entry(raw_id: str, open_id: str, welcome: str,game_sever:MCServerConnection) -> (int, str):
 
         if raw_id =='@a' or raw_id =='@p' or raw_id =='@e'or raw_id == '@s':  # 不允许特殊字符当作ID
             flag = 0  # 0则向服务器返回信息，否则不返回
@@ -43,7 +45,7 @@ class CommandLine:
             return flag, message
         else:
             try:
-                flag, message = CommandLine.add_player(id=raw_id, open_id=open_id, mcsm=mcsm, welcome=welcome)
+                flag, message = CommandLine.add_player(id=raw_id, open_id=open_id,welcome=welcome,game_sever=game_sever)
                 return flag, message
             except Banned:
                 message = '您被禁止加入服务器。'
@@ -89,17 +91,17 @@ class CommandLine:
         #             return 0, message
 
     @staticmethod
-    def add_player(id: str,open_id: str, mcsm: list, welcome: str) -> (int, str):
-        DB.add(player_id=id, openid=open_id, mcsm=mcsm)
+    def add_player(id: str,open_id: str, welcome: str,game_sever:MCServerConnection) -> (int, str):
+        return_code,msg = DB.add(player_id=id, openid=open_id, game_server=game_sever)
         print('\033[0;32;40m-添加新玩家完成!\033[0m')
         message = ('您的ID '+ id + ' 已添加至服务器白名单。\n' + welcome)
         return 0, message
 
     @staticmethod
-    def admin_command(raw_command: str, open_id: str, mcsm:list):
+    def admin_command(raw_command: str, open_id: str,game_sever:MCServerConnection):
         if DB.search_admin(openid=open_id) == 1:
             print('\033[0;32;40m-管理员通过公众号发出指令!\033[0m')
-            DB.push_to_server_command(mcsm=mcsm,command=raw_command)
+            DB.push_to_server_command(command=raw_command,game_server=game_sever)
             message = '指令成功发送!'
             return 0,message
         else:

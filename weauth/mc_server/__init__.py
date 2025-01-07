@@ -11,26 +11,46 @@ from weauth.mc_server.rcon_connect import RCON
 
 
 class MCServerConnection:
-    def __init__(self):
+    def __init__(self,*args,server_type='MCSM'):
+        self.params = args
+        self.server_type:str = server_type
+
+
         pass
 
-    @staticmethod
-    def test_connection(parameter:list,server_type:str) -> (int,str):
+    # @staticmethod
+    def test_connection(self) -> (int,str):
+        server_type = self.server_type
+        # print(self.params)
+        # print(type(self.params))
         if server_type.upper() == "MCSM":
-            return_code = MCSM.test_connection(mcsm_adr=parameter[0],
-                                               mcsm_api=parameter[1],
-                                               uuid=parameter[2],
-                                               remote_uuid=parameter[3])
+            return_code = MCSM.test_connection(mcsm_adr=self.params[0],
+                                               mcsm_api=self.params[1],
+                                               uuid=self.params[2],
+                                               remote_uuid=self.params[3])
             return return_code, None
         elif server_type.upper() == "RCON":
-            return_code = RCON.test_connection(host_add=parameter[0],
-                                               port=int(parameter[1]),
-                                               passwd=parameter[2])
+            return_code = RCON.test_connection(host_add=self.params[0],
+                                               port=int(self.params[1]),
+                                               passwd=self.params[2])
             return return_code
 
 
-    @staticmethod
-    def push_command(adr, api, uuid, remote_uuid, command) -> int:
+    # @staticmethod
+    def push_command(self,command:str) -> (int,str):
+        server_type = self.server_type
+        if server_type.upper() == "MCSM":
+            return_code = MCSM.push_command(adr=self.params[0],
+                                            api=self.params[1],
+                                            uuid=self.params[2],
+                                            remote_uuid=self.params[3],
+                                            command=command)
+            return return_code, None
+
+
+        elif server_type.upper() == "RCON":
+            pass
+
         pass
 
 
