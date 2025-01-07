@@ -64,6 +64,7 @@ def entrypoint():
 
 	if args.op !='-1':
 		from weauth.utils.add_op import add_op
+		print('-正在添加玩家{}为WeAuth管理员'.format(args.op))
 		add_op(op_id=args.op)
 		sys.exit(0)
 
