@@ -7,7 +7,8 @@ WeAuth
 
 <div align=center><img src="logo/long_banner.png"></div>
 
->使用微信公众号或者QQ机器人来帮助你添加白名单与管理Minecraft服务器!
+>使用微信公众号或者QQ机器人来帮助你添加白名单与管理Minecraft服务器!  
+> [开发与问题反馈交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zZWKaVfLOLW19NRVtffSgxPZivKkK45n&authKey=cF0bEvwv%2FoHTMrXJpzkvGvZhuYdF7WCefRF4F21dqnJMSvzOCL%2FZSpGqnwEVYE7G&noverify=0&group_code=1017293626)
   
 ## WeAuth的作用
 ```command
