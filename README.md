@@ -78,8 +78,8 @@ weauth
 weauth
 -v  # 查看版本信息
 -h  # 查看启动参数帮助信息
--p [port]  # 启动后在port端口监听。默认为80端口。
-#-r [route]  # web服务路由。默认为“/wx”。待开发。
+-p [port]  # 启动后在port端口监听。默认为80端口
+-r [route]  # web服务路由。默认为“/wx”
 -w  # 微信服务器验证模式，需配合 -t指令使用
 -t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
 -op [ID]  # 将ID加入ops.yaml中
