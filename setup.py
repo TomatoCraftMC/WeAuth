@@ -10,7 +10,7 @@ from weauth.constants import core_constant
 import os
 NAME = core_constant.PACKAGE_NAME
 VERSION = core_constant.VERSION_PYPI
-DESCRIPTION = 'A python tool to managing your whitelist through WeChat.'
+DESCRIPTION = 'A python tool to managing your whitelist through WeChat. 使用微信公众号来管理MC服务器与注册白名单。'
 PROJECT_URLS = {
 	'Homepage': core_constant.GITHUB_URL,
 	'Documentation': core_constant.DOCUMENTATION_URL,
