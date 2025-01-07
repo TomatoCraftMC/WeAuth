@@ -20,8 +20,6 @@ REQUIRES_PYTHON = '>=3.8'
 
 CLASSIFIERS = [
 	# https://pypi.org/classifiers/
-	'License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE v3 (GPLv3)',
-	'Operating System :: OS Independent',
 	'Programming Language :: Python',
 	'Programming Language :: Python :: 3',
 	'Programming Language :: Python :: 3.8',
@@ -63,5 +61,6 @@ setup(
     include_package_data=True,
     install_requires=REQUIRED,
     entry_points=ENTRY_POINTS,
+	classifiers=CLASSIFIERS,
 	license="GPLv3",
 )
