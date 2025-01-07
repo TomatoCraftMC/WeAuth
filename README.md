@@ -1,6 +1,14 @@
-# WeAuth
-使用微信公众号或者QQ机器人来帮助你添加白名单与管理Minecraft服务器!
+WeAuth
+--------
 
+[//]: # (![PyPI - Python Version]&#40;https://img.shields.io/pypi/pyversions/weauth&#41;)
+[![PyPI - Version](https://img.shields.io/pypi/v/weauth)](https://pypi.org/project/weauth)
+[![GitHub License](https://img.shields.io/github/license/TomatoCraftMC/WeAuth)](https://github.com/TomatoCraftMC/WeAuth/blob/main/LICENSE)
+
+<div align=center><img src="logo/long_banner.png"></div>
+
+>使用微信公众号或者QQ机器人来帮助你添加白名单与管理Minecraft服务器!
+  
 ## WeAuth的作用
 ```command
          微信公众号            <=======(rcon)=======>
