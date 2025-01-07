@@ -41,3 +41,19 @@ jobs:
     - name: Test with running
       run: |
         python -m weauth -p 80
+  release-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Build release distributions
+        run: |
+          # NOTE: put your own distribution build steps here.
+          python -m pip install setuptools wheel
+          python setup.py sdist bdist_wheel
+
