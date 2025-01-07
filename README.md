@@ -47,14 +47,14 @@ Python>=3.8
 
 ## 安装WeAuth
 WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通过`pip`指令安装。  
-```command
+```shell
 pip3 install weauth  # 使用官方Pypi源
 ```   
-```command 
+```shell
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
 ```   
 安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。但我们建议您在新建的文件夹内运行WeAuth。    
-```command
+```shell
 mkdir WeAuth
 cd WeAuth
 weauth
@@ -74,7 +74,7 @@ weauth
 
 **只有`ops.yaml`文件支持热重载**  
 ## WeAuth启动参数(近期正在快速更新)
-```command
+```shell
 weauth
 -v  # 查看版本信息
 -h  # 查看启动参数帮助信息
