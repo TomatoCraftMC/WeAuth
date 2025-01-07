@@ -88,8 +88,7 @@ weauth
 在绝大多数情况下，您无需输入任何参数，直接使用`weauth`启动即可。  
 程序将在`http://127.0.0.1/wx`监听来自微信的请求。  
 ## [微信公众号后台配置](docs/WeChatConfig.md)
-## MCSManager后台配置
-待更新  
+## [MCSManager后台配置](docs/MCSManagerConfig.md)
   
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  

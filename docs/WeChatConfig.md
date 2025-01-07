@@ -30,10 +30,16 @@ EncodingAESKey将在后续支持，目前请将消息加解密方式选择明文
 验证成功后会显示您的服务器地址，如图。  
 ![成功](assets/pic4.png)
 
+### 微信公众号原始ID
+`config.yaml`文件还需要填写微信公众号原始ID。  
+点击左下角公众号头像，【账号详情】。便可以在【注册信息】中找到原始ID。  
+![w](assets/pic9.png)  
+![w2](assets/pic10.png)  
+
 ### 测试功能是否正常  
 完成上面步骤后，如果有微信用户和您的公众号产生交互(向公众号发送内容、订阅公众号、取消公众号)，微信会向WeAuth发送信息。  
 您可以继续使用WeAuth的验证模式`weauth -w -t [token]`来观察是否收到了微信的请求。  
-如果要正式运行WeAuth，您还需要配置Minecraft服务器相关信息。  
+如果要正式运行WeAuth，您还需要[配置Minecraft服务器](MCSManagerConfig.md)相关信息。  
 
 
 
