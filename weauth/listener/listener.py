@@ -14,17 +14,16 @@ from weauth.command_line import CommandLine
 import sqlite3
 
 class Listener:
-    def __init__(self, mcsm: dict, wx_user_name, responses: dict):
+    def __init__(self, mcsm: dict, wx_user_name, responses: dict,url:str):
         print("-正在启动监听......\n")
         __mcsm = [mcsm['adr'], mcsm['apikey'], mcsm['uuid'], mcsm['remote-uuid']]
         __responses = [responses['welcome']]
 
         self.xml_data = []
         self.WxUserName = wx_user_name
-
         self.wx_service = Flask(__name__)
-
-        @self.wx_service.route('/wx',methods=['POST'])
+        print("-开始在'{}'监听".format(url))
+        @self.wx_service.route(url,methods=['POST'])
         def wx():
             if request.method == 'POST':
                 data = request.get_data()

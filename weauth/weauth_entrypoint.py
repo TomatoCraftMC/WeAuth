@@ -46,7 +46,11 @@ def entrypoint():
 						action='store_true',default=False)
 	parser.add_argument('-t','--token',help='验证用token',default='-1',type=str)
 	parser.add_argument('-op', '--op', help='新增op', default='-1', type=str)
+	parser.add_argument('-r', '--url', help='路由地址', default='/wx', type=str)
 	args = parser.parse_args()
+	if args.url[0]!='/':
+		print("路由地址不合法,请检查后重新输入")
+		sys.exit(0)
 
 	if args.version:
 		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage:{}'
@@ -59,7 +63,7 @@ def entrypoint():
 				  '如weauth -t token1234 -w')
 			sys.exit(0)
 		from weauth.wechat_confirm import confirm
-		confirm(args.token)
+		confirm(args.token,url=args.url)
 		sys.exit(0)
 
 	if args.op !='-1':
@@ -67,7 +71,6 @@ def entrypoint():
 		print('-正在添加玩家{}为WeAuth管理员'.format(args.op))
 		add_op(op_id=args.op)
 		sys.exit(0)
-
 
 	main(args)
 
