@@ -64,7 +64,8 @@ def main(args) -> None:
             'appID': '12345',
             'AppSecret': '12345',
             'EncodingMode': '12345',
-            'WxUserName': '12345'
+            'WxUserName': '12345',
+            'url': '/wx'
         }
 
     # 检查是否有op列表
@@ -76,6 +77,10 @@ def main(args) -> None:
         print('-无法连接到游戏服务器, 请检查config.yaml配置以及网络状况!')
         if not args.test_mode:
             sys.exit(0)
+
+    url = config['url']
+    if args.url != '/wx':
+        url = args.url
 
     # 测试微信服务器连接
     access_token = test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret'])
@@ -94,7 +99,8 @@ def main(args) -> None:
     }
 
     listener = Listener(mcsm=mcsm,
-                        wx_user_name=config['WxUserName'],responses=responses)
+                        wx_user_name=config['WxUserName'],responses=responses,url=url)
+
     # 核心监听程序运行
     listener.wx_service.run(host='0.0.0.0', port=port)
 

@@ -30,7 +30,9 @@ def create_config_yaml() -> int:
             '# 微信服务器内容加密方式： 0为明文，其他待开发\n'
             'EncodingMode: 0\n\n'
             '# 微信公众号原始ID\n'
-            'WxUserName: xxxxxx')
+            'WxUserName: xxxxxx\n\n'
+            '# WeAuth路由地址\n'
+            'url: /wx\n\n')
 
     with open('./config.yaml','w+') as f:
         f.write(text)
