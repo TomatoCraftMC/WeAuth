@@ -20,6 +20,11 @@ REQUIRES_PYTHON = '>=3.8'
 
 CLASSIFIERS = [
 	# https://pypi.org/classifiers/
+	'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+	'Natural Language :: Chinese (Simplified)',
+	'Operating System :: OS Independent',
+	'Topic :: Utilities',
+	'Framework :: Flask',
 	'Programming Language :: Python',
 	'Programming Language :: Python :: 3',
 	'Programming Language :: Python :: 3.8',
