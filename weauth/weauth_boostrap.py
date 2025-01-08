@@ -46,34 +46,36 @@ def main(args) -> None:
         print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
     # 检查数据库
     DB.check_database()
+    default_config = {
+        'server_connect': 0,
+        'welcome': '欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!',
+        'mcsm_adr': 'http://127.0.0.1:23333/',
+        'mcsm_api': '12345',
+        'uuid': '12345',
+        'remote-uuid': '12345',
+        'rcon_host_add': '127.0.0.1',
+        'rcon_port': '25565',
+        'rcon_password': 'PASSWORD',
+        'token': '12345',
+        'EncodingAESKey': '12345',
+        'appID': '12345',
+        'AppSecret': '12345',
+        'EncodingMode': '12345',
+        'WxUserName': '12345',
+        'url': '/wx'
+    }
 
     if not args.test_mode:
         # 读取配置文件
         try:
             config = read_config()
+            check_config_version(config,default_config=default_config)
         except ConfigFileNotFound:
-            create_config_yaml()
+            create_config_yaml(config=default_config)
             print('-首次运行, 请先在config.yaml中进行配置!')
             sys.exit(0)
     else:
-        config = {
-            'server_connect': 0,
-            'welcome': '欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!',
-            'mcsm_adr': 'http://127.0.0.1:23333/',
-            'mcsm_api': '12345',
-            'uuid': '12345',
-            'remote-uuid': '12345',
-            'rcon_host_add': '127.0.0.1',
-            'rcon_port': '25565',
-            'rcon_password': 'PASSWORD',
-            'token': '12345',
-            'EncodingAESKey': '12345',
-            'appID': '12345',
-            'AppSecret': '12345',
-            'EncodingMode': '12345',
-            'WxUserName': '12345',
-            'url': '/wx'
-        }
+        config = default_config
 
     # 检查是否有op列表
     check_op_list()
@@ -166,7 +168,11 @@ def test_wechat_server(app_id, app_secret):
     elif code1 == 0:
         print("-已更新Access Token")
         return code2
-    
+
+def check_config_version(config:dict,default_config:dict):
+    print("-正在更新配置文件")
+    create_config_yaml(config=config,default_config=default_config)
+
 
 # if __name__ == '__main__':
 #     main()
