@@ -114,14 +114,6 @@ def main(args) -> None:
     # 测试微信服务器连接
     access_token = test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret'])
 
-    # 连接MCSManager所需要的参数
-    mcsm = {
-        'adr': config['mcsm_adr'],
-        'apikey': config['mcsm_api'],
-        'uuid': config['uuid'],
-        'remote-uuid': config['remote-uuid']
-    }
-
     # 公众号回复语句
     responses = {
         'welcome': config['welcome']  # 玩家注册白名单成功

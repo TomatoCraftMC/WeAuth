@@ -5,53 +5,8 @@
 # datetime： 2024/7/2 下午5:26 
 # ide： PyCharm
 # file: __init__.py.py
-from abc import ABC
-from weauth.mc_server.mcsm_connect import MCSM
-from weauth.mc_server.rcon_connect import RCON
+from .mc_server_connection import MCServerConnection
 
-
-class MCServerConnection:
-    def __init__(self,*args,server_type='MCSM'):
-        self.params = args
-        self.server_type:str = server_type
-
-
-        pass
-
-    # @staticmethod
-    def test_connection(self) -> (int,str):
-        server_type = self.server_type
-        # print(self.params)
-        # print(type(self.params))
-        if server_type.upper() == "MCSM":
-            return_code = MCSM.test_connection(mcsm_adr=self.params[0],
-                                               mcsm_api=self.params[1],
-                                               uuid=self.params[2],
-                                               remote_uuid=self.params[3])
-            return return_code, None
-        elif server_type.upper() == "RCON":
-            return_code = RCON.test_connection(host_add=self.params[0],
-                                               port=int(self.params[1]),
-                                               passwd=self.params[2])
-            return return_code
-
-
-    # @staticmethod
-    def push_command(self,command:str) -> (int,str):
-        server_type = self.server_type
-        if server_type.upper() == "MCSM":
-            return_code = MCSM.push_command(adr=self.params[0],
-                                            api=self.params[1],
-                                            uuid=self.params[2],
-                                            remote_uuid=self.params[3],
-                                            command=command)
-            return return_code, None
-
-
-        elif server_type.upper() == "RCON":
-            pass
-
-        pass
 
 
 

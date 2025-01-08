@@ -37,27 +37,25 @@ class DB:
                     raise Banned('被封禁')
                 else:
                     if user[3] == 0:  # 注册取关后重新注册
+                        return_code,msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
+                        DB.responses_check_whitelist(return_code,msg)
                         cur.execute("UPDATE players SET ISSUB=? WHERE OPENID=?",(1,openid))
                         conn.commit()
                         cur.close()
                         conn.close()
-                        return_code,msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
-                        if  return_code != 200:
-                            raise ServerConnectionFailed('游戏服务器连接失败')
                         return 0, msg
                     else:
                         cur.close()
                         conn.close()
                         raise OpenidAlreadyIn('已添加相同OpenID')
         try:
+            return_code, msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
+            DB.responses_check_whitelist(return_code,msg)
             cur.execute("INSERT INTO players values(?,?,?,?,?)", (player_id, openid, 0, 1, 0))
             conn.commit()  # 全新注册
             cur.close()
             conn.close()
             print("全新注册")
-            return_code, msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server)
-            if return_code != 200:
-                raise ServerConnectionFailed('游戏服务器连接失败')
             return 0, msg
 
         except sqlite3.IntegrityError:
@@ -158,27 +156,25 @@ class DB:
     @staticmethod
     def push_to_server_whitelist(player_id: str, game_server:MCServerConnection, mode=1)->(int,str):  # mode=1加模式，否则为删模式
 
-
-
-
-
-
-
-
-
-
         if mode == 1:
             command = 'whitelist add ' + player_id
         else:
             command = 'whitelist remove ' + player_id
-        return MCSM.push_command(adr=mcsm[0],
-                                 api=mcsm[1],
-                                 uuid=mcsm[2],
-                                 remote_uuid=mcsm[3],
-                                 command=command)
+        return game_server.push_command(command=command)
+
+
     @staticmethod
     def push_to_server_command(command:str,game_server:MCServerConnection)->(int,str):  # 用于推送指令
         return game_server.push_command(command=command)
+
+    @staticmethod
+    def responses_check_whitelist(return_code,msg):
+        if return_code != 200:
+            raise ServerConnectionFailed('游戏服务器连接失败')
+        elif msg == 'That player does not exist\n':
+            raise PlayerIdNotExist('玩家ID不存在')
+        pass
+
 
 
 # if __name__=='__main__':

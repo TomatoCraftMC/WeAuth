@@ -63,6 +63,10 @@ class CommandLine:
                 message = '游戏服务器连接失败, 请联系服务器管理员。'
                 print('-游戏服务器连接失败')
                 return 0, message
+            except PlayerIdNotExist:
+                message = '您输入的ID不存在，请检查后重新输入!'
+                print('-服务器反馈无法找到玩家ID')
+                return 0, message
 
         # match raw_id:
         #     case '@a' | '@p' | '@e' | '@s':  # 不允许特殊字符当作ID

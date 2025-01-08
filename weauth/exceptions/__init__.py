@@ -5,3 +5,4 @@
 # datetime： 2024/7/2 下午5:26
 # ide： PyCharm
 # file: __init__.py
+from .exceptions import *
