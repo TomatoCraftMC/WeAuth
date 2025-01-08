@@ -65,7 +65,8 @@ class Listener:
 
     @staticmethod
     def remove_whitelist(player_id, openid,game_server:MCServerConnection):
-        if DB.push_to_server_whitelist(player_id=player_id, game_server=game_server, mode=-1) != 200:
+        return_code,msg = DB.push_to_server_whitelist(player_id=player_id, game_server=game_server, mode=-1)
+        if return_code != 200:
             raise ServerConnectionFailed('游戏服务器连接失败')
         else:
             DB.remove(openid)

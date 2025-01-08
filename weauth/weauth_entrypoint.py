@@ -53,7 +53,7 @@ def entrypoint():
 		sys.exit(0)
 
 	if args.version:
-		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage:{}'
+		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage: {}'
 			  .format(core_constant.VERSION,core_constant.GITHUB_URL))
 		sys.exit(0)
 
