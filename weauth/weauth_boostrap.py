@@ -120,7 +120,7 @@ def main(args) -> None:
     responses = {
         'welcome': config['welcome']  # 玩家注册白名单成功
     }
-
+    # print(responses['welcome'])
     listener = Listener(wx_user_name=config['WxUserName'],responses=responses,url=url,game_server=game_server)
 
     # 核心监听程序运行

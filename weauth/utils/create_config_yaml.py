@@ -31,7 +31,7 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
     ]
     for key in required_keys:
         if key not in config:
-            config[key] = ' '
+            config[key] = default_config[key]
 
     config_dict = {
         'version': VERSION_PYPI,
