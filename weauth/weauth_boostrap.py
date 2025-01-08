@@ -71,7 +71,7 @@ def main(args) -> None:
             config = read_config()
             check_config_version(config,default_config=default_config)
         except ConfigFileNotFound:
-            create_config_yaml(config=default_config)
+            create_config_yaml(config=default_config,default_config=default_config)
             print('-首次运行, 请先在config.yaml中进行配置!')
             sys.exit(0)
     else:
