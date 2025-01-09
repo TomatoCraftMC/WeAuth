@@ -57,7 +57,10 @@ class WxConnection(TencentServerConnection):
         FromUserName.text = weid
         CreateTime.text = str(int(time.time()))
         MsgType.text = "text"
-        Content.text = message
+        message_slash = message.replace('\\n', '\n')
+        Content.text = message_slash
+        print(f'Content is\n {message_slash}')
+        print(repr(message_slash))
 
         tree = ET.ElementTree(root)
         xml_data = ET.tostring(root, encoding='utf-8')
