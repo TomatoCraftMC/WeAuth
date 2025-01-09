@@ -1,4 +1,9 @@
 # 更新日志
+
+### 2025-01-09 v1.4.1-rc1
+
+* 修复了微信公众号回复文字不换行的问题
+
 ### 2025-01-08 v1.4.0-release
 * WeAuth现在支持使用[rcon](https://github.com/conqp/rcon)协议连接Minecraft服务器
 * `config.yaml`文件现在支持设置rcon相关信息
