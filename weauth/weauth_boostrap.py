@@ -48,7 +48,7 @@ def main(args) -> None:
     DB.check_database()
     default_config = {
         'server_connect': 0,
-        'welcome': '欢迎加入我的服务器!如果仍然无法加入服务器, 请联系管理员。祝您游戏愉快!',
+        'welcome': '欢迎加入我的服务器!\\n如果仍然无法加入服务器, 请联系管理员。\\n祝您游戏愉快!',
         'mcsm_adr': 'http://127.0.0.1:23333/',
         'mcsm_api': '12345',
         'uuid': '12345',
