@@ -6,9 +6,6 @@
 # ide： PyCharm
 # file: cdkey.py
 import sys
-
-from more_itertools.recipes import totient
-
 from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
 import string
 import secrets
@@ -38,7 +35,7 @@ class CDKey:
             sys.exit(0)
         except Exception:
             print('-生成失败')
-            sys.exit(1)
+            sys.exit(0)
 
 
     @staticmethod
@@ -108,12 +105,6 @@ class CDKey:
             with open('cdkey.yaml', 'w+') as f:
                 yaml.dump(data=new_dict, stream=f, allow_unicode=True, sort_keys=False)
 
-        #
-        #
-        # with open('cdkey.yaml', 'r') as f:
-        #     result = yaml.load(f.read(), Loader=yaml.FullLoader)
-
-        pass
 
 if __name__ == '__main__':
     gift = r'0012ff1'
