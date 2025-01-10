@@ -99,7 +99,7 @@ jobs:
       - name: Modify and get version information
         id: version
         run: |
-          version_file=mcdreforged/constants/core_constant.py
+          version_file=weauth/constants/core_constant.py
           if [ "$IS_RELEASE" != "true" ]; then
             sed -i "/^__CI_BUILD_NUM/c\__CI_BUILD_NUM = '$GITHUB_RUN_NUMBER'" "$version_file"
           fi
