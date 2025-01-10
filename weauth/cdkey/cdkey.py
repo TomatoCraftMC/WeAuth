@@ -22,24 +22,24 @@ class CDKey:
     def cdkey_cli(cdkey: str, player_id: str, game_server: MCServerConnection) -> str:
         return_code, msg = game_server.test_connection()
         if return_code != 200:
-            return '-无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
+            return '无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
         try:
             gift_hash = CDKey.check_gift_hash(cdkey=cdkey)
             gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash)
         except CDKeyNotFound:
-            return '-CDKey无效'
+            return 'CDKey无效'
         except FileNotFoundError:
-            return '-CDKey无效'
+            return 'CDKey无效'
         except CDKeyNoLeft:
-            return '-CDKey已无剩余礼物可供兑换'
+            return 'CDKey已无剩余礼物可供兑换'
 
         try:
             return_code, msg = game_server.push_command(command=f'give {player_id} {gift_arg} {gift_num}')
             if return_code != 200:
-                return '-礼物发送失败'
-            return '-礼物已发送, 若未在线则无法收到礼物'
+                return '礼物发送失败'
+            return '礼物已发送, 若未在线则无法收到礼物'
         except Exception as e:
-            return '-礼物发送失败'
+            return '礼物发送失败'
 
     @staticmethod
     def check_gift_hash(cdkey: str) -> str:
@@ -63,7 +63,7 @@ class CDKey:
 
             gift_arg = result[gift_hash]['gift_arg']
             gift_num = result[gift_hash]['gift_num']
-            result[gift_hash]['gift_total'] += 1
+            result[gift_hash]['gift_total'] -= 1
             with open('gift_list.yaml', 'w+') as f:
                 yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
             return gift_arg, int(gift_num)
