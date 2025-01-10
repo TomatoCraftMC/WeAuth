@@ -97,7 +97,7 @@ class DB:
         try:
             with open('./ops.yaml', 'r') as f:
                 op_list = yaml.load(f.read(), Loader=yaml.FullLoader)['ops']
-        except ConfigFileNotFound:
+        except FileNotFoundError:
             print('-未找到op管理员列表文件')
             cur.close()
             conn.close()
