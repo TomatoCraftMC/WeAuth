@@ -28,7 +28,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 白名单添加与管理   
  - [x] 管理员直接通过公众号发送指令（单向）  
  - [x] 微信公众号验证开发者服务器URL地址  
- - [ ] CdKey生成与兑换系统
+- [x] CdKey生成与兑换系统
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
  - [ ] https支持
@@ -51,7 +51,7 @@ Python>=3.8
 * **如果您运行WeAuth的服务器是在大陆境内的云服务器，只有经过备案才能使用80/443端口。**  
 * **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**   
 > 您可以购买一台便宜的云服务器，经过备案后专门运行WeAuth。此时，如果您的Minecraft服务器无法连接到WeAuth服务器
-（比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
+> （比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
 
 
 ## 安装WeAuth
@@ -99,7 +99,8 @@ weauth
 ## [微信公众号后台配置](docs/WeChatConfig.md)
 ## [MCSManager后台配置](docs/MCSManagerConfig.md)
 ## [rcon设置](docs/Rcon.md)
-  
+
+## [CDKey系统使用指南](docs/Cdkey.md)
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 # Licence
