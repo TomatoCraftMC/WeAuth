@@ -37,7 +37,13 @@ class CDKey:
             return_code, msg = game_server.push_command(command=f'give {player_id} {gift_arg} {gift_num}')
             if return_code != 200:
                 return '礼物发送失败'
-            return '礼物已发送, 若未在线则无法收到礼物'
+            elif game_server.server_type.upper() == 'RCON' and msg[:2] == 'No':
+                return '礼物已发送, 但玩家不在线'
+            elif game_server.server_type.upper() == 'RCON' and msg[:4] == 'Gave':
+                return '礼物已成功发送'
+            else:
+                return '礼物已发送, 若未在线则无法收到礼物'
+
         except Exception as e:
             return '礼物发送失败'
 
