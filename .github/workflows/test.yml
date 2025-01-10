@@ -3,11 +3,7 @@
 
 name: Python package
 
-on:
-  push:
-    branches: [ "main", "feat/*", "hotfix/*", "release/*", "dev" ]
-  pull_request:
-    branches: [ "main", "feat/*", "hotfix/*", "release/*", "dev" ]
+on: workflow_call
 
 jobs:
   build:
