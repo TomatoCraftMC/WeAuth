@@ -89,8 +89,8 @@ weauth
 
 ### cdkey.yaml
 
-该文件储存所有未兑换的cdkey(兑换码)。该文件本质是一个Python字典，键为礼物的哈希值(对应gift_list.yaml)
-，键值为该礼物对应的所有兑换码。  
+该文件储存所有未兑换的CDKeys(兑换码)。该文件本质是一个Python字典，键为礼物的哈希值(对应gift_list.yaml)
+，键值为该礼物对应所有兑换码的列表。  
 玩家成功兑换CDKey时会自动从该文件中删除对应兑换码。该文件通过CDKey系统自动生成与管理，具体见[CDKey系统说明](docs/Cdkey.md)。
 ## WeAuth启动参数(近期正在快速更新)
 ```shell

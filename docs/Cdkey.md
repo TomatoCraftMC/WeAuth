@@ -27,7 +27,7 @@ weauth -g
 ### 生成机制
 
 每个礼物会根据`gift_arg`、`gift_num`和`gift_total`生成唯一的哈希值`gift_hash`。  
-`gift_hash`会成为`cdkey.yaml`文件中，连接兑换码和对应礼物的桥梁。
+`gift_hash`会成为`cdkey.yaml`文件中，连接兑换码和对应礼物的唯一索引。
 
 ## 二、兑换CDKey
 
@@ -42,7 +42,7 @@ weauth -g
 例如，输入`#tpFV-Psb5-fHPH-J10h`，即可进行兑换。
 
 - 只有已注册白名单的玩家才能进行兑换，其他用户进行兑换会被WeAuth忽略。
-- 如果使用MCSManager作为连接，WeAuth只会在兑换前确认能否连接到MCSManager，不会对兑换结果进行任何验证。
+- 如果使用MCSManager作为连接，WeAuth只会在核销前确认能否连接到MCSManager，不会对兑换结果进行任何验证。
 - 如果使用Rcon作为连接，WeAuth会确认兑换结果，包括玩家不在线情况、物品ID不合法情况。若兑换失败，CDKey不会被消耗，且玩家在微信公众号会收到反馈。
 
 兑换完成后，`cdkey.yaml`中的兑换码会被删除，`gift_list.yaml`中的`gift_total`会自动减1。  
@@ -50,5 +50,5 @@ weauth -g
 
 ### valid 参数（暂未上线）
 
-你可以设置`gift_list.yaml`中的`valid`为`true`（小写，yaml文件格式要求）  
-这样，该礼物所对应的兑换码均会被拒绝兑换。
+你可以设置`gift_list.yaml`中的`valid`为`false`（小写，yaml文件格式要求）  
+这样，该礼物对应的所有兑换码会被拒绝兑换。
