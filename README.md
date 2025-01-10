@@ -28,10 +28,11 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 白名单添加与管理   
  - [x] 管理员直接通过公众号发送指令（单向）  
  - [x] 微信公众号验证开发者服务器URL地址  
- - [ ] CdKey生成与兑换系统
+- [x] CdKey生成与兑换系统 (1.5.0起支持)
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
  - [ ] https支持
+- [ ] 可直接在微信公众号运行WeAuth指令
 ### 桥梁
  - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
  - [ ] 通过Flask与QQ机器人服务器交互  
@@ -51,7 +52,7 @@ Python>=3.8
 * **如果您运行WeAuth的服务器是在大陆境内的云服务器，只有经过备案才能使用80/443端口。**  
 * **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**   
 > 您可以购买一台便宜的云服务器，经过备案后专门运行WeAuth。此时，如果您的Minecraft服务器无法连接到WeAuth服务器
-（比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
+> （比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
 
 
 ## 安装WeAuth
@@ -75,13 +76,22 @@ weauth
 该文件包含WeAuth连接微信/QQ服务器所需要的凭证与连接MCSManager或rcon所需要的信息。  
 您可以在启动WeAuth时添加参数（见下一节），这些参数的优先级高于`config.yaml`中的内容。   
   
-
 ### ops.yaml  
 该文件保存着管理员ID信息（指游戏角色ID）。  
 该管理员是指可以通过微信公众号直接发送指令到游戏内执行。  
 >请勿将WeAuth管理员与游戏内op混淆，但是在未来，WeAuth将支持从游戏服务器拉取op玩家ID信息。    
 
-**只有`ops.yaml`文件支持热重载**  
+**只有`ops.yaml`文件支持热重载**
+
+### gift_list.yaml
+
+该文件储存CDKey系统的礼物元数据，每个礼物对应一个哈希值。该文件通过CDKey系统自动生成与管理，具体见[CDKey系统说明](docs/Cdkey.md)。
+
+### cdkey.yaml
+
+该文件储存所有未兑换的CDKeys(兑换码)。该文件本质是一个Python字典，键为礼物的哈希值(对应gift_list.yaml)
+，键值为该礼物对应所有兑换码的列表。  
+玩家成功兑换CDKey时会自动从该文件中删除对应兑换码。该文件通过CDKey系统自动生成与管理，具体见[CDKey系统说明](docs/Cdkey.md)。
 ## WeAuth启动参数(近期正在快速更新)
 ```shell
 weauth
@@ -99,11 +109,17 @@ weauth
 ## [微信公众号后台配置](docs/WeChatConfig.md)
 ## [MCSManager后台配置](docs/MCSManagerConfig.md)
 ## [rcon设置](docs/Rcon.md)
-  
+## [CDKey系统使用指南](docs/Cdkey.md)
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 # Licence
-WeAuth is released under the GPLv3.0 license.  
+
+WeAuth is released under the [GPLv3.0](LICENSE) license.   
+[pyyaml](https://github.com/yaml/pyyaml) : MIT   
+[tcping](https://github.com/zhengxiaowai/tcping) : MIT    
+[rcon](https://github.com/conqp/rcon): GPLv3   
+[Flask](https://github.com/pallets/flask/): BSD-3-Clause license  
+
 
 
 

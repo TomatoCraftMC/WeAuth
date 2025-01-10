@@ -26,8 +26,11 @@ class CommandLine:
         elif raw_command[0] == '$':  # CDKey兑换入口
             cdkey = raw_command[1:]
             if len(cdkey) != CDKEY_LENGTH_ONE_PIECE * 4 + 3:
-                return 0, '-CDKey无效'
-            msg = CDKey.cdkey_cli(cdkey=cdkey, player_id=open_id, game_server=game_sever)
+                return 0, 'CDKey无效'
+            player_id = DB.get_player_id(openid=open_id)
+            if player_id is None:
+                return 0, '您的微信号还未绑定游戏ID'
+            msg = CDKey.cdkey_cli(cdkey=cdkey, player_id=player_id, game_server=game_sever)
             return 0, msg
         else:
             return -1, '0'

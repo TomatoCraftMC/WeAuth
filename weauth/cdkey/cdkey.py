@@ -20,41 +20,53 @@ class CDKey:
 
     @staticmethod
     def cdkey_cli(cdkey: str, player_id: str, game_server: MCServerConnection) -> str:
-        return_code = game_server.test_connection()
+        return_code, msg = game_server.test_connection()
         if return_code != 200:
-            return '-无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
+            return '无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
         try:
             gift_hash = CDKey.check_gift_hash(cdkey=cdkey)
             gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash)
         except CDKeyNotFound:
-            return '-CDKey无效'
+            return 'CDKey无效'
         except FileNotFoundError:
-            return '-CDKey无效'
+            return 'CDKey无效'
         except CDKeyNoLeft:
-            return '-CDKey已无剩余礼物可供兑换'
+            return 'CDKey已无剩余礼物可供兑换'
 
         try:
             return_code, msg = game_server.push_command(command=f'give {player_id} {gift_arg} {gift_num}')
             if return_code != 200:
-                return '-礼物发送失败'
-            return '-礼物已发送, 若未在线则无法收到礼物'
+                return '礼物发送失败'
+            elif game_server.server_type.upper() == 'RCON' and msg[:2] == 'No':
+                return '玩家不在线，请上线后再兑换。\nCDKey未兑换。'
+            elif game_server.server_type.upper() == 'RCON' and msg[:4] == 'Gave':
+                gift_hash = CDKey.check_gift_hash(cdkey=cdkey, is_delete=True)
+                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+                return '成功兑换！礼物已成功发送'
+            elif game_server.server_type.upper() == 'RCON' and msg[:7] == 'Unknown':  # gift_arg 不合法
+                return '物品ID设置异常，请联系管理员'
+            else:
+                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+                return '礼物已发送, 若未在线则无法收到礼物。'
+
         except Exception as e:
-            return '-礼物发送失败'
+            return '礼物发送失败'
 
     @staticmethod
-    def check_gift_hash(cdkey: str) -> str:
+    def check_gift_hash(cdkey: str, is_delete=False) -> str:
         with open('cdkey.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         for key in result.keys():
-            if cdkey in result[key]:
-                result[key].remove(cdkey)
-                with open('cdkey.yaml', 'w+') as f:
-                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+            if cdkey in result[key]:  # 查找与删除应该分离
+                if is_delete:
+                    result[key].remove(cdkey)
+                    with open('cdkey.yaml', 'w+') as f:
+                        yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
                 return key
         raise CDKeyNotFound('未找到该CDKey')
 
     @staticmethod
-    def check_gift_arg_and_num(gift_hash: str) -> (str, int):
+    def check_gift_arg_and_num(gift_hash: str, is_delete=False) -> (str, int):
         with open('gift_list.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         try:
@@ -63,9 +75,10 @@ class CDKey:
 
             gift_arg = result[gift_hash]['gift_arg']
             gift_num = result[gift_hash]['gift_num']
-            result[gift_hash]['gift_total'] += 1
-            with open('gift_list.yaml', 'w+') as f:
-                yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+            if is_delete:
+                result[gift_hash]['gift_total'] -= 1
+                with open('gift_list.yaml', 'w+') as f:
+                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
             return gift_arg, int(gift_num)
         except KeyError:
             raise CDKeyNotFound('hash无对应礼物')
@@ -73,19 +86,12 @@ class CDKey:
             raise CDKeyNotFound('无gift_list_yaml文件')
 
 
-
-
-
-
-
-
-
     @staticmethod
     def create_gift_entrypoint() -> None:
         gift_comment: str = input('-请输入礼物注释,并按回车确认。例如: 火把/钻石/给小张的礼物\n> ')
         gift_num: int = int(input('-请输入单次兑换所给予的数量,并按回车确认。例如: 6\n> '))
-        gift_arg: str = input('-请输入礼物,可以带有NBT标签。例如：\n'
-                              r'minecraft:torch 或minecraft:netherite_pickaxe{CanDestroy:[&#34;minecraft:stone&#34;]}'
+        gift_arg: str = input('-请输入礼物,即Minecraft的物品ID,可以带有NBT标签。例如：\n'
+                              r'minecraft:torch 或 minecraft:netherite_pickaxe{CanDestroy:[&#34;minecraft:stone&#34;]}'
                               '\n> ')
         gift_total: int = int(input('-请输入生成CDKey数量\n> '))
         try:
