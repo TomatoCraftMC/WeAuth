@@ -8,6 +8,8 @@
 from weauth.exceptions.exceptions import *
 from weauth.database import DB
 from weauth.mc_server import MCServerConnection
+from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
+from weauth.cdkey import CDKey
 class CommandLine:
     def __init__(self):
         ...
@@ -15,12 +17,21 @@ class CommandLine:
     @staticmethod
     def command_node(command: str, open_id: str, responses: list,game_sever:MCServerConnection) -> (int, str):
         raw_command = command
-        if raw_command[0] == '#':
+        if raw_command[0] == '#':  # 白名单添加入口
             welcome = responses[0]
             return CommandLine.add_new_player_entry(raw_id=raw_command[1:], open_id=open_id, welcome=welcome,
                                                     game_sever=game_sever)
-        elif raw_command[0] == '@':
+        elif raw_command[0] == '@':  # 管理员发送指令入口
             return CommandLine.admin_command(raw_command=command[1:], open_id=open_id,game_sever=game_sever)
+        elif raw_command[0] == '$':  # CDKey兑换入口
+            cdkey = raw_command[1:]
+            if len(cdkey) != CDKEY_LENGTH_ONE_PIECE * 4 + 3:
+                return 0, 'CDKey无效'
+            player_id = DB.get_player_id(openid=open_id)
+            if player_id is None:
+                return 0, '您的微信号还未绑定游戏ID'
+            msg = CDKey.cdkey_cli(cdkey=cdkey, player_id=player_id, game_server=game_sever)
+            return 0, msg
         else:
             return -1, '0'
 

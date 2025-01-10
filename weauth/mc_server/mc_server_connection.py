@@ -35,7 +35,6 @@ class MCServerConnection:
             return return_code
 
 
-    # @staticmethod
     def push_command(self,command:str) -> (int,str):
         server_type = self.server_type
         if server_type.upper() == "MCSM":

@@ -13,8 +13,9 @@ PACKAGE_NAME = 'weauth'
 CLI_COMMAND = PACKAGE_NAME
 
 # WeAuth Version Storage
-VERSION_PYPI: str = '1.4.1'  #
-VERSION: str = '1.4.1'  # 版本号
+VERSION_PYPI: str = '1.5.0'  #
+VERSION: str = '1.5.0'  # 版本号
+
 
 
 # URLs
@@ -22,3 +23,5 @@ GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
 GITEE_VERSION_URL = r'https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION'
 DOCUMENTATION_URL = r'https://github.com/TomatoCraftMC/WeAuth/blob/main/README.md'
 
+# CDKey
+CDKEY_LENGTH_ONE_PIECE = 4
