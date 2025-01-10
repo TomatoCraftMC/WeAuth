@@ -101,6 +101,7 @@ weauth
 -r [route]  # web服务路由。默认为“/wx”
 -w  # 微信服务器验证模式，需配合 -t指令使用
 -t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-g  # 进入CDKey生成系统
 -op [ID]  # 将ID加入ops.yaml中
 -test  # 以测试模式启动，仅用于开发测试
 ```   
