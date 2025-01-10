@@ -17,6 +17,7 @@ VERSION_PYPI: str = '1.5.0'  #
 VERSION: str = '1.5.0'  # 版本号
 
 
+
 # URLs
 GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
 GITEE_VERSION_URL = r'https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION'
