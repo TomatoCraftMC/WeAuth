@@ -49,3 +49,19 @@ class PlayerIdNotExist(Exception):
 
     def __str__(self):
         return self.msg
+
+
+class CDKeyNotFound(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
+
+class CDKeyNoLeft(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
