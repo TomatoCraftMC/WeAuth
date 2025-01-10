@@ -91,7 +91,7 @@ class CDKey:
         gift_comment: str = input('-请输入礼物注释,并按回车确认。例如: 火把/钻石/给小张的礼物\n> ')
         gift_num: int = int(input('-请输入单次兑换所给予的数量,并按回车确认。例如: 6\n> '))
         gift_arg: str = input('-请输入礼物,可以带有NBT标签。例如：\n'
-                              r'minecraft:torch 或minecraft:netherite_pickaxe{CanDestroy:[&#34;minecraft:stone&#34;]}'
+                              r'minecraft:torch 或 minecraft:netherite_pickaxe{CanDestroy:[&#34;minecraft:stone&#34;]}'
                               '\n> ')
         gift_total: int = int(input('-请输入生成CDKey数量\n> '))
         try:
