@@ -20,7 +20,7 @@ class CDKey:
 
     @staticmethod
     def cdkey_cli(cdkey: str, player_id: str, game_server: MCServerConnection) -> str:
-        return_code = game_server.test_connection()
+        return_code, msg = game_server.test_connection()
         if return_code != 200:
             return '-无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
         try:
