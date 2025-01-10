@@ -175,6 +175,23 @@ class DB:
             raise PlayerIdNotExist('玩家ID不存在')
         pass
 
+    @staticmethod
+    def get_player_id(openid: str) -> str:
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
+        for item in cur:
+            if item[1] == openid:
+                player_id = item[0]
+                cur.close()
+                conn.close()
+                return player_id
+        cur.close()
+        conn.close()
+        return None
+
+
+
 
 
 # if __name__=='__main__':
