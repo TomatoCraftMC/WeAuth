@@ -7,6 +7,8 @@
 # file: cdkey.py
 import sys
 
+from more_itertools.recipes import totient
+
 from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
 import string
 import secrets
@@ -18,7 +20,7 @@ class CDKey:
         self.cdkey = cdkey
 
     @staticmethod
-    def create_gift_interface() -> None:
+    def create_gift_entrypoint() -> None:
         gift_comment: str = input('-请输入礼物注释,并按回车确认。例如: 火把/钻石/给小张的礼物\n')
         gift_num: int = int(input('-请输入单次兑换所给予的数量,并按回车确认。例如: 6\n'))
         gift_arg: str = input('-请输入礼物,可以带有NBT标签。例如：\n'
@@ -84,10 +86,35 @@ class CDKey:
             raise ValueError("CDKEY_LENGTH_ONE_PIECE must be defined and should be a positive integer")
 
     @staticmethod
-    def generate_cdkey(gift_hash: str) -> None:
+    def generate_cdkey(gift_hash: str, gift_total: int) -> None:
+        cdkey_list: list[str] = []
+        for i in range(gift_total):
+            cdkey_list.append(CDKey.generate_cdkey_one())
+        new_dict = {gift_hash: cdkey_list}
+        try:
+            with open('cdkey.yaml', 'r', encoding='utf-8') as f:
+                result = yaml.load(f.read(), Loader=yaml.FullLoader)
+            try:
+                result[gift_hash].extend(cdkey_list)
+                with open('cdkey.yaml', 'w+') as f:
+                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+            except KeyError:
+                result.update(new_dict)
+                with open('cdkey.yaml', 'w+') as f:
+                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+
+        except FileNotFoundError:
+            with open('cdkey.yaml', 'w+') as f:
+                yaml.dump(data=new_dict, stream=f, allow_unicode=True, sort_keys=False)
+
+        #
+        #
+        # with open('cdkey.yaml', 'r') as f:
+        #     result = yaml.load(f.read(), Loader=yaml.FullLoader)
 
         pass
 
 if __name__ == '__main__':
-    text = r'minecraft:grass_blck'
-    CDKey.create_gift(gift_arg=text, gift_num=6, gift_total=1, gift_comment='草方块')
+    gift = r'0012ff1'
+    total = 5
+    CDKey.generate_cdkey(gift, total)
