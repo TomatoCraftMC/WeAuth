@@ -44,7 +44,7 @@ class CDKey:
                 gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
                 return '成功兑换！礼物已成功发送'
             elif game_server.server_type.upper() == 'RCON' and msg[:7] == 'Unknown':  # gift_arg 不合法
-                return '礼物参数设置异常，请联系管理员'
+                return '物品ID设置异常，请联系管理员'
             else:
                 gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
                 return '礼物已发送, 若未在线则无法收到礼物。'
@@ -90,7 +90,7 @@ class CDKey:
     def create_gift_entrypoint() -> None:
         gift_comment: str = input('-请输入礼物注释,并按回车确认。例如: 火把/钻石/给小张的礼物\n> ')
         gift_num: int = int(input('-请输入单次兑换所给予的数量,并按回车确认。例如: 6\n> '))
-        gift_arg: str = input('-请输入礼物,可以带有NBT标签。例如：\n'
+        gift_arg: str = input('-请输入礼物,即Minecraft的物品ID,可以带有NBT标签。例如：\n'
                               r'minecraft:torch 或 minecraft:netherite_pickaxe{CanDestroy:[&#34;minecraft:stone&#34;]}'
                               '\n> ')
         gift_total: int = int(input('-请输入生成CDKey数量\n> '))
