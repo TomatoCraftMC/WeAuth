@@ -168,3 +168,5 @@ config.yaml
 /requirements.txt
 /config.backup.yaml
 /weauth/cdkey/gift_list.yaml
+/weauth/cdkey/cdkey.yaml
+*.yaml

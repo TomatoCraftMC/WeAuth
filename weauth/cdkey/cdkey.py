@@ -32,8 +32,9 @@ class CDKey:
                                           gift_num=gift_num,
                                           gift_total=gift_total,
                                           gift_comment=gift_comment)
-            CDKey.generate_cdkey(gift_hash=gift_hash)
-            print('-CDKey生成成功!')
+            CDKey.generate_cdkey(gift_hash=gift_hash,
+                                 gift_total=gift_total)
+            print('-CDKey生成成功! 保存在./cdkey.yaml当中')
             sys.exit(0)
         except Exception:
             print('-生成失败')
