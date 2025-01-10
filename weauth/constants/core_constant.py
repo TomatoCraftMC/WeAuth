@@ -22,3 +22,5 @@ GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
 GITEE_VERSION_URL = r'https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION'
 DOCUMENTATION_URL = r'https://github.com/TomatoCraftMC/WeAuth/blob/main/README.md'
 
+# CDKey
+CDKEY_LENGTH_ONE_PIECE = 4

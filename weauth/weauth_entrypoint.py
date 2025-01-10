@@ -9,6 +9,7 @@ import platform
 import sys
 from weauth.constants import core_constant
 from weauth.constants import exit_code
+from weauth.cdkey import CDKey
 
 __all__ = ['entrypoint']
 
@@ -47,6 +48,8 @@ def entrypoint():
 	parser.add_argument('-t','--token',help='验证用token',default='-1',type=str)
 	parser.add_argument('-op', '--op', help='新增op', default='-1', type=str)
 	parser.add_argument('-r', '--url', help='路由地址', default='/wx', type=str)
+	parser.add_argument('-g', '--gift', help='生成CDKey',
+						action='store_true', default=False)
 	args = parser.parse_args()
 	if args.url[0]!='/':
 		print("路由地址不合法,请检查后重新输入")
@@ -71,6 +74,11 @@ def entrypoint():
 		print('-正在添加玩家{}为WeAuth管理员'.format(args.op))
 		add_op(op_id=args.op)
 		sys.exit(0)
+
+	if args.gift:
+		CDKey.create_gift_entrypoint()
+		sys.exit(0)
+
 
 	main(args)
 
