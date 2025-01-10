@@ -11,6 +11,8 @@ name: Upload Python Package
 on:
   push:
     branches: [ "main", "feat/*", "hotfix/*", "release/*", "dev" ]
+    paths:
+      - "weauth/**"
 env:
   IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
