@@ -38,29 +38,35 @@ class CDKey:
             if return_code != 200:
                 return '礼物发送失败'
             elif game_server.server_type.upper() == 'RCON' and msg[:2] == 'No':
-                return '礼物已发送, 但玩家不在线'
+                return '玩家不在线，请上线后再兑换。\nCDKey未兑换。'
             elif game_server.server_type.upper() == 'RCON' and msg[:4] == 'Gave':
-                return '礼物已成功发送'
+                gift_hash = CDKey.check_gift_hash(cdkey=cdkey, is_delete=True)
+                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+                return '成功兑换！礼物已成功发送'
+            elif game_server.server_type.upper() == 'RCON' and msg[:7] == 'Unknown':  # gift_arg 不合法
+                return '礼物参数设置异常，请联系管理员'
             else:
-                return '礼物已发送, 若未在线则无法收到礼物'
+                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+                return '礼物已发送, 若未在线则无法收到礼物。'
 
         except Exception as e:
             return '礼物发送失败'
 
     @staticmethod
-    def check_gift_hash(cdkey: str) -> str:
+    def check_gift_hash(cdkey: str, is_delete=False) -> str:
         with open('cdkey.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         for key in result.keys():
-            if cdkey in result[key]:
-                result[key].remove(cdkey)
-                with open('cdkey.yaml', 'w+') as f:
-                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+            if cdkey in result[key]:  # 查找与删除应该分离
+                if is_delete:
+                    result[key].remove(cdkey)
+                    with open('cdkey.yaml', 'w+') as f:
+                        yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
                 return key
         raise CDKeyNotFound('未找到该CDKey')
 
     @staticmethod
-    def check_gift_arg_and_num(gift_hash: str) -> (str, int):
+    def check_gift_arg_and_num(gift_hash: str, is_delete=False) -> (str, int):
         with open('gift_list.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         try:
@@ -69,21 +75,15 @@ class CDKey:
 
             gift_arg = result[gift_hash]['gift_arg']
             gift_num = result[gift_hash]['gift_num']
-            result[gift_hash]['gift_total'] -= 1
-            with open('gift_list.yaml', 'w+') as f:
-                yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+            if is_delete:
+                result[gift_hash]['gift_total'] -= 1
+                with open('gift_list.yaml', 'w+') as f:
+                    yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
             return gift_arg, int(gift_num)
         except KeyError:
             raise CDKeyNotFound('hash无对应礼物')
         except FileNotFoundError:
             raise CDKeyNotFound('无gift_list_yaml文件')
-
-
-
-
-
-
-
 
 
     @staticmethod
