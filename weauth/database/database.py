@@ -91,38 +91,36 @@ class DB:
 
 
     @staticmethod
-    def search_admin(openid):
-
+    def search_admin(openid) -> bool:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
+        try:
+            with open('./ops.yaml', 'r') as f:
+                op_list = yaml.load(f.read(), Loader=yaml.FullLoader)['ops']
+        except ConfigFileNotFound:
+            print('-未找到op管理员列表文件')
+            cur.close()
+            conn.close()
+            return False
+        if len(op_list) == 0:
+            cur.close()
+            conn.close()
+            return False
+        upper_op_list = [item.upper() for item in op_list]
         cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
         for item in cur:
             user = item
             user_id = user[0]
-            op_list: list
-            try:
-                with open('./ops.yaml','r') as f:
-                    op_list = yaml.load(f.read(), Loader=yaml.FullLoader)['ops']
-            except ConfigFileNotFound:
-                print('-未找到op管理员列表文件')
+            if user_id.upper() in upper_op_list:
                 cur.close()
                 conn.close()
-                return -1
-            if len(op_list)==0:
-                cur.close()
-                conn.close()
-                return -1
-            for i in op_list:
-                if i.upper()==user_id.upper():
-                    cur.close()
-                    conn.close()
-                    return 1
+                return True
             cur.close()
             conn.close()
-            return -1
+            return False
         cur.close()
         conn.close()
-        return -1
+        return False
 
     @staticmethod
     def check_database() -> None:

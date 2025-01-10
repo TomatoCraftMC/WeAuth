@@ -14,7 +14,6 @@ def add_op(op_id:str):
     if check_op_id_input(op_id):
         print('-输入ID不合法!')
         sys.exit(0)
-
     try:
         with open('ops.yaml','r') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
@@ -26,12 +25,9 @@ def add_op(op_id:str):
             }
             yaml.dump(data=context, stream=f, allow_unicode=True)
     except FileNotFoundError:
-        with open('ops.yaml','w') as f:
-            with open('ops.yaml', 'w') as f:
-                context = {
-                    'ops': [op_id]
-                }
-                yaml.dump(data=context, stream=f, allow_unicode=True)
+        with open('ops.yaml', 'w+') as f:
+            context = {'ops': [op_id]}
+        yaml.dump(data=context, stream=f, allow_unicode=True)
 def check_op_id_input(op_id:str)->bool:
     pattern = re.compile(r'\W')
     if re.search(pattern, op_id) is None:
