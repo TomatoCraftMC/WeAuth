@@ -120,4 +120,4 @@ class CommandLine:
 
             return 0,msg
         else:
-            return -1,'您不是管理员'
+            return -1, '您不是管理员'
