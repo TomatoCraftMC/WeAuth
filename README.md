@@ -113,7 +113,13 @@ weauth
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 # Licence
-WeAuth is released under the GPLv3.0 license.  
+
+WeAuth is released under the [GPLv3.0](LICENSE) license.   
+[pyyaml](https://github.com/yaml/pyyaml) : MIT   
+[tcping](https://github.com/zhengxiaowai/tcping) : MIT    
+[rcon](https://github.com/conqp/rcon): GPLv3   
+[Flask](https://github.com/pallets/flask/): BSD-3-Clause license  
+
 
 
 
