@@ -21,25 +21,23 @@ class AdminCLI:
     @staticmethod
     def admin_cli(command: str) -> (int, str):
         command_list = command.split()
-        if command_list[0] is 'op':
+        if command_list[0] == 'op':
             op_id = command_list[1]
             if add_op(op_id=op_id) != 0:
                 return 0, f'已成功添加 {op_id} 为WeAuth管理员'
             else:
                 return 0, '添加失败'
-        elif command_list[0] is 'sop':
-            command_list = command.split()
-            if command_list[0] is 'op':
+        elif command_list[0] == 'sop':
                 op_id = command_list[1]
                 if add_super_op(op_id=op_id) != 0:
                     return 0, f'已成功添加 {op_id} 为WeAuth超级管理员'
                 else:
                     return 0, '添加失败'
 
-        elif command_list[0] is 'v':
+        elif command_list[0] == 'v':
             msg = f'WeAuth version {VERSION}\nLICENSE: GPLv3\nProject Homepage: {GITHUB_URL}'
             return 0, msg
-        elif command_list[0] is 'g':
+        elif command_list[0] == 'g':
             pass
         else:
             return 0, None
