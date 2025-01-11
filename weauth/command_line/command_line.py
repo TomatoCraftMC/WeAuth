@@ -35,6 +35,11 @@ class CommandLine:
             msg = CDKey.cdkey_cli(cdkey=cdkey, player_id=player_id, game_server=game_sever)
             return 0, msg
         elif raw_command[0] == '!':  # 超级管理员入口
+            player_id = DB.get_player_id(openid=open_id)
+            if player_id is None:
+                return -1, '0'
+
+
             return AdminCLI.admin_cli(command=command[1:])
         else:
             return -1, '0'
