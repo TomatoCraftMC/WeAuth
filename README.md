@@ -32,7 +32,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
  - [ ] https支持
-- [ ] 可直接在微信公众号运行WeAuth指令
+- [x] 可直接在微信公众号运行WeAuth指令
 - [ ] log系统
 ### 桥梁
  - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
