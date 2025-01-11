@@ -35,24 +35,21 @@ class CDKey:
         except CDKeyNoLeft:
             return 'CDKey已无剩余礼物可供兑换'
 
-        try:
-            return_code, msg = game_server.push_command(command=f'give {player_id} {gift_arg} {gift_num}')
-            if return_code != 200:
-                return '礼物发送失败'
-            elif game_server.server_type.upper() == 'RCON' and msg[:2] == 'No':
-                return '玩家不在线，请上线后再兑换。\nCDKey未兑换。'
-            elif game_server.server_type.upper() == 'RCON' and msg[:4] == 'Gave':
-                gift_hash = CDKey.check_gift_hash(cdkey=cdkey, is_delete=True)
-                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
-                return '成功兑换！礼物已成功发送'
-            elif game_server.server_type.upper() == 'RCON' and msg[:7] == 'Unknown':  # gift_arg 不合法
-                return '物品ID设置异常，请联系管理员'
-            else:
-                gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
-                return '礼物已发送, 若未在线则无法收到礼物。'
-
-        except Exception as e:
+        return_code, msg = game_server.push_command(command=f'give {player_id} {gift_arg} {gift_num}')
+        if return_code != 200:
             return '礼物发送失败'
+        elif game_server.server_type.upper() == 'RCON' and msg[:2] == 'No':
+            return '玩家不在线，请上线后再兑换。\nCDKey未兑换。'
+        elif game_server.server_type.upper() == 'RCON' and msg[:4] == 'Gave':
+            gift_hash = CDKey.check_gift_hash(cdkey=cdkey, is_delete=True)
+            gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+            return '成功兑换！礼物已成功发送'
+        elif game_server.server_type.upper() == 'RCON' and msg[:7] == 'Unknown':  # gift_arg 不合法
+            return '物品ID设置异常，请联系管理员'
+        else:
+            gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash, is_delete=True)
+            return '礼物已发送, 若未在线则无法收到礼物。'
+
 
     @staticmethod
     def check_gift_hash(cdkey: str, is_delete=False) -> str:
