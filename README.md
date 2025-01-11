@@ -33,6 +33,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [ ] 执行定时脚本  
  - [ ] https支持
 - [ ] 可直接在微信公众号运行WeAuth指令
+- [ ] log系统
 ### 桥梁
  - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
  - [ ] 通过Flask与QQ机器人服务器交互  
