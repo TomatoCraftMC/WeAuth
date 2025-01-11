@@ -170,3 +170,4 @@ config.yaml
 /weauth/cdkey/gift_list.yaml
 /weauth/cdkey/cdkey.yaml
 *.yaml
+*.db

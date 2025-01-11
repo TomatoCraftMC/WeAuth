@@ -25,7 +25,9 @@ class CDKey:
             return '无法连接到游戏服务器,请联系管理员。\n您的CDKey暂未核销。'
         try:
             gift_hash = CDKey.check_gift_hash(cdkey=cdkey)
-            gift_arg, gift_num = CDKey.check_gift_arg_and_num(gift_hash=gift_hash)
+            gift_arg, gift_num, gift_valid = CDKey.check_gift_arg_and_num(gift_hash=gift_hash)
+            if not gift_valid:
+                return '该CDKey已停用'
         except CDKeyNotFound:
             return 'CDKey无效'
         except FileNotFoundError:
@@ -66,20 +68,21 @@ class CDKey:
         raise CDKeyNotFound('未找到该CDKey')
 
     @staticmethod
-    def check_gift_arg_and_num(gift_hash: str, is_delete=False) -> (str, int):
+    def check_gift_arg_and_num(gift_hash: str, is_delete=False) -> (str, int, bool):
         with open('gift_list.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
         try:
             if result[gift_hash]['gift_total'] <= 0:
                 raise CDKeyNoLeft('CDKey已无剩余礼物可供兑换')
-
             gift_arg = result[gift_hash]['gift_arg']
             gift_num = result[gift_hash]['gift_num']
+            if not bool(result[gift_hash]['valid']):
+                return None, 0, False
             if is_delete:
                 result[gift_hash]['gift_total'] -= 1
                 with open('gift_list.yaml', 'w+') as f:
                     yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
-            return gift_arg, int(gift_num)
+            return gift_arg, int(gift_num), True
         except KeyError:
             raise CDKeyNotFound('hash无对应礼物')
         except FileNotFoundError:
