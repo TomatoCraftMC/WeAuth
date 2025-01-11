@@ -18,12 +18,9 @@ def add_op(op_id: str) -> int:
     try:
         with open('ops.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
-        op_list = result['ops']
-        op_list.append(op_id)
+        result['ops'].append(op_id)
         with open('ops.yaml','w') as f:
-            context = {
-                'ops':op_list
-            }
+            context = result
             yaml.dump(data=context, stream=f, allow_unicode=True)
         return 0
     except FileNotFoundError:
@@ -78,7 +75,8 @@ def add_super_op(op_id: str) -> int:
             yaml.dump(data=context, stream=f, allow_unicode=True)
         return 0
 
-
-if __name__ == '__main__':
-    add_super_op('wc2223442w')
-    # add_op('1212d')
+# if __name__ == '__main__':
+#     # add_op('1212d')
+#     # add_op('12222212d')
+#     # add_super_op('9902')
+#     # add_op('12222212dfnfn')
