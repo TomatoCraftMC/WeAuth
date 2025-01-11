@@ -113,11 +113,11 @@ class CommandLine:
         return 0, message
 
     @staticmethod
-    def admin_command(raw_command: str, open_id: str,game_sever:MCServerConnection):
-        if DB.search_admin(openid=open_id) == 1:
+    def admin_command(raw_command: str, open_id: str, game_sever: MCServerConnection) -> (int, str):
+        if DB.search_admin(openid=open_id):
             print('\033[0;32;40m-管理员通过公众号发出指令!\033[0m')
             return_code,msg = DB.push_to_server_command(command=raw_command,game_server=game_sever)
 
             return 0,msg
         else:
-            return -1,'您不是管理员'
+            return -1, '您不是管理员'
