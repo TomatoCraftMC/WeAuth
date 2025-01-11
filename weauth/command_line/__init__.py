@@ -6,3 +6,4 @@
 # ide： PyCharm
 # file: __init__.py.py
 from .command_line import CommandLine
+from .admin_cli import AdminCLI
