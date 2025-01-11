@@ -91,35 +91,63 @@ class DB:
 
 
     @staticmethod
-    def search_admin(openid) -> bool:
+    def search_admin(openid, is_super=False) -> bool:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         try:
             with open('./ops.yaml', 'r') as f:
                 op_list = yaml.load(f.read(), Loader=yaml.FullLoader)['ops']
+                super_list = yaml.load(f.read(), Loader=yaml.FullLoader)['super_ops']
         except FileNotFoundError:
             print('-未找到op管理员列表文件')
             cur.close()
             conn.close()
             return False
-        if len(op_list) == 0:
+        if len(op_list) and is_super is False:
             cur.close()
             conn.close()
             return False
-        upper_op_list = [item.upper() for item in op_list]
-        cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
-        for item in cur:
-            user = item
-            user_id = user[0]
-            if user_id.upper() in upper_op_list:
+        elif len(super_list) and is_super is True:
+            cur.close()
+            conn.close()
+            return False
+        if not is_super:
+            upper_op_list = [item.upper() for item in op_list]
+            cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
+            for item in cur:
+                user = item
+                user_id = user[0]
+                if user_id.upper() in upper_op_list:
+                    cur.close()
+                    conn.close()
+                    return True
                 cur.close()
                 conn.close()
-                return True
+                return False
             cur.close()
             conn.close()
             return False
+        else:
+            upper_super_list = [item.upper() for item in super_list]
+            cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
+            for item in cur:
+                user = item
+                user_id = user[0]
+                if user_id.upper() in upper_super_list:
+                    cur.close()
+                    conn.close()
+                    return True
+                cur.close()
+                conn.close()
+                return False
+            cur.close()
+            conn.close()
+            return False
+
+
         cur.close()
         conn.close()
+
         return False
 
     @staticmethod

@@ -10,6 +10,8 @@ from weauth.database import DB
 from weauth.mc_server import MCServerConnection
 from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
 from weauth.cdkey import CDKey
+
+
 class CommandLine:
     def __init__(self):
         ...
@@ -32,6 +34,13 @@ class CommandLine:
                 return 0, '您的微信号还未绑定游戏ID'
             msg = CDKey.cdkey_cli(cdkey=cdkey, player_id=player_id, game_server=game_sever)
             return 0, msg
+        elif raw_command[0] == '!':  # 超级管理员入口
+            player_id = DB.get_player_id(openid=open_id)
+            if player_id is None:
+                return -1, '0'
+
+            from weauth.command_line import AdminCLI
+            return AdminCLI.admin_cli(command=command[1:])
         else:
             return -1, '0'
 
