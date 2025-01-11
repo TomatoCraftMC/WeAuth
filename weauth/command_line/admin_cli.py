@@ -39,7 +39,7 @@ class AdminCLI:
         elif command_list[0] == 'g':
             pass
         else:
-            return 0, None
+            return -1, None
 
 
 if __name__ == '__main__':
