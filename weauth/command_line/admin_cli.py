@@ -8,7 +8,6 @@
 from weauth.constants.core_constant import VERSION, GITHUB_URL
 from weauth.utils.add_op import add_op, add_super_op
 
-
 class AdminCLI:
     def __init__(self):
         pass

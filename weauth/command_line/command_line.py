@@ -10,7 +10,7 @@ from weauth.database import DB
 from weauth.mc_server import MCServerConnection
 from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
 from weauth.cdkey import CDKey
-from weauth.command_line import AdminCLI
+
 
 class CommandLine:
     def __init__(self):
@@ -39,7 +39,7 @@ class CommandLine:
             if player_id is None:
                 return -1, '0'
 
-
+            from weauth.command_line import AdminCLI
             return AdminCLI.admin_cli(command=command[1:])
         else:
             return -1, '0'
