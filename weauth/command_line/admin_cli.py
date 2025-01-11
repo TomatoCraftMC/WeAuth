@@ -22,13 +22,13 @@ class AdminCLI:
         command_list = command.split()
         if command_list[0] == 'op':
             op_id = command_list[1]
-            if add_op(op_id=op_id) != 0:
+            if add_op(op_id=op_id) == 0:
                 return 0, f'已成功添加 {op_id} 为WeAuth管理员'
             else:
                 return 0, '添加失败'
         elif command_list[0] == 'sop':
                 op_id = command_list[1]
-                if add_super_op(op_id=op_id) != 0:
+                if add_super_op(op_id=op_id) == 0:
                     return 0, f'已成功添加 {op_id} 为WeAuth超级管理员'
                 else:
                     return 0, '添加失败'
