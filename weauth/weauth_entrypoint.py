@@ -50,6 +50,7 @@ def entrypoint():
 	parser.add_argument('-r', '--url', help='路由地址', default='/wx', type=str)
 	parser.add_argument('-g', '--gift', help='生成CDKey',
 						action='store_true', default=False)
+	parser.add_argument('-sop', '--sop', help='新增超级管理员', default='-1', type=str)
 	args = parser.parse_args()
 	if args.url[0]!='/':
 		print("路由地址不合法,请检查后重新输入")
@@ -73,6 +74,12 @@ def entrypoint():
 		from weauth.utils.add_op import add_op
 		print('-正在添加玩家{}为WeAuth管理员'.format(args.op))
 		add_op(op_id=args.op)
+		sys.exit(0)
+
+	if args.sop != '-1':
+		from weauth.utils.add_op import add_super_op
+		print('-正在添加玩家{}为WeAuth超级管理员'.format(args.sop))
+		add_super_op(op_id=args.sop)
 		sys.exit(0)
 
 	if args.gift:
