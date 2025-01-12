@@ -10,7 +10,7 @@ from weauth.database import DB
 from weauth.mc_server import MCServerConnection
 from weauth.constants.core_constant import CDKEY_LENGTH_ONE_PIECE
 from weauth.cdkey import CDKey
-
+import yaml
 
 class CommandLine:
     def __init__(self):
@@ -36,11 +36,12 @@ class CommandLine:
             return 0, msg
         elif raw_command[0] == '!':  # 超级管理员入口
             player_id = DB.get_player_id(openid=open_id)
-            if player_id is None:
+            if CommandLine.search_super_op(open_id=open_id):
+                from weauth.command_line import AdminCLI
+                return AdminCLI.admin_cli(command=command[1:])
+            else:
                 return -1, '0'
 
-            from weauth.command_line import AdminCLI
-            return AdminCLI.admin_cli(command=command[1:])
         else:
             return -1, '0'
 
@@ -123,10 +124,46 @@ class CommandLine:
 
     @staticmethod
     def admin_command(raw_command: str, open_id: str, game_sever: MCServerConnection) -> (int, str):
-        if DB.search_admin(openid=open_id):
+        if CommandLine.search_op(open_id=open_id):
             print('\033[0;32;40m-管理员通过公众号发出指令!\033[0m')
             return_code,msg = DB.push_to_server_command(command=raw_command,game_server=game_sever)
 
             return 0,msg
         else:
             return -1, '您不是管理员'
+
+    @staticmethod
+    def search_op(open_id: str) -> bool:
+        player_id = DB.get_player_id(openid=open_id)
+        if player_id is None:
+            return False
+        try:
+            with open('ops.yaml', 'r', encoding='utf-8') as f:
+                result = yaml.load(f.read(), Loader=yaml.FullLoader)
+            op_list = result['ops']
+        except FileNotFoundError:
+            return False
+        except KeyError:
+            return False
+
+        if player_id.upper() in [str.upper(i) for i in op_list]:
+            return True
+        return False
+
+    @staticmethod
+    def search_super_op(open_id: str) -> bool:
+        player_id = DB.get_player_id(openid=open_id)
+        if player_id is None:
+            return False
+        try:
+            with open('ops.yaml', 'r', encoding='utf-8') as f:
+                result = yaml.load(f.read(), Loader=yaml.FullLoader)
+            super_op_list = result['super_ops']
+        except FileNotFoundError:
+            return False
+        except KeyError:
+            return False
+
+        if player_id.upper() in [str.upper(i) for i in super_op_list]:
+            return True
+        return False

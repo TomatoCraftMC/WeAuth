@@ -32,7 +32,8 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
  - [ ] https支持
-- [ ] 可直接在微信公众号运行WeAuth指令
+- [x] 可直接在微信公众号运行WeAuth指令
+- [ ] log系统
 ### 桥梁
  - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
  - [ ] 通过Flask与QQ机器人服务器交互  
@@ -102,7 +103,8 @@ weauth
 -w  # 微信服务器验证模式，需配合 -t指令使用
 -t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
 -g  # 进入CDKey生成系统
--op [ID]  # 将ID加入ops.yaml中
+-op [ID]  # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
+-sop [id] # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 -test  # 以测试模式启动，仅用于开发测试
 ```   
 在绝大多数情况下，您无需输入任何参数，直接使用`weauth`启动即可。  
@@ -111,6 +113,17 @@ weauth
 ## [MCSManager后台配置](docs/MCSManagerConfig.md)
 ## [rcon设置](docs/Rcon.md)
 ## [CDKey系统使用指南](docs/Cdkey.md)
+
+## 在微信公众号发送WeAuth指令
+
+> WeAuth指令使用!开头, 只有超级管理员可以使用该功能
+
+```shell
+!op [ID]   # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
+!sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
+!v  # 查看WeAuth版本信息
+!g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 暂未支持
+```
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 # Licence
