@@ -9,6 +9,7 @@
 import os
 
 __CI_BUILD_NUM = None
+BUILD_TIME = None
 
 NAME_SHORT = 'WeAuth'
 NAME = 'WeAuth'
