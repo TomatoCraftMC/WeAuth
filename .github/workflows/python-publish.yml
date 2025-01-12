@@ -58,6 +58,9 @@ jobs:
       - name: Get Timestamp Action
         uses: nanzm/get-time-action@v2.0
         id: time
+        with:
+          timeZone: UTC+8
+          format: 'YYYY-MM-DD-HH-mm-ss'
 
       - name: Modify and get version information
         id: version
