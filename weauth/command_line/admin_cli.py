@@ -32,12 +32,11 @@ class AdminCLI:
                     return 0, f'已成功添加 {op_id} 为WeAuth超级管理员'
                 else:
                     return 0, '添加失败'
-
         elif command_list[0] == 'v':
             msg = f'WeAuth version {VERSION}\nLICENSE: GPLv3\nProject Homepage: {GITHUB_URL}'
             return 0, msg
         elif command_list[0] == 'g':
-            pass
+            return 0, '暂未支持'
         else:
             return -1, None
 
