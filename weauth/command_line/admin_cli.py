@@ -5,7 +5,7 @@
 # datetime： 2025/1/11 08:35 
 # ide： PyCharm
 # file: admin_cli.py
-from weauth.constants.core_constant import VERSION, GITHUB_URL
+from weauth.constants.core_constant import VERSION, GITHUB_URL, BUILD_TIME
 from weauth.utils.add_op import add_op, add_super_op
 from weauth.cdkey import CDKey
 
@@ -34,7 +34,7 @@ class AdminCLI:
                 else:
                     return 0, '添加失败'
         elif command_list[0] == 'v':
-            msg = f'WeAuth version {VERSION}\nLICENSE: GPLv3\nProject Homepage: {GITHUB_URL}'
+            msg = f'WeAuth version {VERSION}\nBuild time: {BUILD_TIME}z\nLICENSE: GPLv3\nProject Homepage: {GITHUB_URL}'
             return 0, msg
         elif command_list[0] == 'g':
             if len(command_list) != 5:
