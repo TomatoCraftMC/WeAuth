@@ -37,7 +37,7 @@ class AdminCLI:
             msg = f'WeAuth version {VERSION}\nLICENSE: GPLv3\nProject Homepage: {GITHUB_URL}'
             return 0, msg
         elif command_list[0] == 'g':
-            if len(command_list) < 5:
+            if len(command_list) != 5:
                 return 0, '参数错误，正确用法:\n!g [mineID] [mineNum] [CDKeyNum] [Comment]'
             mine_id, mine_num, cdkey_num, comment = command_list[1], command_list[2], command_list[3], command_list[4]
             try:
@@ -53,7 +53,14 @@ class AdminCLI:
             msg = "\n".join(cdkey_list)
             return 0, msg
         else:
-            return -1, None
+            text = (f'错误命令！\n'
+                    f'WeAuth v{VERSION}\n【使用指南】\n'
+                    f'!v # 查看版本号\n\n'
+                    f'!op [ID] # 添加普通管理员\n\n'
+                    f'!sop [ID] # 添加超级管理员\n\n'
+                    f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
+                    f'# 生成CDKey')
+            return 0, text
 
 
 if __name__ == '__main__':
