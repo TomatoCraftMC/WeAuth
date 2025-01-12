@@ -40,6 +40,11 @@ class AdminCLI:
             if len(command_list) != 5:
                 return 0, '参数错误，正确用法:\n!g [mineID] [mineNum] [CDKeyNum] [Comment]'
             mine_id, mine_num, cdkey_num, comment = command_list[1], command_list[2], command_list[3], command_list[4]
+            if mine_num.isdigit() and cdkey_num.isdigit():
+                pass
+            else:
+                return 0, '参数错误，正确用法:\n!g [mineID] [mineNum] [CDKeyNum] [Comment]'
+
             try:
                 gift_hash = CDKey.create_gift(gift_arg=mine_id,
                                               gift_num=int(mine_num),
@@ -48,7 +53,7 @@ class AdminCLI:
                 cdkey_list = CDKey.generate_cdkey(gift_hash=gift_hash,
                                                   gift_total=int(cdkey_num), is_feedback=True)
             except Exception:
-                return 0, '生成失败，请重新检查输入'
+                return 0, '生成失败，请联系管理员'
 
             msg = "\n".join(cdkey_list)
             return 0, msg
