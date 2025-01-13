@@ -9,6 +9,7 @@
 import os
 
 __CI_BUILD_NUM = None
+BUILD_TIME = None
 
 NAME_SHORT = 'WeAuth'
 NAME = 'WeAuth'
@@ -16,8 +17,8 @@ PACKAGE_NAME = 'weauth'
 CLI_COMMAND = PACKAGE_NAME
 
 # WeAuth Version Storage
-VERSION_PYPI: str = '1.5.3'
-VERSION: str = '1.5.3'
+VERSION_PYPI: str = '1.5.4'
+VERSION: str = '1.5.4'
 
 
 # URLs

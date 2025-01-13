@@ -13,6 +13,7 @@ import yaml
 import hashlib
 from weauth.mc_server import MCServerConnection
 from weauth.exceptions import *
+from typing import Optional
 
 class CDKey:
     def __init__(self, cdkey: str):
@@ -154,7 +155,7 @@ class CDKey:
             raise ValueError("CDKEY_LENGTH_ONE_PIECE must be defined and should be a positive integer")
 
     @staticmethod
-    def generate_cdkey(gift_hash: str, gift_total: int) -> None:
+    def generate_cdkey(gift_hash: str, gift_total: int, is_feedback=False) -> Optional[list]:
         cdkey_list: list[str] = []
         for i in range(gift_total):
             cdkey_list.append(CDKey.generate_cdkey_one())
@@ -166,14 +167,23 @@ class CDKey:
                 result[gift_hash].extend(cdkey_list)
                 with open('cdkey.yaml', 'w+') as f:
                     yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+                if is_feedback:
+                    return cdkey_list
+                return None
             except KeyError:
                 result.update(new_dict)
                 with open('cdkey.yaml', 'w+') as f:
                     yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
+                if is_feedback:
+                    return cdkey_list
+                return None
 
         except FileNotFoundError:
             with open('cdkey.yaml', 'w+') as f:
                 yaml.dump(data=new_dict, stream=f, allow_unicode=True, sort_keys=False)
+            if is_feedback:
+                return cdkey_list
+            return None
 
 
 if __name__ == '__main__':

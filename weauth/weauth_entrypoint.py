@@ -57,8 +57,8 @@ def entrypoint():
 		sys.exit(0)
 
 	if args.version:
-		print('WeAuth version {}\nLICENSE: GPLv3\nProject Homepage: {}'
-			  .format(core_constant.VERSION,core_constant.GITHUB_URL))
+		print('WeAuth version {}\nBuild time: {}z\nLICENSE: GPLv3\nProject Homepage: {}'
+			  .format(core_constant.VERSION, core_constant.BUILD_TIME, core_constant.GITHUB_URL))
 		sys.exit(0)
 
 	if args.wechat_confirm:
