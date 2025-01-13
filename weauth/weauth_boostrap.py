@@ -5,7 +5,7 @@
 from email.policy import default
 import sys
 from http.client import responses
-
+from gevent import pywsgi
 
 # import click
 from weauth.listener import Listener
@@ -30,20 +30,21 @@ from weauth.mc_server import MCServerConnection
 def main(args) -> None:
     """应用程序入口"""
     print(" ")
-    print("      __        __      _         _   _     ")
-    print("      \ \      / /__   / \  _   _| |_| |__  ")
-    print("       \ \ /\ / / _ \ / _ \| | | | __| '_ \ ")
-    print("        \ V  V /  __// ___ \ |_| | |_| | | |")
-    print("         \_/\_/ \___/_/   \_\__,_|\__|_| |_|")
-    print("                                            ")
-    print("                 Version: {} \n".format(VERSION))
+    print("\033[32m      __        __      _         _   _     \033[0m")
+    print("\033[32m      \ \      / /__   / \  _   _| |_| |__  \033[0m")
+    print("\033[32m       \ \ /\ / / _ \ / _ \| | | | __| '_ \ \033[0m")
+    print("\033[32m        \ V  V /  __// ___ \ |_| | |_| | | |\033[0m")
+    print("\033[32m         \_/\_/ \___/_/   \_\__,_|\__|_| |_|\033[0m")
+    print("                 Version: {}".format(VERSION))
+    print("\033[34mWeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.\033[0m")
+    print("Project Homepage: {}\n".format(GITHUB_URL))
     port = args.port
     # 检查更新
-    print("-正在检查更新...\n")
+    print("-正在检查更新...")
     if check_for_update(VERSION) == 1:
         print("-当前为最新版本")
     else:
-        print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
+        print("-已有新版本,您可以使用 pip3 install --upgrade weauth 进行更新。")
     # 检查数据库
     DB.check_database()
     default_config = {
@@ -120,11 +121,18 @@ def main(args) -> None:
     responses = {
         'welcome': config['welcome']  # 玩家注册白名单成功
     }
-    # print(responses['welcome'])
+
+    # 创建Flask实例
+    print("-正在启动监听......\n")
     listener = Listener(wx_user_name=config['WxUserName'],responses=responses,url=url,game_server=game_server)
 
     # 核心监听程序运行
-    listener.wx_service.run(host='0.0.0.0', port=port)
+    server = pywsgi.WSGIServer(('0.0.0.0', int(port)), listener.wx_service)
+    print(f"-开始在 http://0.0.0.0:{port}{url} 进行监听")
+    server.serve_forever()
+
+    # 核心监听程序运行(flask自带web服务器)
+    # listener.wx_service.run(host='0.0.0.0', port=port)
 
 
 # 读取配置文件
