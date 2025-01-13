@@ -14,15 +14,13 @@ from weauth.command_line import CommandLine
 import sqlite3
 from weauth.mc_server import MCServerConnection
 
+
 class Listener:
     def __init__(self, wx_user_name, responses: dict,url:str,game_server:MCServerConnection):
-        print("-正在启动监听......\n")
         __responses = [responses['welcome']]
-
         self.xml_data = []
         self.WxUserName = wx_user_name
         self.wx_service = Flask(__name__)
-        print("-开始在'{}'监听".format(url))
         @self.wx_service.route(url,methods=['POST'])
         def wx():
             if request.method == 'POST':

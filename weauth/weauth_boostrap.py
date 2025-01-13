@@ -5,7 +5,7 @@
 from email.policy import default
 import sys
 from http.client import responses
-
+from gevent import pywsgi
 
 # import click
 from weauth.listener import Listener
@@ -120,11 +120,18 @@ def main(args) -> None:
     responses = {
         'welcome': config['welcome']  # 玩家注册白名单成功
     }
-    # print(responses['welcome'])
+
+    # 创建Flask实例
+    print("-正在启动监听......\n")
     listener = Listener(wx_user_name=config['WxUserName'],responses=responses,url=url,game_server=game_server)
 
     # 核心监听程序运行
-    listener.wx_service.run(host='0.0.0.0', port=port)
+    server = pywsgi.WSGIServer(('0.0.0.0', int(port)), listener.wx_service)
+    print(f"-开始在 http://0.0.0.0:{port}{url} 进行监听")
+    server.serve_forever()
+
+    # 核心监听程序运行(flask自带web服务器)
+    # listener.wx_service.run(host='0.0.0.0', port=port)
 
 
 # 读取配置文件
