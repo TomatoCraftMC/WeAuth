@@ -48,7 +48,7 @@ weauth -g
 兑换完成后，`cdkey.yaml`中的兑换码会被删除，`gift_list.yaml`中的`gift_total`会自动减1。  
 若兑换时`gift_total`已小于等于0，则会提醒兑换失败。
 
-### valid 参数（暂未上线）
+### valid 参数
 
 你可以设置`gift_list.yaml`中的`valid`为`false`（小写，yaml文件格式要求）  
 这样，该礼物对应的所有兑换码会被拒绝兑换。
