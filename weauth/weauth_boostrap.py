@@ -30,20 +30,21 @@ from weauth.mc_server import MCServerConnection
 def main(args) -> None:
     """应用程序入口"""
     print(" ")
-    print("      __        __      _         _   _     ")
-    print("      \ \      / /__   / \  _   _| |_| |__  ")
-    print("       \ \ /\ / / _ \ / _ \| | | | __| '_ \ ")
-    print("        \ V  V /  __// ___ \ |_| | |_| | | |")
-    print("         \_/\_/ \___/_/   \_\__,_|\__|_| |_|")
-    print("                                            ")
-    print("                 Version: {} \n".format(VERSION))
+    print("\033[32m      __        __      _         _   _     \033[0m")
+    print("\033[32m      \ \      / /__   / \  _   _| |_| |__  \033[0m")
+    print("\033[32m       \ \ /\ / / _ \ / _ \| | | | __| '_ \ \033[0m")
+    print("\033[32m        \ V  V /  __// ___ \ |_| | |_| | | |\033[0m")
+    print("\033[32m         \_/\_/ \___/_/   \_\__,_|\__|_| |_|\033[0m")
+    print("                 Version: {}".format(VERSION))
+    print("\033[34mWeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.\033[0m")
+    print("Project Homepage: {}\n".format(GITHUB_URL))
     port = args.port
     # 检查更新
-    print("-正在检查更新...\n")
+    print("-正在检查更新...")
     if check_for_update(VERSION) == 1:
         print("-当前为最新版本")
     else:
-        print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
+        print("-已有新版本,您可以使用 pip3 install --upgrade weauth 进行更新。")
     # 检查数据库
     DB.check_database()
     default_config = {
