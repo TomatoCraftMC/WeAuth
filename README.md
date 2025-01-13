@@ -133,7 +133,7 @@ WeAuth is released under the [GPLv3.0](LICENSE) license.
 [tcping](https://github.com/zhengxiaowai/tcping) : MIT    
 [rcon](https://github.com/conqp/rcon): GPLv3   
 [Flask](https://github.com/pallets/flask/): BSD-3-Clause license  
-
+[MCDReforged](https://github.com/MCDReforged/MCDReforged): LGPLv3
 
 
 
