@@ -42,8 +42,9 @@ class Listener:
                 elif type_of_message == 1:  # 取消订阅
                     self.xml_data = parseString(data).documentElement
                     open_id = self.xml_data.getElementsByTagName("FromUserName")[0].childNodes[0].data
-                    is_openid_player, player_id = DB.search(open_id)
-                    if is_openid_player == 1:   # 取消订阅的人是玩家
+                    player_id = DB.get_player_id(open_id)
+                    # is_openid_player, player_id = DB.search(open_id)
+                    if player_id is not None:  # 取消订阅的人是玩家
                         try:
                             Listener.remove_whitelist(player_id, open_id,game_server=game_server)
                         except ServerConnectionFailed:

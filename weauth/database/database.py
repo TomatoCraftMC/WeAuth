@@ -11,6 +11,7 @@ import os
 from weauth.mc_server.mcsm_connect import MCSM
 from weauth.mc_server import MCServerConnection
 import yaml
+from typing import Optional
 
 class DB:
     def __init__(self):
@@ -76,7 +77,6 @@ class DB:
 
     @staticmethod
     def search(openid):
-         
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("SELECT * FROM players WHERE OPENID=?",(openid,))
@@ -142,7 +142,7 @@ class DB:
         pass
 
     @staticmethod
-    def get_player_id(openid: str) -> str:
+    def get_player_id(openid: str) -> Optional[str]:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
