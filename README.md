@@ -62,7 +62,8 @@ WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通�
 pip3 install weauth  # 使用官方Pypi源
 ```   
 
-### 推荐使用国内镜像源加速 (部分上游库使用官方源实在太慢)
+### 推荐使用国内镜像源加速
+
 ```shell
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
 ```   
