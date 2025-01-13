@@ -46,7 +46,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 
 ## WeAuth所需要的安装与运行环境  
 ```command
-Python>=3.8
+Python>=3.8 (推荐使用Python>=3.10)
 服务器的80端口必须可以被访问*
 ```   
 * 微信公众号只会通过80(http)或443(https)与开发者服务器进行交互。
@@ -61,9 +61,13 @@ WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通�
 ```shell
 pip3 install weauth  # 使用官方Pypi源
 ```   
+
+### 推荐使用国内镜像源加速 (部分上游库使用官方源实在太慢)
 ```shell
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
 ```   
+
+### 建议使用Python>=3.10版本
 安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。但我们建议您在新建的文件夹内运行WeAuth。    
 ```shell
 mkdir WeAuth
