@@ -54,7 +54,11 @@ jobs:
         run: |
           python -m pip install -U pip
           pip install setuptools wheel    
-      
+
+      - name: Get Timestamp Action
+        uses: nanzm/get-time-action@v2.0
+        id: time
+
 
       - name: Modify and get version information
         id: version
@@ -63,6 +67,15 @@ jobs:
           if [ "$IS_RELEASE" != "true" ]; then
             sed -i "/^__CI_BUILD_NUM/c\__CI_BUILD_NUM = '$GITHUB_RUN_NUMBER'" "$version_file"
           fi
+
+      - name: Modify time
+        id: modify_time
+        env:
+          TIME: "${{ steps.time.outputs.time }}"
+        run: |
+          version_file=weauth/constants/core_constant.py
+          sed -i "/^BUILD_TIME/c\BUILD_TIME = '$TIME'" "$version_file"
+      
 
       - name: Create distribution
         run: |
