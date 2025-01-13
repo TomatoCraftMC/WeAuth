@@ -32,7 +32,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
  - [ ] https支持
-- [x] 可直接在微信公众号运行WeAuth指令
+- [x] 可直接在微信公众号运行WeAuth指令 (1.5.3起支持)
 - [ ] log系统
 ### 桥梁
  - [x] 通过[Flask](https://github.com/pallets/flask)与微信公众号服务器交互     
@@ -127,10 +127,14 @@ weauth
 !op [ID]   # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
 !sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 !v  # 查看WeAuth版本信息
-!g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 暂未支持
+!g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 
 ```
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
+
+欢迎大家参与WeAuth的开发！请发起PR时选择`dev`
+branch。如有任何问题欢迎在[Issues](https://github.com/TomatoCraftMC/WeAuth/issues)中提出。
+
 # Licence
 
 WeAuth is released under the [GPLv3.0](LICENSE) license.   
