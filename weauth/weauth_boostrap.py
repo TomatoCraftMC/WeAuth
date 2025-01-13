@@ -44,7 +44,7 @@ def main(args) -> None:
     if check_for_update(VERSION) == 1:
         print("-当前为最新版本")
     else:
-        print("-已有新版本,您可以前往 {} 进行更新。".format(GITHUB_URL))
+        print("-已有新版本,您可以使用 pip3 install --upgrade weauth 进行更新。")
     # 检查数据库
     DB.check_database()
     default_config = {
