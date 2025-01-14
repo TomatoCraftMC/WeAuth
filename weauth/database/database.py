@@ -74,6 +74,15 @@ class DB:
         cur.close()
         conn.close()
 
+    @staticmethod
+    def update_item_by_player_id(player_id: str, ban: str, sub: str) -> None:
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("UPDATE players SET ISBAN=?, ISSUB=? WHERE ID=?", (int(ban), int(sub), player_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+
 
     @staticmethod
     def remove_player_id(player_id: str) -> None:

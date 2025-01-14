@@ -11,6 +11,7 @@ from weauth.constants import core_constant
 from weauth.constants import exit_code
 from weauth.cdkey import CDKey
 from weauth.command_line import AdminCLI
+from weauth.database import DB
 
 __all__ = ['entrypoint']
 
@@ -56,8 +57,12 @@ def entrypoint():
 						action='store_true', default=False)
 	parser.add_argument('-list', '--list', help='打印数据库里面的所有Player_id',
 						action='store_true', default=False)
-	parser.add_argument('-search', '--search', help='数据库中搜索Player_id',
-						action='store_true', default=False)
+	parser.add_argument('-search', '--search', help='数据库中搜索Player_id', type=str, default='-1')
+	parser.add_argument('-update', '--update', help='更新数据库中一条,传入玩家ID', type=str, default='-1')
+	parser.add_argument('-ban', '--ban', help='切换ban状态',
+						default=False, action='store_true')
+	parser.add_argument('-sub', '--sub', help='切换订阅状态',
+						default=False, action='store_true')
 
 	args = parser.parse_args()
 
@@ -69,9 +74,59 @@ def entrypoint():
 		print(AdminCLI.list_all_player_id())
 		sys.exit(0)
 
-	if args.search:
-		AdminCLI.search_db()
+	if args.search != '-1':
+		AdminCLI.search_db(player_id=args.search)
 		sys.exit(0)
+
+	if args.update != '-1':
+		player_item = DB.get_item(player_id=args.update)
+		if player_item is None:
+			print("-未找到该玩家ID")
+			sys.exit(0)
+		ban_ = player_item[2]
+		sub_ = player_item[3]
+		if ban_ == 0:
+			ban_stat = '否'
+		else:
+			ban_stat = '是'
+		if sub_ == 0:
+			sub_stat = '否'
+		else:
+			sub_stat = '是'
+		print(f'玩家ID: {player_item[0]}, 是否封禁: {ban_stat}, 是否正在订阅: {sub_stat}')
+		ans1 = []
+		ans2 = []
+		if args.ban and bool(ban_):
+			ans1.append(input(f'-您确认将玩家 {player_item[0]}的封禁状态更改为【否】？ (输入yes/no确认)\n>'))
+			ans1.append('0')
+
+		elif args.ban or bool(ban_):
+			ans1.append(input(f'-您确认将玩家 {player_item[0]}的封禁状态更改为【是】？ (输入yes/no确认)\n>'))
+			ans1.append('1')
+		else:
+			ans1 = ['yes', str(player_item[2])]
+
+		if not (ans1[0] == 'yes' or ans1[0] == 'y'):
+			sys.exit(0)
+
+		if args.sub and bool(sub_):
+			ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【否】？ (输入yes/no确认)\n>'))
+			ans2.append('0')
+
+		elif args.sub or bool(sub_):
+			ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【是】？ (输入yes/no确认)\n>'))
+			ans2.append('1')
+		else:
+			ans2 = ['yes', str(player_item[3])]
+		if not (ans2[0] == 'yes' or ans2[0] == 'y'):
+			sys.exit(0)
+
+		DB.update_item_by_player_id(player_id=player_item[0],
+									ban=ans1[1],
+									sub=ans2[1])
+		print('-数据库成功更新')
+		sys.exit(0)
+
 
 	if args.url[0]!='/':
 		print("路由地址不合法,请检查后重新输入")
