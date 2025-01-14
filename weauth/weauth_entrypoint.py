@@ -10,6 +10,7 @@ import sys
 from weauth.constants import core_constant
 from weauth.constants import exit_code
 from weauth.cdkey import CDKey
+from weauth.command_line import AdminCLI
 
 __all__ = ['entrypoint']
 
@@ -51,7 +52,15 @@ def entrypoint():
 	parser.add_argument('-g', '--gift', help='生成CDKey',
 						action='store_true', default=False)
 	parser.add_argument('-sop', '--sop', help='新增超级管理员', default='-1', type=str)
+	parser.add_argument('-del', '--delete', help='通过player_id从数据库删除玩家信息',
+						action='store_true', default=False)
 	args = parser.parse_args()
+
+	if args.delete:
+		AdminCLI.remove_by_player_id(None)
+		sys.exit(0)
+
+
 	if args.url[0]!='/':
 		print("路由地址不合法,请检查后重新输入")
 		sys.exit(0)

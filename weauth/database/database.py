@@ -77,6 +77,9 @@ class DB:
 
     @staticmethod
     def remove_player_id(player_id: str) -> None:
+        player_id = DB.search_player_id(player_id=player_id)
+        if player_id is None:
+            raise PlayerIdNotExist('玩家ID不存在')
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("DELETE FROM players WHERE ID=?", (player_id,))
@@ -146,6 +149,20 @@ class DB:
                 cur.close()
                 conn.close()
                 return player_id
+        cur.close()
+        conn.close()
+        return None
+
+    @staticmethod
+    def search_player_id(player_id: str) -> Optional[str]:
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM players WHERE ID=?", (player_id,))
+        for item in cur:
+            if item[0] == player_id:
+                cur.close()
+                conn.close()
+                return item[0]
         cur.close()
         conn.close()
         return None

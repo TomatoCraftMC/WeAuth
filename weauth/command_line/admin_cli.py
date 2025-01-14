@@ -5,9 +5,13 @@
 # datetime： 2025/1/11 08:35 
 # ide： PyCharm
 # file: admin_cli.py
+import sys
+from weauth.database import DB
 from weauth.constants.core_constant import VERSION, GITHUB_URL, BUILD_TIME
 from weauth.utils.add_op import add_op, add_super_op
 from weauth.cdkey import CDKey
+from weauth.exceptions import *
+from typing import Optional
 
 class AdminCLI:
     def __init__(self):
@@ -57,6 +61,11 @@ class AdminCLI:
 
             msg = "\n".join(cdkey_list)
             return 0, msg
+        elif command_list[0] == 'd':
+            if len(command_list) != 2:
+                return 0, '参数错误，正确用法:\n!d [player_id]'
+            return 0, AdminCLI.remove_by_player_id(play_id_from_wechat=command_list[1])
+
         else:
             text = (f'错误命令！\n'
                     f'WeAuth v{VERSION}\n【使用指南】\n'
@@ -66,6 +75,33 @@ class AdminCLI:
                     f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
                     f'# 生成CDKey')
             return 0, text
+
+    @staticmethod
+    def remove_by_player_id(play_id_from_wechat=None) -> Optional[str]:
+        if play_id_from_wechat is None:
+            player_id = input("-请输入您要删除的玩家ID\n>")
+            try:
+                DB.remove_player_id(player_id)
+            except PlayerIdNotExist:
+                print("-玩家ID不存在")
+                sys.exit(0)
+            finally:
+                print(f"-玩家 {player_id} 成功删除")
+                sys.exit(0)
+        else:
+            player_id = play_id_from_wechat
+            try:
+                DB.remove_player_id(player_id)
+            except PlayerIdNotExist:
+                print("-玩家ID不存在")
+                return '玩家ID不存在'
+            finally:
+                print(f"-玩家 {player_id} 成功删除")
+                return f"玩家 {player_id} 成功删除"
+
+
+
+
 
 
 if __name__ == '__main__':
