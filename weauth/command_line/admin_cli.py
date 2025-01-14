@@ -85,9 +85,8 @@ class AdminCLI:
             except PlayerIdNotExist:
                 print("-玩家ID不存在")
                 sys.exit(0)
-            finally:
-                print(f"-玩家 {player_id} 成功删除")
-                sys.exit(0)
+            print(f"-玩家 {player_id} 成功删除")
+            sys.exit(0)
         else:
             player_id = play_id_from_wechat
             try:
@@ -95,9 +94,8 @@ class AdminCLI:
             except PlayerIdNotExist:
                 print("-玩家ID不存在")
                 return '玩家ID不存在'
-            finally:
-                print(f"-玩家 {player_id} 成功删除")
-                return f"玩家 {player_id} 成功删除"
+            print(f"-玩家 {player_id} 成功删除")
+            return f"玩家 {player_id} 成功删除"
 
 
 
