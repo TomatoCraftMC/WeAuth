@@ -167,6 +167,18 @@ class DB:
         conn.close()
         return None
 
+    @staticmethod
+    def get_all_player_ids() -> list:
+        player_ids = []
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT ID FROM players")
+        for row in cur:
+            player_ids.append(row[0])
+        cur.close()
+        conn.close()
+        return player_ids
+
 
 
 

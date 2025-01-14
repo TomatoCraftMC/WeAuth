@@ -54,10 +54,16 @@ def entrypoint():
 	parser.add_argument('-sop', '--sop', help='新增超级管理员', default='-1', type=str)
 	parser.add_argument('-del', '--delete', help='通过player_id从数据库删除玩家信息',
 						action='store_true', default=False)
+	parser.add_argument('-list', '--list', help='打印数据库里面的所有Player_id',
+						action='store_true', default=False)
 	args = parser.parse_args()
 
 	if args.delete:
 		AdminCLI.remove_by_player_id()
+		sys.exit(0)
+
+	if args.list:
+		print(AdminCLI.list_all_player_id())
 		sys.exit(0)
 
 

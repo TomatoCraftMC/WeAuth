@@ -6,6 +6,7 @@
 # ide： PyCharm
 # file: admin_cli.py
 import sys
+import os
 from weauth.database import DB
 from weauth.constants.core_constant import VERSION, GITHUB_URL, BUILD_TIME
 from weauth.utils.add_op import add_op, add_super_op
@@ -70,6 +71,8 @@ class AdminCLI:
             if msg is None:
                 return 0, '删除失败，请联系管理员'
             return 0, msg
+        elif command_list[0] == 'l':
+            return AdminCLI.list_all_player_id()
 
         else:
             text = (f'错误命令！\n'
@@ -107,6 +110,16 @@ class AdminCLI:
                 return f"-玩家 {player_id} 在数据库成功删除，但推送至游戏服务器时出现异常"
             print(f"-玩家 {player_id} 成功删除")
             return f"玩家 {player_id} 成功删除"
+
+    @staticmethod
+    def list_all_player_id() -> str:
+        if not os.path.exists('WeAuth.db'):
+            return '数据库丢失！'
+        player_id_list = DB.get_all_player_ids()
+        if len(player_id_list) <= 0:
+            return '数据库无数据！'
+        msg = '\n'.join(player_id_list)
+        return msg
 
 
 if __name__ == '__main__':
