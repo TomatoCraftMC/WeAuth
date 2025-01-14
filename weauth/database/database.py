@@ -65,8 +65,7 @@ class DB:
             raise AlreadyIn('已添加')
 
     @staticmethod
-    def remove(openid):
-        
+    def remove_openid(openid: str) -> None:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("UPDATE players SET ISSUB=? WHERE OPENID=?",(0,openid))
@@ -75,20 +74,15 @@ class DB:
         cur.close()
         conn.close()
 
+
     @staticmethod
-    def search(openid):
+    def remove_player_id(player_id: str) -> None:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
-        cur.execute("SELECT * FROM players WHERE OPENID=?",(openid,))
-        for item in cur:
-            DB.remove(openid=openid)
-            cur.close()
-            conn.close()
-            return 1, item[0]
+        cur.execute("DELETE FROM players WHERE ID=?", (player_id,))
+        conn.commit()
         cur.close()
         conn.close()
-        return -1, -1
-
 
     @staticmethod
     def check_database() -> None:

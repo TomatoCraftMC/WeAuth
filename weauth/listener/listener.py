@@ -69,7 +69,7 @@ class Listener:
         if return_code != 200:
             raise ServerConnectionFailed('游戏服务器连接失败')
         else:
-            DB.remove(openid)
+            DB.remove_openid(openid)
             print('\033[0;32;40m-删除动作完成\033[0m')
 
     @staticmethod

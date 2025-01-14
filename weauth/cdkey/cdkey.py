@@ -61,7 +61,7 @@ class CDKey:
         for key in result.keys():
             if cdkey in result[key]:  # 查找与删除应该分离
                 if is_delete:
-                    result[key].remove(cdkey)
+                    result[key].remove_openid(cdkey)
                     with open('cdkey.yaml', 'w+') as f:
                         yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
                 return key
