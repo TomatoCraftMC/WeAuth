@@ -65,7 +65,8 @@ class AdminCLI:
         elif command_list[0] == 'd':
             if len(command_list) != 2:
                 return 0, '参数错误，正确用法:\n!d [player_id]'
-            msg = AdminCLI.remove_by_player_id(play_id_from_wechat=command_list[1])
+            msg = AdminCLI.remove_by_player_id(game_server=game_server,
+                                               play_id_from_wechat=command_list[1])
             if msg is None:
                 return 0, '删除失败，请联系管理员'
             return 0, msg
