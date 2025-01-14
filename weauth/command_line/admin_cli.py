@@ -77,7 +77,7 @@ class AdminCLI:
         elif command_list[0] == 's':
             if len(command_list) != 2:
                 return 0, '参数错误，正确用法:\n!s [player_id]'
-            msg = AdminCLI.search_db(player_id=command_list[1])
+            msg = AdminCLI.search_db(player_id=command_list[1], from_admin_cli=True)
             return 0, msg
         else:
             text = (f'错误命令！\n'
@@ -132,8 +132,8 @@ class AdminCLI:
         return title + player_list + end
 
     @staticmethod
-    def search_db(player_id: str = None) -> Optional[str]:
-        if player_id is not None:
+    def search_db(player_id: str = None, from_admin_cli=False) -> Optional[str]:
+        if from_admin_cli is True:
             player_item = DB.get_item(player_id=player_id)
             if player_item is None:
                 print(f'-数据库中找不到 {player_id}')
@@ -144,7 +144,6 @@ class AdminCLI:
                    f'正在订阅公众号: {player_item[3]}\n')
             return msg
         else:
-            player_id = input('-请输入玩家ID\n>')
             player_item = DB.get_item(player_id=player_id)
             if player_item is None:
                 print(f'-数据库中找不到 {player_id}')
