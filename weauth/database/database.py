@@ -108,7 +108,6 @@ class DB:
                     OPENID TEXT,
                     ISBAN NUMBER,
                     ISSUB NUMBER,
-                    ISOP NUMBER,
                     UNIQUE(ID),
                     PRIMARY KEY(ID));'''
             cur.execute(sql_text_1)
@@ -178,9 +177,6 @@ class DB:
         cur.close()
         conn.close()
         return player_ids
-
-
-
 
 
 # if __name__=='__main__':
