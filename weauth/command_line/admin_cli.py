@@ -72,7 +72,7 @@ class AdminCLI:
                 return 0, '删除失败，请联系管理员'
             return 0, msg
         elif command_list[0] == 'l':
-            return AdminCLI.list_all_player_id()
+            return 0, AdminCLI.list_all_player_id()
 
         else:
             text = (f'错误命令！\n'
@@ -118,8 +118,11 @@ class AdminCLI:
         player_id_list = DB.get_all_player_ids()
         if len(player_id_list) <= 0:
             return '数据库无数据！'
-        msg = '\n'.join(player_id_list)
-        return msg
+        player_list = '\n'.join(player_id_list)
+        title = '=====玩家ID=====\n'
+        end = f'\n=====玩家ID=====\n共有{len(player_id_list)}位玩家'
+
+        return title + player_list + end
 
 
 if __name__ == '__main__':
