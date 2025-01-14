@@ -14,6 +14,7 @@ from weauth.cdkey import CDKey
 from weauth.exceptions import *
 from typing import Optional
 from weauth.mc_server import MCServerConnection
+import prettytable
 
 class AdminCLI:
     def __init__(self):
@@ -73,7 +74,11 @@ class AdminCLI:
             return 0, msg
         elif command_list[0] == 'l':
             return 0, AdminCLI.list_all_player_id()
-
+        elif command_list[0] == 's':
+            if len(command_list) != 2:
+                return 0, '参数错误，正确用法:\n!s [player_id]'
+            msg = AdminCLI.search_db(player_id=command_list[1])
+            return 0, msg
         else:
             text = (f'错误命令！\n'
                     f'WeAuth v{VERSION}\n【使用指南】\n'
@@ -81,7 +86,10 @@ class AdminCLI:
                     f'!op [ID] # 添加普通管理员\n\n'
                     f'!sop [ID] # 添加超级管理员\n\n'
                     f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
-                    f'# 生成CDKey')
+                    f'# 生成CDKey\n'
+                    f'!l # 打印所有玩家ID\n'
+                    f'!d [ID]\n'
+                    f'# 在数据库和游戏服务器删除ID')
             return 0, text
 
     @staticmethod
@@ -121,8 +129,38 @@ class AdminCLI:
         player_list = '\n'.join(player_id_list)
         title = '=====玩家ID=====\n'
         end = f'\n=====玩家ID=====\n共有{len(player_id_list)}位玩家'
-
         return title + player_list + end
+
+    @staticmethod
+    def search_db(player_id: str = None) -> Optional[str]:
+        if player_id is not None:
+            player_item = DB.get_item(player_id=player_id)
+            if player_item is None:
+                print(f'-数据库中找不到 {player_id}')
+                return f'-数据库中找不到 {player_id}'
+            msg = (f'玩家ID: {player_item[0]}\n'
+                   f'OpenID: {player_item[1]}\n'
+                   f'是否封禁: {player_item[2]}\n'
+                   f'正在订阅公众号: {player_item[3]}\n')
+            return msg
+        else:
+            player_id = input('-请输入玩家ID\n>')
+            player_item = DB.get_item(player_id=player_id)
+            if player_item is None:
+                print(f'-数据库中找不到 {player_id}')
+                sys.exit(0)
+            print(f'-找到玩家 {player_item[0]}\n==================================')
+            table = prettytable.PrettyTable()
+            table.field_names = ['玩家ID', 'OpenID', '是否封禁', '正在订阅公众号']
+            table.add_row(player_item[:4])
+            print(table)
+            sys.exit(0)
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

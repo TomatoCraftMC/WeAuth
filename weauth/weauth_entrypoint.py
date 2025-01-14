@@ -56,6 +56,9 @@ def entrypoint():
 						action='store_true', default=False)
 	parser.add_argument('-list', '--list', help='打印数据库里面的所有Player_id',
 						action='store_true', default=False)
+	parser.add_argument('-search', '--search', help='数据库中搜索Player_id',
+						action='store_true', default=False)
+
 	args = parser.parse_args()
 
 	if args.delete:
@@ -66,6 +69,9 @@ def entrypoint():
 		print(AdminCLI.list_all_player_id())
 		sys.exit(0)
 
+	if args.search:
+		AdminCLI.search_db()
+		sys.exit(0)
 
 	if args.url[0]!='/':
 		print("路由地址不合法,请检查后重新输入")

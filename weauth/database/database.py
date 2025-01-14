@@ -178,6 +178,23 @@ class DB:
         conn.close()
         return player_ids
 
+    @staticmethod
+    def get_item(player_id: str) -> Optional[list]:
+        player_item = []
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM players WHERE ID=?", (player_id,))
+        for item in cur:
+            if item[0] == player_id:
+                player_item.extend(item)
+                cur.close()
+                conn.close()
+                return player_item
+        cur.close()
+        conn.close()
+        return None
+
+
 
 # if __name__=='__main__':
 #     createNewDb()
