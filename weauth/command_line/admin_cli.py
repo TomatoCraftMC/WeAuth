@@ -12,6 +12,7 @@ from weauth.utils.add_op import add_op, add_super_op
 from weauth.cdkey import CDKey
 from weauth.exceptions import *
 from typing import Optional
+from weauth.mc_server import MCServerConnection
 
 class AdminCLI:
     def __init__(self):
@@ -23,7 +24,7 @@ class AdminCLI:
         pass
 
     @staticmethod
-    def admin_cli(command: str) -> (int, str):
+    def admin_cli(command: str, game_server: MCServerConnection) -> (int, str):
         command_list = command.split()
         if command_list[0] == 'op':
             op_id = command_list[1]
@@ -64,7 +65,10 @@ class AdminCLI:
         elif command_list[0] == 'd':
             if len(command_list) != 2:
                 return 0, '参数错误，正确用法:\n!d [player_id]'
-            return 0, AdminCLI.remove_by_player_id(play_id_from_wechat=command_list[1])
+            msg = AdminCLI.remove_by_player_id(play_id_from_wechat=command_list[1])
+            if msg is None:
+                return 0, '删除失败，请联系管理员'
+            return 0, msg
 
         else:
             text = (f'错误命令！\n'
@@ -77,7 +81,7 @@ class AdminCLI:
             return 0, text
 
     @staticmethod
-    def remove_by_player_id(play_id_from_wechat=None) -> Optional[str]:
+    def remove_by_player_id(game_server: MCServerConnection = None, play_id_from_wechat=None) -> Optional[str]:
         if play_id_from_wechat is None:
             player_id = input("-请输入您要删除的玩家ID\n>")
             try:
@@ -94,12 +98,14 @@ class AdminCLI:
             except PlayerIdNotExist:
                 print("-玩家ID不存在")
                 return '玩家ID不存在'
+            return_code, msg = DB.push_to_server_whitelist(player_id=player_id,
+                                                           game_server=game_server,
+                                                           mode=0)
+            if return_code != 200:
+                print(f"-玩家 {player_id} 在数据库成功删除，但推送至游戏服务器时出现异常")
+                return f"-玩家 {player_id} 在数据库成功删除，但推送至游戏服务器时出现异常"
             print(f"-玩家 {player_id} 成功删除")
             return f"玩家 {player_id} 成功删除"
-
-
-
-
 
 
 if __name__ == '__main__':

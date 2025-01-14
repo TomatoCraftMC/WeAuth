@@ -57,7 +57,7 @@ def entrypoint():
 	args = parser.parse_args()
 
 	if args.delete:
-		AdminCLI.remove_by_player_id(None)
+		AdminCLI.remove_by_player_id()
 		sys.exit(0)
 
 
