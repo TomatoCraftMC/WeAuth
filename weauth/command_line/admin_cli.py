@@ -79,6 +79,20 @@ class AdminCLI:
                 return 0, '参数错误，正确用法:\n!s [player_id]'
             msg = AdminCLI.search_db(player_id=command_list[1], from_admin_cli=True)
             return 0, msg
+        elif command_list[0] == 'u':
+            if len(command_list) != 4:
+                return 0, '参数错误，正确用法:\n!u [player_id] [is_ban] [is_sub]'
+            player_id = DB.search_player_id(player_id=command_list[1])
+            if player_id is None:
+                return 0, '数据库无该玩家ID'
+            if command_list[2] != '0' and command_list[2] != '1':
+                return 0, '[is_ban]只能输入1或0，请重新输入'
+            if command_list[3] != '0' and command_list[3] != '1':
+                return 0, '[is_sub]只能输入1或0，请重新输入'
+            DB.update_item_by_player_id(player_id=player_id,
+                                        ban=command_list[2],
+                                        sub=command_list[3])
+            return 0, f'{player_id} 的封禁与订阅信息已更新！\n您可以使用!s {player_id}进行查看。'
         else:
             text = (f'错误命令！\n'
                     f'WeAuth v{VERSION}\n【使用指南】\n'
@@ -89,7 +103,9 @@ class AdminCLI:
                     f'# 生成CDKey\n'
                     f'!l # 打印所有玩家ID\n'
                     f'!d [ID]\n'
-                    f'# 在数据库和游戏服务器删除ID')
+                    f'# 在数据库和游戏服务器删除ID\n'
+                    f'!u [player_id] [is_ban] [is_sub]\n'
+                    f'# 更新玩家封禁与订阅信息')
             return 0, text
 
     @staticmethod
