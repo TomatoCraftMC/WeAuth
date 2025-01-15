@@ -11,11 +11,9 @@ WeAuth
 > [开发与问题反馈交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zZWKaVfLOLW19NRVtffSgxPZivKkK45n&authKey=cF0bEvwv%2FoHTMrXJpzkvGvZhuYdF7WCefRF4F21dqnJMSvzOCL%2FZSpGqnwEVYE7G&noverify=0&group_code=1017293626)
   
 ## WeAuth的作用
-```command
-         微信公众号            <=======(rcon)=======>
-玩家<====>        <====>WeAuth                      Minecraft Server
-         QQ 机器人             ==(MCSManager API)==>
-```
+
+![原理图](docs/assets/pic11.png)
+
 WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的桥梁。  
 
 你可以直接在微信公众号（或者QQ机器人）对Minecraft服务器进行指令操作。
@@ -103,17 +101,30 @@ weauth
 weauth
 -v  # 查看版本信息
 -h  # 查看启动参数帮助信息
--p [port]  # 启动后在port端口监听。默认为80端口
--r [route]  # web服务路由。默认为“/wx”
--w  # 微信服务器验证模式，需配合 -t指令使用
--t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-p [port]  # 启动后的监听端口。默认为80端口
+-r [route]  # 启动后的web服务路由。默认为“/wx”
+-w -t [token]  # 微信服务器验证模式，[token]即微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-w -t [token -r [route]  # 微信服务器验证模式，自定义路由
 -g  # 进入CDKey生成系统
 -op [ID]  # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
 -sop [id] # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 -test  # 以测试模式启动，仅用于开发测试
+-update [player_id] -b -s 
+# 手动更新该玩家是否封禁标志与是否订阅标志(仅本地数据库)
+-ban [player_id]
+# 封禁该用户(仅本地数据库)
+-unban [player_id]
+# 移出封禁(仅本地数据库)
+-search [play_id]
+# 显示该用户ID的封禁、订阅情况
+-del [player_id]
+# 在数据库中删除该玩家信息(仅本地数据库)
+-list
+# 显示所有用户ID
 ```   
 在绝大多数情况下，您无需输入任何参数，直接使用`weauth`启动即可。  
-程序将在`http://127.0.0.1/wx`监听来自微信的请求。  
+程序将默认在`http://0.0.0.0:80/wx`监听来自微信的请求。
+
 ## [微信公众号后台配置](docs/WeChatConfig.md)
 ## [MCSManager后台配置](docs/MCSManagerConfig.md)
 ## [rcon设置](docs/Rcon.md)
@@ -128,6 +139,12 @@ weauth
 !sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 !v  # 查看WeAuth版本信息
 !g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 
+!l # 显示所有用户ID
+!s [player_id]  # 显示该用户ID的封禁、订阅情况
+!b [player_id]  # 封禁该用户，同时会移出白名单
+!ub [player_id]  # 移出封禁
+!d [player_id]  # 在数据库中删除该玩家信息，会自动移出白名单
+!u [player_id] [is_ban] [is_sub]  # 手动更新该玩家是否封禁标志与是否订阅标志 （会自动同步到游戏服务器）
 ```
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  

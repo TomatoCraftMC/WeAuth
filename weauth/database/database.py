@@ -105,7 +105,7 @@ class DB:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         if mode == 1:
-            cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (1, player_id))
+            cur.execute("UPDATE players SET ISBAN=?, ISSUB=? WHERE ID=?", (1, 0, player_id))
         else:
             cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (0, player_id))
         conn.commit()
