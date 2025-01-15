@@ -111,9 +111,22 @@ weauth
 -op [ID]  # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
 -sop [id] # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 -test  # 以测试模式启动，仅用于开发测试
+-update [player_id] -b -s 
+# 手动更新该玩家是否封禁标志与是否订阅标志(仅本地数据库)
+-ban [player_id]
+# 封禁该用户(仅本地数据库)
+-unban [player_id]
+# 移出封禁(仅本地数据库)
+-search [play_id]
+# 显示该用户ID的封禁、订阅情况
+-del [player_id]
+# 在数据库中删除该玩家信息(仅本地数据库)
+-list
+# 显示所有用户ID
 ```   
 在绝大多数情况下，您无需输入任何参数，直接使用`weauth`启动即可。  
-程序将在`http://127.0.0.1/wx`监听来自微信的请求。  
+程序将默认在`http://0.0.0.0:80/wx`监听来自微信的请求。
+
 ## [微信公众号后台配置](docs/WeChatConfig.md)
 ## [MCSManager后台配置](docs/MCSManagerConfig.md)
 ## [rcon设置](docs/Rcon.md)
@@ -128,6 +141,12 @@ weauth
 !sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
 !v  # 查看WeAuth版本信息
 !g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 
+!l # 显示所有用户ID
+!s [player_id]  # 显示该用户ID的封禁、订阅情况
+!b [player_id]  # 封禁该用户，同时会移出白名单
+!ub [player_id]  # 移出封禁
+!d [player_id]  # 在数据库中删除该玩家信息，会自动移出白名单
+!u [player_id] [is_ban] [is_sub]  # 手动更新该玩家是否封禁标志与是否订阅标志 （会自动同步到游戏服务器）
 ```
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
