@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
-# datetime： 2025/1/5 20:29 
+# datetime： 2025/1/5 20:29
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # ide： PyCharm
 # file: core_constant.py
 # modified from MCDReforged https://mcdreforged.com/zh-CN

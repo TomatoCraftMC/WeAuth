@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.10
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # email: wang@rjack.cn
 # datetime： 2025/1/5 20:28
 # ide： PyCharm
