@@ -99,8 +99,8 @@ class AdminCLI:
             elif command_list[2] == '1':
                 return_code, msg = DB.push_to_server_ban(player_id=player_id, game_server=game_server, mode=1)
             if return_code != 200:
-                return 0, f'{player_id} 的封禁与订阅信息已更新，但推送游戏服务器失败。'
-            return 0, f'{player_id} 的封禁与订阅信息已更新！\n您可以使用!s {player_id}进行查看。'
+                return 0, f'{player_id} 的封禁与注册信息已更新，但推送游戏服务器失败。'
+            return 0, f'{player_id} 的封禁与注册信息已更新！\n您可以使用!s {player_id}进行查看。'
         elif command_list[0] == 'b':
             if len(command_list) != 2:
                 return 0, '参数错误，正确用法:\n!b [player_id]'
@@ -120,7 +120,7 @@ class AdminCLI:
                     f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
                     f'# 生成CDKey\n\n'
                     f'!l # 打印所有玩家ID\n\n'
-                    f'!s [player_id]  # 显示该用户ID的封禁、订阅情况\n\n'
+                    f'!s [player_id]  # 显示该用户ID的封禁、注册情况\n\n'
                     f'!d [ID]\n'
                     f'# 在数据库和游戏服务器删除ID，会自动移出白名单\n\n'
                     f'!b [player_id]  # 封禁该用户，同时会移出白名单\n\n'
@@ -175,7 +175,7 @@ class AdminCLI:
             msg = (f'玩家ID: {player_item[0]}\n'
                    f'OpenID: {player_item[1]}\n'
                    f'是否封禁: {player_item[2]}\n'
-                   f'正在订阅公众号: {player_item[3]}\n')
+                   f'是否注册: {player_item[3]}\n')
             return msg
         else:
             player_item = DB.get_item(player_id=player_id)
@@ -184,7 +184,7 @@ class AdminCLI:
                 sys.exit(0)
             print(f'-找到玩家 {player_item[0]}\n==================================')
             table = prettytable.PrettyTable()
-            table.field_names = ['玩家ID', 'OpenID', '是否封禁', '正在订阅公众号']
+            table.field_names = ['玩家ID', 'OpenID', '是否封禁', '是否注册']
             table.add_row(player_item[:4])
             print(table)
             sys.exit(0)

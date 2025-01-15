@@ -63,7 +63,7 @@ def entrypoint():
 	parser.add_argument('-update', '--update', help='更新数据库中一条,传入玩家ID', type=str, default='-1')
 	parser.add_argument('-b', '--b', help='ban', default=False, action='store_true')
 	parser.add_argument('-ban', '--ban', help='ban [player_id]', default='-1', type=str)
-	parser.add_argument('-s', '--s', help='切换订阅状态',
+	parser.add_argument('-s', '--s', help='切换注册状态',
 						default=False, action='store_true')
 	parser.add_argument('-unban', '--unban', help='unban [player_id]', default='-1', type=str)
 
@@ -166,11 +166,11 @@ def update_item(args: argparse.Namespace) -> None:
 		sys.exit(0)
 
 	if _sub and bool(sub_):
-		ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【否】？ (输入yes/no确认)\n>'))
+		ans2.append(input(f'-您确认将玩家 {player_item[0]}的注册状态更改为【否】？ (输入yes/no确认)\n>'))
 		ans2.append('0')
 
 	elif _sub or bool(sub_):
-		ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【是】？ (输入yes/no确认)\n>'))
+		ans2.append(input(f'-您确认将玩家 {player_item[0]}的注册状态更改为【是】？ (输入yes/no确认)\n>'))
 		ans2.append('1')
 	else:
 		ans2 = ['yes', str(player_item[3])]
