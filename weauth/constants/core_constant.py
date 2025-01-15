@@ -18,8 +18,8 @@ PACKAGE_NAME = 'weauth'
 CLI_COMMAND = PACKAGE_NAME
 
 # WeAuth Version Storage
-VERSION_PYPI: str = '1.5.6b2'
-VERSION: str = '1.5.6-beta2'
+VERSION_PYPI: str = '1.5.6'
+VERSION: str = '1.5.6'
 
 
 # URLs
