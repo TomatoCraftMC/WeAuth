@@ -11,11 +11,9 @@ WeAuth
 > [开发与问题反馈交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zZWKaVfLOLW19NRVtffSgxPZivKkK45n&authKey=cF0bEvwv%2FoHTMrXJpzkvGvZhuYdF7WCefRF4F21dqnJMSvzOCL%2FZSpGqnwEVYE7G&noverify=0&group_code=1017293626)
   
 ## WeAuth的作用
-```command
-         微信公众号            <=======(rcon)=======>
-玩家<====>        <====>WeAuth                      Minecraft Server
-         QQ 机器人             ==(MCSManager API)==>
-```
+
+![原理图](docs/assets/pic11.png)
+
 WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的桥梁。  
 
 你可以直接在微信公众号（或者QQ机器人）对Minecraft服务器进行指令操作。
@@ -103,10 +101,10 @@ weauth
 weauth
 -v  # 查看版本信息
 -h  # 查看启动参数帮助信息
--p [port]  # 启动后在port端口监听。默认为80端口
--r [route]  # web服务路由。默认为“/wx”
--w  # 微信服务器验证模式，需配合 -t指令使用
--t [token]  # 微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-p [port]  # 启动后的监听端口。默认为80端口
+-r [route]  # 启动后的web服务路由。默认为“/wx”
+-w -t [token]  # 微信服务器验证模式，[token]即微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
+-w -t [token -r [route]  # 微信服务器验证模式，自定义路由
 -g  # 进入CDKey生成系统
 -op [ID]  # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
 -sop [id] # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
