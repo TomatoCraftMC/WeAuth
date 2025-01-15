@@ -119,10 +119,13 @@ class AdminCLI:
                     f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
                     f'# 生成CDKey\n'
                     f'!l # 打印所有玩家ID\n'
+                    f'!s [player_id]  # 显示该用户ID的封禁、订阅情况\n'
                     f'!d [ID]\n'
-                    f'# 在数据库和游戏服务器删除ID\n'
+                    f'# 在数据库和游戏服务器删除ID，会自动移出白名单\n'
+                    f'!b [player_id]  # 封禁该用户，同时会移出白名单\n'
+                    f'!ub [player_id]  # 移出封禁\n'
                     f'!u [player_id] [is_ban] [is_sub]\n'
-                    f'# 更新玩家封禁与订阅信息')
+                    f'# 手动更新玩家封禁与订阅信息')
             return 0, text
 
     @staticmethod
