@@ -11,7 +11,7 @@ contain the root `toctree` directive.
    :maxdepth: 2
    :caption: 首页
 
-   下载与安装<quick_start/index.rst>
+   下载和安装<quick_start/index.rst>
    微信公众号后台设置<wechat_config/index.rst>
    连接游戏服务器<mc_config/index.rst>
    启动参数与命令<command/index.rst>

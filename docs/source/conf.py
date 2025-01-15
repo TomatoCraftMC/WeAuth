@@ -9,7 +9,9 @@
 project = 'WeAuth'
 copyright = '2025, NearlyHeadlessJack'
 author = 'NearlyHeadlessJack'
-release = 'v1'
+from weauth.constants.core_constant import VERSION
+
+release = 'v' + VERSION
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,3 +28,4 @@ language = 'zh_CN'
 
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
+html_logo = '../../logo/long_banner.png'
