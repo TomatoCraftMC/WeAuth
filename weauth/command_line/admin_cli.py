@@ -105,6 +105,11 @@ class AdminCLI:
                 return 0, '参数错误，正确用法:\n!b [player_id]'
             msg = AdminCLI.ban_db(player_id=command_list[1], game_server=game_server)
             return 0, msg
+        elif command_list[0] == 'ub':
+            if len(command_list) != 2:
+                return 0, '参数错误，正确用法:\n!ub [player_id]'
+            msg = AdminCLI.unban_db(player_id=command_list[1], game_server=game_server)
+            return 0, msg
         else:
             text = (f'错误命令！\n'
                     f'WeAuth v{VERSION}\n【使用指南】\n'
@@ -204,6 +209,28 @@ class AdminCLI:
                 sys.exit(0)
             DB.ban_player_id(player_id=player_id_)
             print(f'-已封禁{player_id_}，但未推送至游戏服务器')
+
+    @staticmethod
+    def unban_db(player_id: str, game_server: MCServerConnection = None) -> Optional[str]:
+        if game_server is not None:
+            player_id_ = DB.search_player_id(player_id=player_id)
+            if player_id_ is None:
+                print(f'-数据库中找不到 {player_id}')
+                return f'数据库中找不到 {player_id}'
+            DB.ban_player_id(player_id=player_id_, mode=0)
+            return_code, msg = DB.push_to_server_ban(player_id=player_id_, game_server=game_server, mode=0)
+            if return_code != 200:
+                print(f'-数据库中已解除封禁{player_id_}，但推送游戏服务器失败')
+                return f'数据库中已解除封禁{player_id_}，但推送游戏服务器失败'
+            print(f'-已解除封禁{player_id_}')
+            return f'已解除封禁{player_id_}'
+        else:
+            player_id_ = DB.search_player_id(player_id=player_id)
+            if player_id_ is None:
+                print(f'-数据库中找不到 {player_id}')
+                sys.exit(0)
+            DB.ban_player_id(player_id=player_id_, mode=0)
+            print(f'-已解除封禁{player_id_}，但未推送至游戏服务器')
 
 
 

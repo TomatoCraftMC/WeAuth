@@ -97,13 +97,16 @@ class DB:
         conn.close()
 
     @staticmethod
-    def ban_player_id(player_id: str) -> None:
+    def ban_player_id(player_id: str, mode=1) -> None:
         player_id = DB.search_player_id(player_id=player_id)
         if player_id is None:
             raise PlayerIdNotExist('玩家ID不存在')
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
-        cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (1, player_id))
+        if mode == 1:
+            cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (1, player_id))
+        else:
+            cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (0, player_id))
         conn.commit()
         cur.close()
         conn.close()

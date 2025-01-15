@@ -60,9 +60,11 @@ def entrypoint():
 						action='store_true', default=False)
 	parser.add_argument('-search', '--search', help='数据库中搜索Player_id', type=str, default='-1')
 	parser.add_argument('-update', '--update', help='更新数据库中一条,传入玩家ID', type=str, default='-1')
-	parser.add_argument('-ban', '--ban', help='ban状态', default='-1', type=str)
-	parser.add_argument('-sub', '--sub', help='切换订阅状态',
+	parser.add_argument('-b', '--b', help='ban', default=False, action='store_true')
+	parser.add_argument('-ban', '--ban', help='ban [player_id]', default='-1', type=str)
+	parser.add_argument('-s', '--s', help='切换订阅状态',
 						default=False, action='store_true')
+	parser.add_argument('-unban', '--unban', help='unban [player_id]', default='-1', type=str)
 
 	args = parser.parse_args()
 
@@ -85,6 +87,11 @@ def entrypoint():
 	if args.update == '-1' and args.ban != '-1':
 		AdminCLI.ban_db(player_id=args.ban)
 		sys.exit(0)
+
+	if args.update == '-1' and args.unban != '-1':
+		AdminCLI.unban_db(player_id=args.unban)
+		sys.exit(0)
+
 
 	if args.url[0] != '/':
 		print("路由地址不合法,请检查后重新输入")
@@ -141,10 +148,9 @@ def update_item(args: argparse.Namespace) -> None:
 	print(f'玩家ID: {player_item[0]}, 是否封禁: {ban_stat}, 是否正在订阅: {sub_stat}')
 	ans1 = []
 	ans2 = []
-	if args.ban == '-1':
-		_ban = False
-	else:
-		_ban = True
+	_ban = args.b
+	_sub = args.s
+
 	if _ban and bool(ban_):
 		ans1.append(input(f'-您确认将玩家 {player_item[0]}的封禁状态更改为【否】？ (输入yes/no确认)\n>'))
 		ans1.append('0')
@@ -158,11 +164,11 @@ def update_item(args: argparse.Namespace) -> None:
 	if not (ans1[0] == 'yes' or ans1[0] == 'y'):
 		sys.exit(0)
 
-	if args.sub and bool(sub_):
+	if _sub and bool(sub_):
 		ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【否】？ (输入yes/no确认)\n>'))
 		ans2.append('0')
 
-	elif args.sub or bool(sub_):
+	elif _sub or bool(sub_):
 		ans2.append(input(f'-您确认将玩家 {player_item[0]}的订阅状态更改为【是】？ (输入yes/no确认)\n>'))
 		ans2.append('1')
 	else:
