@@ -92,7 +92,19 @@ class AdminCLI:
             DB.update_item_by_player_id(player_id=player_id,
                                         ban=command_list[2],
                                         sub=command_list[3])
+            return_code = -200
+            if command_list[2] == '0':
+                return_code, msg = DB.push_to_server_ban(player_id=player_id, game_server=game_server, mode=0)
+            elif command_list[2] == '1':
+                return_code, msg = DB.push_to_server_ban(player_id=player_id, game_server=game_server, mode=1)
+            if return_code != 200:
+                return 0, f'{player_id} 的封禁与订阅信息已更新，但推送游戏服务器失败。'
             return 0, f'{player_id} 的封禁与订阅信息已更新！\n您可以使用!s {player_id}进行查看。'
+        elif command_list[0] == 'b':
+            if len(command_list) != 2:
+                return 0, '参数错误，正确用法:\n!b [player_id]'
+            msg = AdminCLI.ban_db(player_id=command_list[1], game_server=game_server)
+            return 0, msg
         else:
             text = (f'错误命令！\n'
                     f'WeAuth v{VERSION}\n【使用指南】\n'
@@ -171,8 +183,27 @@ class AdminCLI:
             print(table)
             sys.exit(0)
 
-
-
+    @staticmethod
+    def ban_db(player_id: str, game_server: MCServerConnection = None) -> Optional[str]:
+        if game_server is not None:
+            player_id_ = DB.search_player_id(player_id=player_id)
+            if player_id_ is None:
+                print(f'-数据库中找不到 {player_id}')
+                return f'数据库中找不到 {player_id}'
+            DB.ban_player_id(player_id=player_id_)
+            return_code, msg = DB.push_to_server_ban(player_id=player_id_, game_server=game_server)
+            if return_code != 200:
+                print(f'-数据库中已封禁{player_id_}，但推送游戏服务器失败')
+                return f'数据库中已封禁{player_id_}，但推送游戏服务器失败'
+            print(f'-已封禁{player_id_}')
+            return f'已封禁{player_id_}'
+        else:
+            player_id_ = DB.search_player_id(player_id=player_id)
+            if player_id_ is None:
+                print(f'-数据库中找不到 {player_id}')
+                sys.exit(0)
+            DB.ban_player_id(player_id=player_id_)
+            print(f'-已封禁{player_id_}，但未推送至游戏服务器')
 
 
 

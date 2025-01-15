@@ -97,6 +97,19 @@ class DB:
         conn.close()
 
     @staticmethod
+    def ban_player_id(player_id: str) -> None:
+        player_id = DB.search_player_id(player_id=player_id)
+        if player_id is None:
+            raise PlayerIdNotExist('玩家ID不存在')
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (1, player_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+    @staticmethod
     def check_database() -> None:
         """
         检查数据库是否存在，不存在则新建数据库
@@ -133,6 +146,14 @@ class DB:
             command = 'whitelist remove ' + player_id
         return game_server.push_command(command=command)
 
+    @staticmethod
+    def push_to_server_ban(player_id: str, game_server: MCServerConnection, mode=1) -> (
+    int, str):  # mode=1为ban模式，否则为取消ban模式
+        if mode == 1:
+            command = 'ban ' + player_id
+        else:
+            command = 'ban remove ' + player_id
+        return game_server.push_command(command=command)
 
     @staticmethod
     def push_to_server_command(command:str,game_server:MCServerConnection)->(int,str):  # 用于推送指令
