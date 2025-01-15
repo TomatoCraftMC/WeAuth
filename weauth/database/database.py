@@ -11,6 +11,7 @@ import os
 from weauth.mc_server.mcsm_connect import MCSM
 from weauth.mc_server import MCServerConnection
 import yaml
+from typing import Optional
 
 class DB:
     def __init__(self):
@@ -64,8 +65,7 @@ class DB:
             raise AlreadyIn('已添加')
 
     @staticmethod
-    def remove(openid):
-        
+    def remove_openid(openid: str) -> None:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("UPDATE players SET ISSUB=? WHERE OPENID=?",(0,openid))
@@ -75,19 +75,41 @@ class DB:
         conn.close()
 
     @staticmethod
-    def search(openid):
-         
+    def update_item_by_player_id(player_id: str, ban: str, sub: str) -> None:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
-        cur.execute("SELECT * FROM players WHERE OPENID=?",(openid,))
-        for item in cur:
-            DB.remove(openid=openid)
-            cur.close()
-            conn.close()
-            return 1, item[0]
+        cur.execute("UPDATE players SET ISBAN=?, ISSUB=? WHERE ID=?", (int(ban), int(sub), player_id))
+        conn.commit()
         cur.close()
         conn.close()
-        return -1, -1
+
+
+    @staticmethod
+    def remove_player_id(player_id: str) -> None:
+        player_id = DB.search_player_id(player_id=player_id)
+        if player_id is None:
+            raise PlayerIdNotExist('玩家ID不存在')
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("DELETE FROM players WHERE ID=?", (player_id,))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    @staticmethod
+    def ban_player_id(player_id: str, mode=1) -> None:
+        player_id = DB.search_player_id(player_id=player_id)
+        if player_id is None:
+            raise PlayerIdNotExist('玩家ID不存在')
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        if mode == 1:
+            cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (1, player_id))
+        else:
+            cur.execute("UPDATE players SET ISBAN=? WHERE ID=?", (0, player_id))
+        conn.commit()
+        cur.close()
+        conn.close()
 
 
     @staticmethod
@@ -111,7 +133,6 @@ class DB:
                     OPENID TEXT,
                     ISBAN NUMBER,
                     ISSUB NUMBER,
-                    ISOP NUMBER,
                     UNIQUE(ID),
                     PRIMARY KEY(ID));'''
             cur.execute(sql_text_1)
@@ -128,6 +149,14 @@ class DB:
             command = 'whitelist remove ' + player_id
         return game_server.push_command(command=command)
 
+    @staticmethod
+    def push_to_server_ban(player_id: str, game_server: MCServerConnection, mode=1) -> (
+    int, str):  # mode=1为ban模式，否则为取消ban模式
+        if mode == 1:
+            command = 'ban ' + player_id
+        else:
+            command = 'ban remove ' + player_id
+        return game_server.push_command(command=command)
 
     @staticmethod
     def push_to_server_command(command:str,game_server:MCServerConnection)->(int,str):  # 用于推送指令
@@ -142,7 +171,7 @@ class DB:
         pass
 
     @staticmethod
-    def get_player_id(openid: str) -> str:
+    def get_player_id(openid: str) -> Optional[str]:
         conn = sqlite3.connect('./WeAuth.db')
         cur = conn.cursor()
         cur.execute("SELECT * FROM players WHERE OPENID=?", (openid,))
@@ -156,7 +185,47 @@ class DB:
         conn.close()
         return None
 
+    @staticmethod
+    def search_player_id(player_id: str) -> Optional[str]:
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM players WHERE ID=?", (player_id,))
+        for item in cur:
+            if item[0] == player_id:
+                cur.close()
+                conn.close()
+                return item[0]
+        cur.close()
+        conn.close()
+        return None
 
+    @staticmethod
+    def get_all_player_ids() -> list:
+        player_ids = []
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT ID FROM players")
+        for row in cur:
+            player_ids.append(row[0])
+        cur.close()
+        conn.close()
+        return player_ids
+
+    @staticmethod
+    def get_item(player_id: str) -> Optional[list]:
+        player_item = []
+        conn = sqlite3.connect('./WeAuth.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM players WHERE ID=?", (player_id,))
+        for item in cur:
+            if item[0] == player_id:
+                player_item.extend(item)
+                cur.close()
+                conn.close()
+                return player_item
+        cur.close()
+        conn.close()
+        return None
 
 
 

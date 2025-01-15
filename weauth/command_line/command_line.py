@@ -38,7 +38,7 @@ class CommandLine:
             player_id = DB.get_player_id(openid=open_id)
             if CommandLine.search_super_op(open_id=open_id):
                 from weauth.command_line import AdminCLI
-                return AdminCLI.admin_cli(command=command[1:])
+                return AdminCLI.admin_cli(command=command[1:], game_server=game_sever)
             else:
                 return -1, '0'
 
