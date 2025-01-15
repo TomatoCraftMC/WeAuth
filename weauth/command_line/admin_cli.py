@@ -118,13 +118,13 @@ class AdminCLI:
                     f'!op [ID] # 添加普通管理员\n\n'
                     f'!sop [ID] # 添加超级管理员\n\n'
                     f'!g [mineID] [mineNum] [CDKeyNum] [Comment]\n'
-                    f'# 生成CDKey\n'
-                    f'!l # 打印所有玩家ID\n'
-                    f'!s [player_id]  # 显示该用户ID的封禁、订阅情况\n'
+                    f'# 生成CDKey\n\n'
+                    f'!l # 打印所有玩家ID\n\n'
+                    f'!s [player_id]  # 显示该用户ID的封禁、订阅情况\n\n'
                     f'!d [ID]\n'
-                    f'# 在数据库和游戏服务器删除ID，会自动移出白名单\n'
-                    f'!b [player_id]  # 封禁该用户，同时会移出白名单\n'
-                    f'!ub [player_id]  # 移出封禁\n'
+                    f'# 在数据库和游戏服务器删除ID，会自动移出白名单\n\n'
+                    f'!b [player_id]  # 封禁该用户，同时会移出白名单\n\n'
+                    f'!ub [player_id]  # 移出封禁\n\n'
                     f'!u [player_id] [is_ban] [is_sub]\n'
                     f'# 手动更新玩家封禁与订阅信息')
             return 0, text
@@ -145,16 +145,14 @@ class AdminCLI:
             try:
                 DB.remove_player_id(player_id)
             except PlayerIdNotExist:
-                print("-玩家ID不存在")
-                return '玩家ID不存在'
+                return msg_encode('玩家ID不存在')
             return_code, msg = DB.push_to_server_whitelist(player_id=player_id,
                                                            game_server=game_server,
                                                            mode=0)
             if return_code != 200:
                 print(f"-玩家 {player_id} 在数据库成功删除，但推送至游戏服务器时出现异常")
                 return f"-玩家 {player_id} 在数据库成功删除，但推送至游戏服务器时出现异常"
-            print(f"-玩家 {player_id} 成功删除")
-            return f"玩家 {player_id} 成功删除"
+            return msg_encode(f"-玩家 {player_id} 成功删除")
 
     @staticmethod
     def list_all_player_id() -> str:
@@ -173,8 +171,7 @@ class AdminCLI:
         if from_admin_cli is True:
             player_item = DB.get_item(player_id=player_id)
             if player_item is None:
-                print(f'-数据库中找不到 {player_id}')
-                return f'-数据库中找不到 {player_id}'
+                return msg_encode(f'数据库中找不到 {player_id}')
             msg = (f'玩家ID: {player_item[0]}\n'
                    f'OpenID: {player_item[1]}\n'
                    f'是否封禁: {player_item[2]}\n'
@@ -197,14 +194,12 @@ class AdminCLI:
         if game_server is not None:
             player_id_ = DB.search_player_id(player_id=player_id)
             if player_id_ is None:
-                print(f'-数据库中找不到 {player_id}')
-                return f'数据库中找不到 {player_id}'
+                return msg_encode(f'数据库中找不到 {player_id}')
             DB.ban_player_id(player_id=player_id_)
             return_code1, msg1 = DB.push_to_server_ban(player_id=player_id_, game_server=game_server)
             return_code2, msg2 = DB.push_to_server_whitelist(player_id=player_id_, game_server=game_server, mode=0)
             if return_code1 != 200 and return_code2 != 200:
-                print(f'-数据库中已封禁{player_id_}，但推送游戏服务器失败')
-                return f'数据库中已封禁{player_id_}，但推送游戏服务器失败'
+                return msg_encode(f'数据库中已封禁{player_id_}，但推送游戏服务器失败')
             print(f'-已封禁{player_id_}')
             return f'已封禁{player_id_}'
         else:
@@ -220,15 +215,12 @@ class AdminCLI:
         if game_server is not None:
             player_id_ = DB.search_player_id(player_id=player_id)
             if player_id_ is None:
-                print(f'-数据库中找不到 {player_id}')
-                return f'数据库中找不到 {player_id}'
+                return msg_encode(f'数据库中找不到 {player_id}')
             DB.ban_player_id(player_id=player_id_, mode=0)
             return_code, msg = DB.push_to_server_ban(player_id=player_id_, game_server=game_server, mode=0)
             if return_code != 200:
-                print(f'-数据库中已解除封禁{player_id_}，但推送游戏服务器失败')
-                return f'数据库中已解除封禁{player_id_}，但推送游戏服务器失败'
-            print(f'-已解除封禁{player_id_}')
-            return f'已解除封禁{player_id_}'
+                return msg_encode(f'数据库中已解除封禁{player_id_}，但推送游戏服务器失败')
+            return msg_encode(f'已解除封禁{player_id_}')
         else:
             player_id_ = DB.search_player_id(player_id=player_id)
             if player_id_ is None:
@@ -237,6 +229,10 @@ class AdminCLI:
             DB.ban_player_id(player_id=player_id_, mode=0)
             print(f'-已解除封禁{player_id_}，但未推送至游戏服务器')
 
+
+def msg_encode(msg: str) -> str:
+    print(f'-{msg}')
+    return msg
 
 if __name__ == '__main__':
     AdminCLI.admin_cli('g d 1 2 te')
