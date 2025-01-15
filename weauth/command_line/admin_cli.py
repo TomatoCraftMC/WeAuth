@@ -196,8 +196,9 @@ class AdminCLI:
                 print(f'-数据库中找不到 {player_id}')
                 return f'数据库中找不到 {player_id}'
             DB.ban_player_id(player_id=player_id_)
-            return_code, msg = DB.push_to_server_ban(player_id=player_id_, game_server=game_server)
-            if return_code != 200:
+            return_code1, msg1 = DB.push_to_server_ban(player_id=player_id_, game_server=game_server)
+            return_code2, msg2 = DB.push_to_server_whitelist(player_id=player_id_, game_server=game_server, mode=0)
+            if return_code1 != 200 and return_code2 != 200:
                 print(f'-数据库中已封禁{player_id_}，但推送游戏服务器失败')
                 return f'数据库中已封禁{player_id_}，但推送游戏服务器失败'
             print(f'-已封禁{player_id_}')
@@ -231,9 +232,6 @@ class AdminCLI:
                 sys.exit(0)
             DB.ban_player_id(player_id=player_id_, mode=0)
             print(f'-已解除封禁{player_id_}，但未推送至游戏服务器')
-
-
-
 
 
 if __name__ == '__main__':
