@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # datetime： 2024/7/2 下午5:26
 # ide： PyCharm
 # file: listener.py
@@ -42,8 +43,9 @@ class Listener:
                 elif type_of_message == 1:  # 取消订阅
                     self.xml_data = parseString(data).documentElement
                     open_id = self.xml_data.getElementsByTagName("FromUserName")[0].childNodes[0].data
-                    is_openid_player, player_id = DB.search(open_id)
-                    if is_openid_player == 1:   # 取消订阅的人是玩家
+                    player_id = DB.get_player_id(open_id)
+                    # is_openid_player, player_id = DB.search(open_id)
+                    if player_id is not None:  # 取消订阅的人是玩家
                         try:
                             Listener.remove_whitelist(player_id, open_id,game_server=game_server)
                         except ServerConnectionFailed:
@@ -68,7 +70,7 @@ class Listener:
         if return_code != 200:
             raise ServerConnectionFailed('游戏服务器连接失败')
         else:
-            DB.remove(openid)
+            DB.remove_openid(openid)
             print('\033[0;32;40m-删除动作完成\033[0m')
 
     @staticmethod

@@ -1,5 +1,6 @@
 # WeAuth.py
 # created by NearlyHeadlessJack 2024-01-03
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
 from email.policy import default

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # datetime： 2025/1/5 14:20 
 # ide： PyCharm
 # file: command_line.py
@@ -38,7 +39,7 @@ class CommandLine:
             player_id = DB.get_player_id(openid=open_id)
             if CommandLine.search_super_op(open_id=open_id):
                 from weauth.command_line import AdminCLI
-                return AdminCLI.admin_cli(command=command[1:])
+                return AdminCLI.admin_cli(command=command[1:], game_server=game_sever)
             else:
                 return -1, '0'
 

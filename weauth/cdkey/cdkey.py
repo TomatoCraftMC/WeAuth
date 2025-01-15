@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
+# WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # datetime： 2025/1/9 20:36 
 # ide： PyCharm
 # file: cdkey.py
@@ -61,7 +62,7 @@ class CDKey:
         for key in result.keys():
             if cdkey in result[key]:  # 查找与删除应该分离
                 if is_delete:
-                    result[key].remove(cdkey)
+                    result[key].remove_openid(cdkey)
                     with open('cdkey.yaml', 'w+') as f:
                         yaml.dump(data=result, stream=f, allow_unicode=True, sort_keys=False)
                 return key
