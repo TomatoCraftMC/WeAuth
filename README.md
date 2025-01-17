@@ -4,6 +4,7 @@ WeAuth
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/weauth)](https://pypi.org/project/weauth)
 [![PyPI - Version](https://img.shields.io/pypi/v/weauth)](https://pypi.org/project/weauth)
 [![GitHub License](https://img.shields.io/github/license/TomatoCraftMC/WeAuth)](https://github.com/TomatoCraftMC/WeAuth/blob/main/LICENSE)
+[![docs](https://readthedocs.org/projects/mcdreforged/badge/)](https://weauth.readthedocs.io/)
 
 <div align=center><img src="logo/long_banner.png"></div>
 
