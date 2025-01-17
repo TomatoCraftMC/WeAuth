@@ -65,3 +65,10 @@ uuid与remote-uuid
     weauth -gtest
 
 如果配置正确，则会提示连接成功。
+
+使用frp进行MCSM连接
+~~~~~~~~~~~~~~~~~
+
+您也可以使用frp工具搭建隧道实现MCSM连接，可用于MC Server无固定公网IP情况。
+
+具体请参考下一节。
