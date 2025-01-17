@@ -8,6 +8,7 @@
 # file: wechat_confirm.py
 from weauth.listener import WeChatConfirmListener
 from gevent import pywsgi
+
 from gevent import ssl
 
 def confirm(token:str,url:str):
