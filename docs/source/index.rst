@@ -8,6 +8,8 @@ WeAuth在 `GNU GENERAL PUBLIC LICENSE Version 3 (GPLv3) <https://github.com/Toma
 
 如果您开发的应用需要WeAuth作为依赖，或者您修改并重新发布了WeAuth，请遵守GPLv3协议开源。
 
+如果您使用WeAuth仅用于微信公众平台验证第三方服务器使用，请直接阅读 :doc:`/quick_start/only_for_wechat_confirm` 。
+
 .. toctree::
    :maxdepth: 2
    :caption: 首页
