@@ -7,8 +7,21 @@
 # ide： PyCharm
 # file: wechat_confirm.py
 from weauth.listener import WeChatConfirmListener
+from gevent import pywsgi
+from gevent import ssl
 
 def confirm(token:str,url:str):
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ssl_context.load_cert_chain(certfile='public.pem',
+                                keyfile='private.key')
+
     wechat_listener = WeChatConfirmListener(token,url)
+
+    server = pywsgi.WSGIServer(('0.0.0.0', 443), wechat_listener.wx_service,
+                               ssl_context=ssl_context)
+
+
     # 核心监听程序运行
-    wechat_listener.wx_service.run(host='0.0.0.0', port=80)
+    server.serve_forever()
+
+    # wechat_listener.wx_service.run(host='0.0.0.0', port=80)
