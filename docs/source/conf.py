@@ -5,12 +5,17 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-project = 'WeAuth'
-copyright = '2025, NearlyHeadlessJack'
-author = 'NearlyHeadlessJack'
-# from weauth.constants.core_constant import VERSION
+import sys
+import os
+import datetime
 
-release = '1.0'
+project = 'WeAuth'
+copyright = f'{datetime.datetime.now().year}, NearlyHeadlessJack'
+author = 'NearlyHeadlessJack'
+sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
+from weauth.constants.core_constant import VERSION
+
+release = 'v' + VERSION
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
