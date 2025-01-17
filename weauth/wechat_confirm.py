@@ -11,9 +11,9 @@ from gevent import pywsgi
 from gevent import ssl
 
 def confirm(token:str,url:str):
-    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    ssl_context.load_cert_chain(certfile='public.pem',
-                                keyfile='private.key')
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    ssl_context.load_cert_chain(certfile='/root/WeAuth/public.pem',
+                                keyfile='/root/WeAuth/private.key')
 
     wechat_listener = WeChatConfirmListener(token,url)
 
