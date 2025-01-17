@@ -5,13 +5,12 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
 project = 'WeAuth'
 copyright = '2025, NearlyHeadlessJack'
 author = 'NearlyHeadlessJack'
-from weauth.constants.core_constant import VERSION
+# from weauth.constants.core_constant import VERSION
 
-release = 'v' + VERSION
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
