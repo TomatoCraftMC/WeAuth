@@ -21,13 +21,7 @@ from weauth.constants.core_constant import *
 from weauth.constants import exit_code
 from weauth.mc_server import MCServerConnection
 
-# @click.command()
-# @click.option(
-#     '-p',
-#     '--port',
-#     default='80',
-#     help='本地监听端口号'
-# )
+
 def main(args) -> None:
     """应用程序入口"""
     print(" ")
@@ -66,7 +60,7 @@ def main(args) -> None:
         'WxUserName': '12345',
         'url': '/wx',
         'ssl': 0,
-        'ssl_cer': 'ssl/my.server.com.cer',
+        'ssl_cer': 'ssl/my.server.com.crt',
         'ssl_key': 'ssl/my.server.com.key'
     }
 
@@ -196,8 +190,6 @@ def check_config_version(config:dict,default_config:dict):
     create_config_yaml(config=config,default_config=default_config)
 
 
-# if __name__ == '__main__':
-#     main()
 
 
     
