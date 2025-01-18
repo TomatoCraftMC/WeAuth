@@ -11,11 +11,15 @@ from xml.dom.minidom import parseString
 from weauth.tencent_server.wx_server import WxConnection
 
 class WeChatConfirmListener:
-    def __init__(self,token:str,url:str):
+    def __init__(self, token: str, url: str, ssl: bool = False):
         print('-正在启动微信验证服务器')
         print('-服务器已启动,请在微信公众号后台进行操作,当前token为 {}'.format(token))
-        print('-URL地址为 http://您的服务器IP或域名{}'.format(url))
-        print('-验证程序默认使用80端口')
+        if ssl:
+            print('-URL地址为 https://您的服务器IP或域名{}'.format(url))
+            print('-验证程序默认使用443端口')
+        else:
+            print('-URL地址为 http://您的服务器IP或域名{}'.format(url))
+            print('-验证程序默认使用80端口')
         self.wx_service = Flask(__name__)
         @self.wx_service.route(url,methods=['GET'])
         def wx():

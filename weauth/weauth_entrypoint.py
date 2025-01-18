@@ -50,6 +50,8 @@ def entrypoint():
 	parser.add_argument('-w', '--wechat_confirm', help='微信验证开发者服务器相应程序',
 						action='store_true',default=False)
 	parser.add_argument('-t','--token',help='验证用token',default='-1',type=str)
+	parser.add_argument('-cp', '--pub_path', help='ssl_证书路径', default='-1', type=str)
+	parser.add_argument('-kp', '--key_path', help='ssl_私钥路径', default='-1', type=str)
 	parser.add_argument('-op', '--op', help='新增op', default='-1', type=str)
 	parser.add_argument('-r', '--url', help='路由地址', default='/wx', type=str)
 	parser.add_argument('-g', '--gift', help='生成CDKey',
@@ -66,6 +68,7 @@ def entrypoint():
 	parser.add_argument('-s', '--s', help='切换注册状态',
 						default=False, action='store_true')
 	parser.add_argument('-unban', '--unban', help='unban [player_id]', default='-1', type=str)
+
 
 	args = parser.parse_args()
 
@@ -109,8 +112,12 @@ def entrypoint():
 				  '如weauth -t token1234 -w')
 			sys.exit(0)
 		from weauth.wechat_confirm import confirm
-		confirm(args.token, url=args.url)
-		sys.exit(0)
+		if args.pub_path == '-1' or args.key_path == '-1':
+			confirm(args.token, url=args.url)
+			sys.exit(0)
+		else:
+			confirm(args.token, url=args.url, cer_path=args.pub_path, key_path=args.key_path)
+			sys.exit(0)
 
 	if args.op != '-1':
 		from weauth.utils.add_op import add_op
