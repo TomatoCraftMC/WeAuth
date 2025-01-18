@@ -42,7 +42,6 @@ def entrypoint():
 	from weauth.weauth_boostrap import main
 	import argparse
 	parser = argparse.ArgumentParser(description='启动参数')
-	parser.add_argument('-p','--port',help='监听端口',default='80',type=str)
 	parser.add_argument('-v', '--version', help='Print {} version and exit'.format(core_constant.NAME),
 						action='store_true',default=False)
 	parser.add_argument('-test', '--test_mode', help='Running in test_mode',
