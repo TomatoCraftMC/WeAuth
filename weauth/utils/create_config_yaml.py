@@ -28,7 +28,10 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
             'AppSecret',
             'EncodingMode',
             'WxUserName',
-            'url'
+        'url',
+        'ssl',
+        'ssl_cer',
+        'ssl_key'
     ]
     for key in required_keys:
         if key not in config:
@@ -51,7 +54,10 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
         'AppSecret': config['AppSecret'],
         'EncodingMode': config['EncodingMode'],
         'WxUserName': config['WxUserName'],
-        'url': config['url']
+        'url': config['url'],
+        'ssl': config['ssl'],
+        'ssl_cer': config['ssl_cer'],
+        'ssl_key': config['ssl_key']
     }
 
     # 生成 comment 字典
@@ -72,7 +78,10 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
         'AppSecret': '微信公众号AppSecret',
         'EncodingMode': '微信服务器内容加密方式： 0为明文，其他待开发',
         'WxUserName': '微信公众号原始ID',
-        'url': 'WeAuth路由地址，用于监听来自微信服务器消息'
+        'url': 'WeAuth路由地址，用于监听来自微信服务器消息',
+        'ssl': '是否开启ssl, 0 为不开启， 1 为开启',
+        'ssl_cer': 'ssl证书路径',
+        'ssl_key': 'ssl密钥路径'
     }
 
     text = ''

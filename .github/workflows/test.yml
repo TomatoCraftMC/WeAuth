@@ -35,5 +35,5 @@ jobs:
           pytest
       - name: Test with running
         run: |
-          python -m weauth -p 80
+          python -m weauth 
 
