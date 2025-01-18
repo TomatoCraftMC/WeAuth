@@ -156,7 +156,7 @@ class DB:
         if mode == 1:
             command = 'ban ' + player_id
         else:
-            command = 'ban remove ' + player_id
+            command = 'pardon ' + player_id
         return game_server.push_command(command=command)
 
     @staticmethod
