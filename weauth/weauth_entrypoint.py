@@ -14,6 +14,8 @@ from weauth.constants import exit_code
 from weauth.cdkey import CDKey
 from weauth.command_line import AdminCLI
 from weauth.database import DB
+from weauth.utils.gtest import gtest
+from weauth.utils.wtest import wtest
 
 __all__ = ['entrypoint']
 
@@ -46,6 +48,10 @@ def entrypoint():
 						action='store_true',default=False)
 	parser.add_argument('-test', '--test_mode', help='Running in test_mode',
 						action='store_true',default=False)
+	parser.add_argument('-gtest', '--gtest', help='游戏服务器测试模式',
+						action='store_true', default=False)
+	parser.add_argument('-wtest', '--wtest', help='微信服务器测试模式',
+						action='store_true', default=False)
 	parser.add_argument('-w', '--wechat_confirm', help='微信验证开发者服务器相应程序',
 						action='store_true',default=False)
 	parser.add_argument('-t','--token',help='验证用token',default='-1',type=str)
@@ -70,6 +76,15 @@ def entrypoint():
 
 
 	args = parser.parse_args()
+
+	if args.gtest:
+		gtest()
+		sys.exit(0)
+
+	if args.wtest:
+		wtest()
+		sys.exit(0)
+
 
 	if args.delete:
 		AdminCLI.remove_by_player_id()
