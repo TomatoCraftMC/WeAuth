@@ -12,10 +12,11 @@ import yaml
 
 
 def gtest() -> None:
+    print('-正在测试游戏服务器连接')
     try:
         with open('config.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
-
+        print('-已读取配置文件')
     except FileNotFoundError:
         print('-未找到配置文件config.yaml!')
         sys.exit(0)

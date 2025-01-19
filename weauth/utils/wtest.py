@@ -14,10 +14,11 @@ from gevent import ssl
 
 
 def wtest() -> None:
+    print('-正在测试微信服务器连接')
     try:
         with open('config.yaml', 'r', encoding='utf-8') as f:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
-
+        print('-已读取配置文件')
     except FileNotFoundError:
         print('-未找到配置文件config.yaml!')
         sys.exit(0)
@@ -25,6 +26,7 @@ def wtest() -> None:
     config = result
     url = config['url']
     # 测试微信服务器连接
+    print('-正在检验AppID与AppSecret是否正确')
     if test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret']) == -1:
         sys.exit(0)
 
@@ -41,11 +43,13 @@ def wtest() -> None:
         server = pywsgi.WSGIServer(('0.0.0.0', 443), listener.wx_service,
                                    ssl_context=ssl_context)
         print(f"-开始在 https://0.0.0.0{url} 进行监听")
+        print('-您可以向公众号发送消息进行测试')
         server.serve_forever()
     else:
         # 核心监听程序运行
         server = pywsgi.WSGIServer(('0.0.0.0', 80), listener.wx_service)
         print(f"-开始在 http://0.0.0.0{url} 进行监听")
+        print('-您可以向公众号发送消息进行测试')
         server.serve_forever()
 
 
@@ -61,7 +65,7 @@ def test_wechat_server(app_id, app_secret):
         return -1
 
     elif code1 == 0:
-        print("-已更新Access Token")
+        print("-检验通过")
         return code2
 
 
