@@ -10,14 +10,16 @@ WeAuth在 `GNU GENERAL PUBLIC LICENSE Version 3 (GPLv3) <https://github.com/Toma
 
 如果您使用WeAuth仅用于微信公众平台验证第三方服务器使用，请直接阅读 :doc:`/quick_start/only_for_wechat_confirm` 。
 
+**本手册将向您介绍如何安装WeAuth，如何配置微信公众号后台，如何配置连接游戏服务器，以及如何使用WeAuth指令。**
+
 .. toctree::
    :maxdepth: 2
    :caption: 首页
 
    下载和安装<quick_start/index.rst>
-   微信公众号后台设置<wechat_config/index.rst>
-   连接游戏服务器<mc_config/index.rst>
-   启动参数与命令<command/index.rst>
+   配置微信公众号后台<wechat_config/index.rst>
+   配置连接游戏服务器<mc_config/index.rst>
+   启动WeAuth与指令控制<command/index.rst>
    参与WeAuth开发<dev/index.rst>
    开源组件许可<lis.rst>
 

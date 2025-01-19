@@ -58,7 +58,7 @@ uuid与remote-uuid
 测试与MCSM连接
 ~~~~~~~~~~~~~
 
-您可以运行WeAuth的游戏端测试模式。（1.6.0起支持）
+您可以运行WeAuth的游戏端测试模式。（1.6.1起支持）
 
 .. code-block:: bash
 

@@ -21,8 +21,6 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 
 此外，WeAuth可以单独作为微信公众号验证开发者服务器url地址使用。  
 
-## 浏览WeAuth[使用手册](https://weauth.readthedocs.io/)
-
 ## WeAuth目前的开发路线图  
 
 ### 功能  
@@ -32,7 +30,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 - [x] CdKey生成与兑换系统 (1.5.0起支持)
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
- - [ ] https支持
+- [x] https支持 (1.6.0起支持)
 - [x] 可直接在微信公众号运行WeAuth指令 (1.5.3起支持)
 - [ ] log系统
 ### 桥梁
@@ -57,27 +55,18 @@ pip3 install weauth  # 使用官方Pypi源
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
 ```
 
-## 在微信公众号发送WeAuth指令
+## 浏览WeAuth[使用手册](https://weauth.readthedocs.io/)
 
-> WeAuth指令使用!开头, 只有超级管理员可以使用该功能
-
-```shell
-!op [ID]   # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
-!sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
-!v  # 查看WeAuth版本信息
-!g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 
-!l # 显示所有用户ID
-!s [player_id]  # 显示该用户ID的封禁、订阅情况
-!b [player_id]  # 封禁该用户，同时会移出白名单
-!ub [player_id]  # 移出封禁
-!d [player_id]  # 在数据库中删除该玩家信息，会自动移出白名单
-!u [player_id] [is_ban] [is_sub]  # 手动更新该玩家是否封禁标志与是否订阅标志 （会自动同步到游戏服务器）
-```
+**WeAuth的使用手册现已迁移至[Read the Docs](https://weauth.readthedocs.io/)。**  
+**使用手册将详细介绍如何下载安装WeAuth，如何配置微信公众号后台，如何配置连接Minecraft Server，以及如何使用WeAuth来管理Minecraft服务器。
+**
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 
+维护者：[@NearlyHeadlessJack](https://rjack.cn/), [@MrDotMr](https://github.com/MrDotMr)。  
 欢迎大家参与WeAuth的开发！请发起PR时选择`dev`
-branch。如有任何问题欢迎在[Issues](https://github.com/TomatoCraftMC/WeAuth/issues)中提出。
+branch。如有任何问题欢迎在[Issues](https://github.com/TomatoCraftMC/WeAuth/issues)中提出。    
+[开发与问题反馈交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zZWKaVfLOLW19NRVtffSgxPZivKkK45n&authKey=cF0bEvwv%2FoHTMrXJpzkvGvZhuYdF7WCefRF4F21dqnJMSvzOCL%2FZSpGqnwEVYE7G&noverify=0&group_code=1017293626)
 
 # Licence
 
