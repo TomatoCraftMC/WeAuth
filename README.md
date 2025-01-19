@@ -58,8 +58,10 @@ pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # �
 ## 浏览WeAuth[使用手册](https://weauth.readthedocs.io/)
 
 **WeAuth的使用手册现已迁移至[Read the Docs](https://weauth.readthedocs.io/)。**  
+
 **使用手册将详细介绍如何下载安装WeAuth，如何配置微信公众号后台，如何配置连接Minecraft Server，以及如何使用WeAuth来管理Minecraft服务器。
 **
+
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 
