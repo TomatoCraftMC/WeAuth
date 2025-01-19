@@ -23,7 +23,7 @@ def wtest() -> None:
         sys.exit(0)
 
     config = result
-
+    url = config['url']
     # 测试微信服务器连接
     if test_wechat_server(app_id=config['appID'], app_secret=config['AppSecret']) == -1:
         sys.exit(0)
