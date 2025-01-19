@@ -153,7 +153,7 @@ https://github.com/fatedier/frp/releases/
 测试连接
 ~~~~~~~
 
-您可以运行WeAuth的游戏端测试模式。（1.6.0起支持）
+您可以运行WeAuth的游戏端测试模式。（1.6.1起支持）
 
 在测试之前，请开启MC Server。
 
