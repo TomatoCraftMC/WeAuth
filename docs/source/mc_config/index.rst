@@ -1,5 +1,5 @@
-连接游戏服务器
-============
+配置连接游戏服务器
+===============
 WeAuth提供两种连接Minecraft Server的方式。即使您的MC Server没有固定公网IP，也可以借助frp工具搭建隧道实现与WeAuth服务器的连接。
 
 .. list-table::

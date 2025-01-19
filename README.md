@@ -4,6 +4,7 @@ WeAuth
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/weauth)](https://pypi.org/project/weauth)
 [![PyPI - Version](https://img.shields.io/pypi/v/weauth)](https://pypi.org/project/weauth)
 [![GitHub License](https://img.shields.io/github/license/TomatoCraftMC/WeAuth)](https://github.com/TomatoCraftMC/WeAuth/blob/main/LICENSE)
+[![docs](https://readthedocs.org/projects/mcdreforged/badge/)](https://weauth.readthedocs.io/)
 
 <div align=center><img src="logo/long_banner.png"></div>
 
@@ -29,7 +30,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 - [x] CdKey生成与兑换系统 (1.5.0起支持)
  - [x] 从Minecraft能反向输出信息到微信公众号（仅支持rcon）(1.4.0起支持)
  - [ ] 执行定时脚本  
- - [ ] https支持
+- [x] https支持 (1.6.0起支持)
 - [x] 可直接在微信公众号运行WeAuth指令 (1.5.3起支持)
 - [ ] log系统
 ### 桥梁
@@ -42,18 +43,6 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
  - [x] 集成的SQLite3  
  - [ ] MySQL连接支持  
 
-## WeAuth所需要的安装与运行环境  
-```command
-Python>=3.8 (推荐使用Python>=3.10)
-服务器的80端口必须可以被访问*
-```   
-* 微信公众号只会通过80(http)或443(https)与开发者服务器进行交互。
-* **如果您运行WeAuth的服务器是在大陆境内的云服务器，只有经过备案才能使用80/443端口。**  
-* **如果您运行WeAuth的服务器使用的家庭宽带，则80/443端口无法使用。**   
-> 您可以购买一台便宜的云服务器，经过备案后专门运行WeAuth。此时，如果您的Minecraft服务器无法连接到WeAuth服务器
-> （比如IPv6原因，云服务器厂商一般不提供IPv6访问），可以使用[frp](https://github.com/fatedier/frp)等工具解决。  
-
-
 ## 安装WeAuth
 WeAuth已上传至[Pypi](https://pypi.org/project/weauth/)，您可以直接通过`pip`指令安装。  
 ```shell
@@ -64,93 +53,20 @@ pip3 install weauth  # 使用官方Pypi源
 
 ```shell
 pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # 使用清华源加速
-```   
-
-### 建议使用Python>=3.10版本
-安装完成后，此时，你已经可以直接在控制台使用`weauth`指令来运行WeAuth。但我们建议您在新建的文件夹内运行WeAuth。    
-```shell
-mkdir WeAuth
-cd WeAuth
-weauth
-```   
-## 配置WeAuth
-首次运行WeAuth会自动生成`config.yaml`与`ops.yaml`文件。  
-您需要在文件内填入合适信息才能正式运行WeAuth。  
-### config.yaml  
-该文件包含WeAuth连接微信/QQ服务器所需要的凭证与连接MCSManager或rcon所需要的信息。  
-您可以在启动WeAuth时添加参数（见下一节），这些参数的优先级高于`config.yaml`中的内容。   
-  
-### ops.yaml  
-该文件保存着管理员ID信息（指游戏角色ID）。  
-该管理员是指可以通过微信公众号直接发送指令到游戏内执行。  
->请勿将WeAuth管理员与游戏内op混淆，但是在未来，WeAuth将支持从游戏服务器拉取op玩家ID信息。    
-
-**只有`ops.yaml`文件支持热重载**
-
-### gift_list.yaml
-
-该文件储存CDKey系统的礼物元数据，每个礼物对应一个哈希值。该文件通过CDKey系统自动生成与管理，具体见[CDKey系统说明](docs/Cdkey.md)。
-
-### cdkey.yaml
-
-该文件储存所有未兑换的CDKeys(兑换码)。该文件本质是一个Python字典，键为礼物的哈希值(对应gift_list.yaml)
-，键值为该礼物对应所有兑换码的列表。  
-玩家成功兑换CDKey时会自动从该文件中删除对应兑换码。该文件通过CDKey系统自动生成与管理，具体见[CDKey系统说明](docs/Cdkey.md)。
-## WeAuth启动参数(近期正在快速更新)
-```shell
-weauth
--v  # 查看版本信息
--h  # 查看启动参数帮助信息
--p [port]  # 启动后的监听端口。默认为80端口
--r [route]  # 启动后的web服务路由。默认为“/wx”
--w -t [token]  # 微信服务器验证模式，[token]即微信服务器验证用的token，也就是您在微信公众号后台输入的token内容
--w -t [token -r [route]  # 微信服务器验证模式，自定义路由
--g  # 进入CDKey生成系统
--op [ID]  # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
--sop [id] # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
--test  # 以测试模式启动，仅用于开发测试
--update [player_id] -b -s 
-# 手动更新该玩家是否封禁标志与是否订阅标志(仅本地数据库)
--ban [player_id]
-# 封禁该用户(仅本地数据库)
--unban [player_id]
-# 移出封禁(仅本地数据库)
--search [play_id]
-# 显示该用户ID的封禁、订阅情况
--del [player_id]
-# 在数据库中删除该玩家信息(仅本地数据库)
--list
-# 显示所有用户ID
-```   
-在绝大多数情况下，您无需输入任何参数，直接使用`weauth`启动即可。  
-程序将默认在`http://0.0.0.0:80/wx`监听来自微信的请求。
-
-## [微信公众号后台配置](docs/WeChatConfig.md)
-## [MCSManager后台配置](docs/MCSManagerConfig.md)
-## [rcon设置](docs/Rcon.md)
-## [CDKey系统使用指南](docs/Cdkey.md)
-
-## 在微信公众号发送WeAuth指令
-
-> WeAuth指令使用!开头, 只有超级管理员可以使用该功能
-
-```shell
-!op [ID]   # 将ID加入ops.yaml中的普通管理员(可以在公众号发出游戏内指令)
-!sop [ID]  # 将ID加入ops.yaml中的超级管理员(可以在公众号中发出WeAuth指令)
-!v  # 查看WeAuth版本信息
-!g [mineID] [mineNum] [cdkeyNum] [comment]   # 生成礼物 
-!l # 显示所有用户ID
-!s [player_id]  # 显示该用户ID的封禁、订阅情况
-!b [player_id]  # 封禁该用户，同时会移出白名单
-!ub [player_id]  # 移出封禁
-!d [player_id]  # 在数据库中删除该玩家信息，会自动移出白名单
-!u [player_id] [is_ban] [is_sub]  # 手动更新该玩家是否封禁标志与是否订阅标志 （会自动同步到游戏服务器）
 ```
+
+## 浏览WeAuth[使用手册](https://weauth.readthedocs.io/)
+
+**WeAuth的使用手册现已迁移至[Read the Docs](https://weauth.readthedocs.io/)。**  
+**使用手册将详细介绍如何下载安装WeAuth，如何配置微信公众号后台，如何配置连接Minecraft Server，以及如何使用WeAuth来管理Minecraft服务器。
+**
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 
+维护者：[@NearlyHeadlessJack](https://rjack.cn/), [@MrDotMr](https://github.com/MrDotMr)。  
 欢迎大家参与WeAuth的开发！请发起PR时选择`dev`
-branch。如有任何问题欢迎在[Issues](https://github.com/TomatoCraftMC/WeAuth/issues)中提出。
+branch。如有任何问题欢迎在[Issues](https://github.com/TomatoCraftMC/WeAuth/issues)中提出。    
+[开发与问题反馈交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zZWKaVfLOLW19NRVtffSgxPZivKkK45n&authKey=cF0bEvwv%2FoHTMrXJpzkvGvZhuYdF7WCefRF4F21dqnJMSvzOCL%2FZSpGqnwEVYE7G&noverify=0&group_code=1017293626)
 
 # Licence
 
