@@ -4,6 +4,7 @@
 
 - 新增微信服务器测试模式，`weauth -wtest`
 - 新增游戏服务器测试模式 `weauth -gtest`
+- 更改测试rcon连接使用的指令
 ### 2025-01-19 v1.6.0
 
 - WeAuth现已支持https
