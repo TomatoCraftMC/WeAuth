@@ -7,3 +7,4 @@
 # file: __init__.py
 from .listener import Listener
 from .wechat_confirm_listener import WeChatConfirmListener
+from .wtest_listener import WechatTestListener

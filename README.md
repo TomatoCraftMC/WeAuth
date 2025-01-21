@@ -19,7 +19,7 @@ WeAuth架起一座连接微信公众号（QQ机器人）与Minecraft服务器的
 
 你可以直接在微信公众号（或者QQ机器人）对Minecraft服务器进行指令操作。
 
-此外，WeAuth可以单独作为微信公众号验证开发者服务器url地址使用。  
+此外，**WeAuth可以单独作为微信公众号验证开发者服务器url地址使用。**
 
 ## WeAuth目前的开发路线图  
 
@@ -57,9 +57,10 @@ pip3 install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple weauth  # �
 
 ## 浏览WeAuth[使用手册](https://weauth.readthedocs.io/)
 
-**WeAuth的使用手册现已迁移至[Read the Docs](https://weauth.readthedocs.io/)。**  
-**使用手册将详细介绍如何下载安装WeAuth，如何配置微信公众号后台，如何配置连接Minecraft Server，以及如何使用WeAuth来管理Minecraft服务器。
-**
+**WeAuth的使用手册现已迁移至[Read the Docs](https://weauth.readthedocs.io/)。**    
+**使用手册将详细介绍如何下载安装WeAuth，如何配置微信公众号后台，
+如何配置连接Minecraft Server，以及如何使用WeAuth来管理Minecraft服务器。**
+
 ## [版本更新日志](docs/UPDATE.md)  
 ## 贡献  
 

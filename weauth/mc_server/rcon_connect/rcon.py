@@ -34,7 +34,7 @@ class RCON:
             return -200, None
         try:
             with Client(host_add, port, passwd=passwd) as client:
-                response = client.run('tell', '@a', 'arguments')
+                response = client.run('list')
             return 200,None
         except socket.gaierror:
             print('-rcon地址无法解析')
