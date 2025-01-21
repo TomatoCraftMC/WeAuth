@@ -3,6 +3,7 @@
 # WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
 # https://github.com/nearlyheadlessjack/weauth
 # 程序总入口
+import time
 from email.policy import default
 import sys
 from http.client import responses
@@ -20,7 +21,9 @@ from weauth.exceptions.exceptions import *
 from weauth.constants.core_constant import *
 from weauth.constants import exit_code
 from weauth.mc_server import MCServerConnection
-
+from multiprocessing import Process
+import threading
+from weauth.utils.backup import BackUp
 
 def main(args) -> None:
     """应用程序入口"""
@@ -44,6 +47,8 @@ def main(args) -> None:
     DB.check_database()
     default_config = {
         'server_connect': 0,
+        'backup': 1,
+        'backup_cron': '* * */1 * *',
         'welcome': '欢迎加入我的服务器!\\n如果仍然无法加入服务器, 请联系管理员。\\n祝您游戏愉快!',
         'mcsm_adr': 'http://127.0.0.1:23333/',
         'mcsm_api': '12345',
@@ -109,6 +114,9 @@ def main(args) -> None:
 
 
     url = config['url']
+    backup_ = config['backup']
+    cron = config['backup_cron']
+
     if args.url != '/wx':
         url = args.url
 
@@ -120,27 +128,17 @@ def main(args) -> None:
         'welcome': config['welcome']  # 玩家注册白名单成功
     }
 
-    # 创建Flask实例
-    print("-正在启动监听......\n")
-    listener = Listener(wx_user_name=config['WxUserName'], responses=responses, url=url, game_server=game_server)
+    # 创建监听进程
+    weauth_server = Process(target=server_start, args=(config, responses, url, game_server))
 
-    if config['ssl'] == 1:
-        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        try:
-            ssl_context.load_cert_chain(certfile=config['ssl_cer'], keyfile=config['ssl_key'])
-        except FileNotFoundError:
-            print('-未找到ssl证书文件！')
-            sys.exit(0)
-        server = pywsgi.WSGIServer(('0.0.0.0', 443), listener.wx_service,
-                                   ssl_context=ssl_context)
-        print(f"-开始在 https://0.0.0.0{url} 进行监听")
-        server.serve_forever()
-    else:
-        # 核心监听程序运行
-        server = pywsgi.WSGIServer(('0.0.0.0', 80), listener.wx_service)
-        print(f"-开始在 http://0.0.0.0{url} 进行监听")
-        server.serve_forever()
+    if backup_ == 1:
+        # 创建备份管理系统线程
+        print('-正在创建备份任务')
+        backup_thread = threading.Thread(target=backup_server, args=(cron,))
+        weauth_server.daemon = True
+        backup_thread.start()
 
+    weauth_server.start()
 
 
 # 读取配置文件
@@ -190,6 +188,35 @@ def check_config_version(config:dict,default_config:dict):
     create_config_yaml(config=config,default_config=default_config)
 
 
+def server_start(config: dict, responses: dict, url: str, game_server: MCServerConnection) -> None:
+    # 创建Flask实例
+    print("-正在启动监听......\n")
+    listener = Listener(wx_user_name=config['WxUserName'], responses=responses, url=url, game_server=game_server)
+
+    if config['ssl'] == 1:
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        try:
+            ssl_context.load_cert_chain(certfile=config['ssl_cer'], keyfile=config['ssl_key'])
+        except FileNotFoundError:
+            print('-未找到ssl证书文件！')
+            sys.exit(0)
+        server = pywsgi.WSGIServer(('0.0.0.0', 443), listener.wx_service,
+                                   ssl_context=ssl_context)
+        print(f"-开始在 https://0.0.0.0{url} 进行监听")
+        server.serve_forever()
+    else:
+        # 核心监听程序运行
+        server = pywsgi.WSGIServer(('0.0.0.0', 80), listener.wx_service)
+        print(f"-开始在 http://0.0.0.0{url} 进行监听")
+        server.serve_forever()
 
 
-    
+def backup_server(cron: str) -> None:
+    try:
+        backup_task = BackUp(cron)
+        print(backup_task.next())
+        backup_task.run()
+
+    except ValueError:
+        print('\033[31m-备份系统计划设置错误，请检查config.yaml中的backup_cron设置是否正确\033[0m')
+        sys.exit(0)

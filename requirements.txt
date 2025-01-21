@@ -5,3 +5,4 @@ rcon>=2.1.1
 tcping==0.1.1rc1
 gevent>=24.2.1
 prettytable>=0.2.13
+crontab>=1.0.1
