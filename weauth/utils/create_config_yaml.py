@@ -14,6 +14,8 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
 
     required_keys = [
             'server_connect',
+        'backup',
+        'backup_cron',
             'welcome',
             'mcsm_adr',
             'mcsm_api',
@@ -39,6 +41,8 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
 
     config_dict = {
         'version': VERSION_PYPI,
+        'backup': config['backup'],
+        'backup_cron': config['backup_cron'],
         'server_connect': config['server_connect'],
         'welcome': config['welcome'],
         'mcsm_adr': config['mcsm_adr'],
@@ -63,6 +67,8 @@ def create_config_yaml(config: dict, default_config:dict) -> int:
     # 生成 comment 字典
     comment_dict = {
         'version': '版本号，请勿修改',
+        'backup': '是否开启配置及数据库备份 0 为不开启，1 为开启',
+        'backup_cron': '备份系统定时，crontab格式，默认为每天2:00进行备份',
         'server_connect': '游戏服务器连接方式，0 为MCSManager，1 为rcon',
         'welcome': '玩家成功加入白名单后，微信的回复消息',
         'mcsm_adr': 'MCSM的url地址',
