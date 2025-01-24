@@ -12,24 +12,24 @@ import os
 __CI_BUILD_NUM = None
 BUILD_TIME = None
 
-NAME_SHORT = 'WeAuth'
-NAME = 'WeAuth'
-PACKAGE_NAME = 'weauth'
+NAME_SHORT = "WeAuth"
+NAME = "WeAuth"
+PACKAGE_NAME = "weauth"
 CLI_COMMAND = PACKAGE_NAME
 
 # WeAuth Version Storage
-VERSION_PYPI: str = '1.7.0'
-VERSION: str = '1.7.0'
+VERSION_PYPI: str = "1.7.0"
+VERSION: str = "1.7.0"
 
 
 # URLs
-GITHUB_URL = r'https://github.com/TomatoCraftMC/WeAuth'
-GITEE_VERSION_URL = r'https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION'
-DOCUMENTATION_URL = r'https://github.com/TomatoCraftMC/WeAuth/blob/main/README.md'
+GITHUB_URL = r"https://github.com/TomatoCraftMC/WeAuth"
+GITEE_VERSION_URL = r"https://gitee.com/NHJ2001/WeAuth/raw/main/VERSION"
+DOCUMENTATION_URL = r"https://github.com/TomatoCraftMC/WeAuth/blob/main/README.md"
 
 # CDKey
 CDKEY_LENGTH_ONE_PIECE = 4
 
 if isinstance(__CI_BUILD_NUM, str) and __CI_BUILD_NUM.isdigit():
-	VERSION += '+dev.{}'.format(__CI_BUILD_NUM)
-	VERSION_PYPI += '.dev{}'.format(__CI_BUILD_NUM)
+    VERSION += "+dev.{}".format(__CI_BUILD_NUM)
+    VERSION_PYPI += ".dev{}".format(__CI_BUILD_NUM)

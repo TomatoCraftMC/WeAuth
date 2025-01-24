@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
-# datetime： 2024/7/4 上午1:23 
+# datetime： 2024/7/4 上午1:23
 # ide： PyCharm
 # file: __init__.py.py
 from .command_line import CommandLine

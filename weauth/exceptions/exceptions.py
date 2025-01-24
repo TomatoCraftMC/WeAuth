@@ -7,35 +7,36 @@
 # ide： PyCharm
 # file: exceptions.py
 class Banned(Exception):
-     def __init__(self, msg):
-         self.msg = msg
-    
-     def __str__(self):
-         return self.msg
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
 
 
 class AlreadyIn(Exception):
-     def __init__(self, msg):
-         self.msg = msg
-    
-     def __str__(self):
-         return self.msg
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
 
 
 class OpenidAlreadyIn(Exception):
-     def __init__(self, msg):
-         self.msg = msg
-    
-     def __str__(self):
-         return self.msg     
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
 
 
 class ServerConnectionFailed(Exception):
-     def __init__(self, msg):
-         self.msg = msg
-    
-     def __str__(self):
-         return self.msg
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
 
 class ConfigFileNotFound(Exception):
     def __init__(self, msg):
@@ -43,6 +44,7 @@ class ConfigFileNotFound(Exception):
 
     def __str__(self):
         return self.msg
+
 
 class PlayerIdNotExist(Exception):
     def __init__(self, msg):

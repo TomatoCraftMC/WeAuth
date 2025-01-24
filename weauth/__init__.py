@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
-# datetime： 2025/1/5 19:41 
+# datetime： 2025/1/5 19:41
 # ide： PyCharm
 # file: __init__.py
 from weauth.constants import core_constant as __core_constant

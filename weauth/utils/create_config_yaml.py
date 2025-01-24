@@ -3,104 +3,102 @@
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
 # WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
-# datetime： 2025/1/5 12:18 
+# datetime： 2025/1/5 12:18
 # ide： PyCharm
 # file: create_config_yaml.py
 from weauth.constants.core_constant import VERSION_PYPI
 import yaml
 
 
-def create_config_yaml(config: dict, default_config:dict) -> int:
+def create_config_yaml(config: dict, default_config: dict) -> int:
 
     required_keys = [
-            'server_connect',
-        'backup',
-        'backup_cron',
-            'welcome',
-            'mcsm_adr',
-            'mcsm_api',
-            'uuid',
-            'remote-uuid',
-            'rcon_host_add',
-            'rcon_port',
-            'rcon_password',
-            'token',
-            'EncodingAESKey',
-            'appID',
-            'AppSecret',
-            'EncodingMode',
-            'WxUserName',
-        'url',
-        'ssl',
-        'ssl_cer',
-        'ssl_key'
+        "server_connect",
+        "backup",
+        "backup_cron",
+        "welcome",
+        "mcsm_adr",
+        "mcsm_api",
+        "uuid",
+        "remote-uuid",
+        "rcon_host_add",
+        "rcon_port",
+        "rcon_password",
+        "token",
+        "EncodingAESKey",
+        "appID",
+        "AppSecret",
+        "EncodingMode",
+        "WxUserName",
+        "url",
+        "ssl",
+        "ssl_cer",
+        "ssl_key",
     ]
     for key in required_keys:
         if key not in config:
             config[key] = default_config[key]
 
     config_dict = {
-        'version': VERSION_PYPI,
-        'backup': config['backup'],
-        'backup_cron': config['backup_cron'],
-        'server_connect': config['server_connect'],
-        'welcome': config['welcome'],
-        'mcsm_adr': config['mcsm_adr'],
-        'mcsm_api': config['mcsm_api'],
-        'uuid': config['uuid'],
-        'remote-uuid': config['remote-uuid'],
-        'rcon_host_add': config['rcon_host_add'],
-        'rcon_port': config['rcon_port'],
-        'rcon_password': config['rcon_password'],
-        'token': config['token'],
-        'EncodingAESKey': config['EncodingAESKey'],
-        'appID': config['appID'],
-        'AppSecret': config['AppSecret'],
-        'EncodingMode': config['EncodingMode'],
-        'WxUserName': config['WxUserName'],
-        'url': config['url'],
-        'ssl': config['ssl'],
-        'ssl_cer': config['ssl_cer'],
-        'ssl_key': config['ssl_key']
+        "version": VERSION_PYPI,
+        "backup": config["backup"],
+        "backup_cron": config["backup_cron"],
+        "server_connect": config["server_connect"],
+        "welcome": config["welcome"],
+        "mcsm_adr": config["mcsm_adr"],
+        "mcsm_api": config["mcsm_api"],
+        "uuid": config["uuid"],
+        "remote-uuid": config["remote-uuid"],
+        "rcon_host_add": config["rcon_host_add"],
+        "rcon_port": config["rcon_port"],
+        "rcon_password": config["rcon_password"],
+        "token": config["token"],
+        "EncodingAESKey": config["EncodingAESKey"],
+        "appID": config["appID"],
+        "AppSecret": config["AppSecret"],
+        "EncodingMode": config["EncodingMode"],
+        "WxUserName": config["WxUserName"],
+        "url": config["url"],
+        "ssl": config["ssl"],
+        "ssl_cer": config["ssl_cer"],
+        "ssl_key": config["ssl_key"],
     }
 
     # 生成 comment 字典
     comment_dict = {
-        'version': '版本号，请勿修改',
-        'backup': '是否开启配置及数据库备份 0 为不开启，1 为开启',
-        'backup_cron': '备份系统定时，crontab格式，默认为每天2:00进行备份',
-        'server_connect': '游戏服务器连接方式，0 为MCSManager，1 为rcon',
-        'welcome': '玩家成功加入白名单后，微信的回复消息',
-        'mcsm_adr': 'MCSM的url地址',
-        'mcsm_api': 'MCSM的api密钥',
-        'uuid': 'MCSM实例的应用实例ID',
-        'remote-uuid': 'MCSM实例的远程节点ID',
-        'rcon_host_add': 'RCON 主机域名或者IP',
-        'rcon_port': 'RCON 端口',
-        'rcon_password': 'RCON 密码',
-        'token': '微信公众号token',
-        'EncodingAESKey': '微信公众号加密密钥（暂时无用）',
-        'appID': '微信公众号appID',
-        'AppSecret': '微信公众号AppSecret',
-        'EncodingMode': '微信服务器内容加密方式： 0为明文，其他待开发',
-        'WxUserName': '微信公众号原始ID',
-        'url': 'WeAuth路由地址，用于监听来自微信服务器消息',
-        'ssl': '是否开启ssl, 0 为不开启， 1 为开启',
-        'ssl_cer': 'ssl证书路径',
-        'ssl_key': 'ssl密钥路径'
+        "version": "版本号，请勿修改",
+        "backup": "是否开启配置及数据库备份 0 为不开启，1 为开启",
+        "backup_cron": "备份系统定时，crontab格式，默认为每天2:00进行备份",
+        "server_connect": "游戏服务器连接方式，0 为MCSManager，1 为rcon",
+        "welcome": "玩家成功加入白名单后，微信的回复消息",
+        "mcsm_adr": "MCSM的url地址",
+        "mcsm_api": "MCSM的api密钥",
+        "uuid": "MCSM实例的应用实例ID",
+        "remote-uuid": "MCSM实例的远程节点ID",
+        "rcon_host_add": "RCON 主机域名或者IP",
+        "rcon_port": "RCON 端口",
+        "rcon_password": "RCON 密码",
+        "token": "微信公众号token",
+        "EncodingAESKey": "微信公众号加密密钥（暂时无用）",
+        "appID": "微信公众号appID",
+        "AppSecret": "微信公众号AppSecret",
+        "EncodingMode": "微信服务器内容加密方式： 0为明文，其他待开发",
+        "WxUserName": "微信公众号原始ID",
+        "url": "WeAuth路由地址，用于监听来自微信服务器消息",
+        "ssl": "是否开启ssl, 0 为不开启， 1 为开启",
+        "ssl_cer": "ssl证书路径",
+        "ssl_key": "ssl密钥路径",
     }
 
-    text = ''
+    text = ""
     for key in config_dict:
         text += f"# {comment_dict[key]}\n"
         text += f"{key}: {config_dict[key]}\n\n\n"
 
-    with open('./config.yaml', 'w+') as f:
+    with open("./config.yaml", "w+") as f:
         f.write(text)
         return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     create_config_yaml()
-
-

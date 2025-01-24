@@ -3,7 +3,7 @@
 # author： NearlyHeadlessJack
 # email: wang@rjack.cn
 # WeAuth is released under the GNU GENERAL PUBLIC LICENSE v3 (GPLv3.0) license.
-# datetime： 2024/7/2 下午5:26 
+# datetime： 2024/7/2 下午5:26
 # ide： PyCharm
 # file: __init__.py.py
 
@@ -21,4 +21,3 @@ class TencentServerConnection(ABC):
     @staticmethod
     def message_encode(openid, weid, message):
         pass
-
