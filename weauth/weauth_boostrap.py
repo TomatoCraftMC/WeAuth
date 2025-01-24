@@ -23,6 +23,7 @@ from weauth.constants import exit_code
 from weauth.mc_server import MCServerConnection
 from multiprocessing import Process
 import threading
+
 from weauth.utils.backup import BackUp
 
 def main(args) -> None:
